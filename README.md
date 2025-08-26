@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# Portfolio Website - Bhumika Agarwal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 🎯 Project Goal
 
-## Available Scripts
+Modern portfolio website showcasing professional experience as Software Engineer II at JP Morgan Chase & Co., featuring real projects, skills, and contact information with Vercel/Apple-inspired design.
 
-In the project directory, you can run:
+## 🛠️ Tech Stack
 
-### `npm start`
+- **React 19.1.1** - UI framework
+- **TypeScript 4.9.5** - Type-safe JavaScript
+- **Material-UI 7.3.1** - Component library  
+- **React Router 6.30.1** - Client-side routing
+- **Emotion** - CSS-in-JS styling
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🌐 Live Demo
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**Portfolio Website**: [Coming Soon - Deploy to Render.com]
 
-### `npm test`
+## 📸 Demo Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- ✨ Hero section with gradient background
+- 💼 Professional experience and skills showcase
+- 🚀 Real project portfolio with live links
+- 📱 Fully responsive design
+- 🎨 Smooth animations and hover effects
+- 📧 Working contact form
 
-### `npm run build`
+## 🔗 Links
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **GitHub**: [https://github.com/bhumika-aga](https://github.com/bhumika-aga)
+- **LinkedIn**: [https://linkedin.com/in/bhumika-aga](https://linkedin.com/in/bhumika-aga)
+- **Live Projects**:
+  - [Hospital Management System](https://healthsync-portal.onrender.com)
+  - [Movie Review Platform](https://reelcriticapp.onrender.com)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🚀 Quick Start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# Install dependencies
+npm install
 
-### `npm run eject`
+# Start development server
+npm start
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Build for production
+npm run build
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Run tests
+npm test
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 📦 Deployment
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Ready for deployment on Render.com with included `render.yaml` configuration.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
