@@ -1,93 +1,189 @@
-import { ArrowForward, Brush, Code, Speed } from "@mui/icons-material";
+import { ArrowForward } from "@mui/icons-material";
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   Container,
   Typography,
+  useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
-  const features = [
-    {
-      icon: <Code fontSize="large" />,
-      title: "Backend Development",
-      description:
-        "Building robust APIs with Java, Spring Boot, and secure authentication systems",
-    },
-    {
-      icon: <Brush fontSize="large" />,
-      title: "Frontend Development",
-      description:
-        "Creating dynamic user interfaces with React, TypeScript, and Material-UI",
-    },
-    {
-      icon: <Speed fontSize="large" />,
-      title: "System Optimization",
-      description:
-        "Improving API performance by 30%+ through query optimization and caching",
-    },
+  const theme = useTheme();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const floatingElements = [
+    { x: 20, y: 20, size: 8, delay: 0 },
+    { x: 80, y: 15, size: 12, delay: 1 },
+    { x: 15, y: 60, size: 6, delay: 2 },
+    { x: 85, y: 70, size: 10, delay: 0.5 },
+    { x: 60, y: 25, size: 4, delay: 1.5 },
+    { x: 25, y: 85, size: 14, delay: 2.5 },
   ];
 
   return (
-    <Box>
+    <Box sx={{ position: 'relative', overflow: 'hidden' }}>
       {/* Hero Section */}
       <Box
         sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          color: "white",
-          position: "relative",
-          overflow: "hidden",
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          position: 'relative',
+          background: theme.palette.mode === 'dark' 
+            ? 'radial-gradient(ellipse at center, rgba(0, 122, 255, 0.1) 0%, rgba(0, 0, 0, 0.95) 70%)'
+            : 'radial-gradient(ellipse at center, rgba(90, 200, 250, 0.08) 0%, rgba(255, 255, 255, 0.95) 70%)',
         }}
       >
-        <Container maxWidth="lg">
+        {/* Animated Background Elements */}
+        {floatingElements.map((element, index) => (
+          <Box
+            key={index}
+            sx={{
+              position: 'absolute',
+              left: `${element.x}%`,
+              top: `${element.y}%`,
+              width: element.size,
+              height: element.size,
+              borderRadius: '50%',
+              background: `linear-gradient(135deg, ${theme.palette.primary.main}40, ${theme.palette.secondary.main}40)`,
+              opacity: 0.6,
+              transform: `translate(${(mousePosition.x - window.innerWidth / 2) * 0.01 * (index + 1)}px, ${(mousePosition.y - window.innerHeight / 2) * 0.01 * (index + 1)}px) translateY(${scrollY * 0.1 * (index + 1)}px)`,
+              transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              animation: `float-${index} ${4 + element.delay}s ease-in-out infinite`,
+              '@keyframes float-0': {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-20px)' },
+              },
+              '@keyframes float-1': {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-15px)' },
+              },
+              '@keyframes float-2': {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-25px)' },
+              },
+              '@keyframes float-3': {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-18px)' },
+              },
+              '@keyframes float-4': {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-12px)' },
+              },
+              '@keyframes float-5': {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-22px)' },
+              },
+            }}
+          />
+        ))}
+
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
           <Box
             sx={{
-              textAlign: "center",
-              py: 6,
+              textAlign: 'center',
+              py: { xs: 8, md: 12 },
+              transform: `translateY(${scrollY * -0.3}px)`, // Parallax effect
             }}
           >
+            {/* Subtitle */}
+            <Typography
+              variant="subtitle1"
+              sx={{
+                mb: { xs: 2, md: 3 },
+                color: 'primary.main',
+                fontWeight: 500,
+                letterSpacing: '0.5px',
+                textTransform: 'uppercase',
+                fontSize: { xs: '0.875rem', md: '1rem' },
+                opacity: 0,
+                animation: 'slideUp 1s ease-out 0.2s forwards',
+                '@keyframes slideUp': {
+                  '0%': {
+                    opacity: 0,
+                    transform: 'translateY(20px)',
+                  },
+                  '100%': {
+                    opacity: 1,
+                    transform: 'translateY(0)',
+                  },
+                },
+              }}
+            >
+              Software Engineer II
+            </Typography>
+
+            {/* Main Title */}
             <Typography
               variant="h1"
               sx={{
-                mb: 2,
-                fontSize: { xs: "1.8rem", md: "2.5rem" },
-                fontWeight: 600,
-                background: "linear-gradient(45deg, #ffffff 30%, #f0f0f0 90%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
+                mb: { xs: 3, md: 4 },
+                background: theme.palette.mode === 'dark'
+                  ? 'linear-gradient(135deg, #ffffff 0%, #5AC8FA 50%, #007AFF 100%)'
+                  : 'linear-gradient(135deg, #1D1D1F 0%, #007AFF 50%, #5AC8FA 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundSize: '200% auto',
+                opacity: 0,
+                animation: 'slideUp 1s ease-out 0.4s forwards, textShimmer 3s ease-in-out 1s infinite',
+                '@keyframes textShimmer': {
+                  '0%': { backgroundPosition: '0% center' },
+                  '100%': { backgroundPosition: '200% center' },
+                },
               }}
             >
               Bhumika Agarwal
             </Typography>
+
+            {/* Description */}
             <Typography
-              variant="h4"
+              variant="body1"
               sx={{
-                mb: 3,
-                fontSize: { xs: "1rem", md: "1.125rem" },
-                fontWeight: 300,
-                opacity: 0.9,
-                maxWidth: 600,
-                mx: "auto",
+                mb: { xs: 4, md: 6 },
+                maxWidth: 680,
+                mx: 'auto',
+                color: 'text.secondary',
+                opacity: 0,
+                animation: 'slideUp 1s ease-out 0.6s forwards',
               }}
             >
-              Software Engineer II at JP Morgan Chase & Co. | Full-Stack
-              Developer specializing in Java, Spring Boot, React, and secure
-              financial systems
+              Creating exceptional digital experiences with modern technologies.
+              Specialized in building scalable applications and secure financial systems
+              that serve millions of users worldwide.
             </Typography>
+
+            {/* CTA Buttons */}
             <Box
               sx={{
-                display: "flex",
-                gap: 2,
-                justifyContent: "center",
-                flexWrap: "wrap",
+                display: 'flex',
+                gap: { xs: 2, md: 3 },
+                justifyContent: 'center',
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: 'center',
+                opacity: 0,
+                animation: 'slideUp 1s ease-out 0.8s forwards',
               }}
             >
               <Button
@@ -97,140 +193,149 @@ const Home: React.FC = () => {
                 to="/projects"
                 endIcon={<ArrowForward />}
                 sx={{
-                  bgcolor: "white",
-                  color: "#000000",
-                  px: 3,
-                  py: 1,
-                  fontSize: "0.9rem",
-                  "&:hover": {
-                    bgcolor: "rgba(255, 255, 255, 0.9)",
+                  px: { xs: 4, md: 5 },
+                  py: { xs: 1.5, md: 2 },
+                  fontSize: { xs: '1rem', md: '1.125rem' },
+                  fontWeight: 500,
+                  borderRadius: 50,
+                  minWidth: 200,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: '-100%',
+                    width: '100%',
+                    height: '100%',
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+                    transition: 'left 0.6s',
+                  },
+                  '&:hover::before': {
+                    left: '100%',
+                  },
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 8px 25px rgba(0, 122, 255, 0.3)',
                   },
                 }}
               >
                 View My Work
               </Button>
+              
               <Button
                 variant="outlined"
                 size="large"
                 component={Link}
-                to="/contact"
+                to="/about"
                 sx={{
-                  borderColor: "white",
-                  color: "white",
-                  px: 3,
-                  py: 1,
-                  fontSize: "0.9rem",
-                  "&:hover": {
-                    borderColor: "white",
-                    bgcolor: "rgba(255, 255, 255, 0.1)",
+                  px: { xs: 4, md: 5 },
+                  py: { xs: 1.5, md: 2 },
+                  fontSize: { xs: '1rem', md: '1.125rem' },
+                  fontWeight: 500,
+                  borderRadius: 50,
+                  minWidth: 200,
+                  borderWidth: 1.5,
+                  '&:hover': {
+                    borderWidth: 1.5,
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 8px 25px rgba(0, 122, 255, 0.15)',
                   },
                 }}
               >
-                Get In Touch
+                About Me
               </Button>
             </Box>
           </Box>
         </Container>
-      </Box>
 
-      {/* Features Section */}
-      <Container maxWidth="lg" sx={{ py: 8 }}>
-        <Typography
-          variant="h2"
-          sx={{
-            textAlign: "center",
-            mb: 2,
-            fontSize: { xs: "1.5rem", md: "2rem" },
-          }}
-        >
-          What I Do
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            textAlign: "center",
-            mb: 6,
-            fontSize: "1rem",
-            maxWidth: 600,
-            mx: "auto",
-          }}
-        >
-          Leveraging 3+ years of experience in fintech and banking to build
-          scalable, secure applications that handle critical business operations
-        </Typography>
+        {/* Scroll Indicator */}
         <Box
           sx={{
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
-            gap: 4,
+            position: 'absolute',
+            bottom: 32,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            opacity: 0,
+            animation: 'fadeIn 1s ease-out 1.5s forwards, bounce 2s ease-in-out 2s infinite',
+            '@keyframes fadeIn': {
+              '0%': { opacity: 0, transform: 'translateX(-50%) translateY(20px)' },
+              '100%': { opacity: 0.6, transform: 'translateX(-50%) translateY(0)' },
+            },
+            '@keyframes bounce': {
+              '0%, 100%': { transform: 'translateX(-50%) translateY(0)' },
+              '50%': { transform: 'translateX(-50%) translateY(-10px)' },
+            },
           }}
         >
-          {features.map((feature, index) => (
-            <Box key={index}>
-              <Card
-                sx={{
-                  height: "100%",
-                  textAlign: "center",
-                  p: 3,
-                  border: "1px solid rgba(0, 0, 0, 0.05)",
-                  transition: "transform 0.3s ease-in-out",
-                  "&:hover": {
-                    transform: "translateY(-4px)",
-                  },
-                }}
-              >
-                <CardContent>
-                  <Box
-                    sx={{
-                      mb: 3,
-                      color: "secondary.main",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {feature.icon}
-                  </Box>
-                  <Typography variant="h4" sx={{ mb: 2 }}>
-                    {feature.title}
-                  </Typography>
-                  <Typography variant="body1">{feature.description}</Typography>
-                </CardContent>
-              </Card>
-            </Box>
-          ))}
+          <Box
+            sx={{
+              width: 2,
+              height: 40,
+              background: `linear-gradient(to bottom, ${theme.palette.primary.main}, transparent)`,
+              borderRadius: 1,
+              mx: 'auto',
+              mb: 1,
+            }}
+          />
+          <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
+            Scroll
+          </Typography>
         </Box>
-      </Container>
+      </Box>
 
-      {/* CTA Section */}
+      {/* Quick Stats Section */}
       <Box
         sx={{
-          bgcolor: "background.paper",
-          py: 8,
+          py: { xs: 6, md: 8 },
+          background: theme.palette.mode === 'dark' 
+            ? 'rgba(28, 28, 30, 0.5)'
+            : 'rgba(242, 242, 247, 0.5)',
+          backdropFilter: 'blur(20px)',
+          borderTop: `0.5px solid ${theme.palette.divider}`,
         }}
       >
-        <Container maxWidth="md">
-          <Box sx={{ textAlign: "center" }}>
-            <Typography variant="h2" sx={{ mb: 3 }}>
-              Let's Build Something Great Together
-            </Typography>
-            <Typography variant="body1" sx={{ mb: 3, fontSize: "1rem" }}>
-              Ready to collaborate on your next software project or discuss
-              opportunities in fintech?
-            </Typography>
-            <Button
-              variant="contained"
-              size="large"
-              component={Link}
-              to="/contact"
-              endIcon={<ArrowForward />}
-              sx={{
-                px: 4,
-                py: 1.5,
-                fontSize: "1.1rem",
-              }}
-            >
-              Start a Conversation
-            </Button>
+        <Container maxWidth="lg">
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
+              gap: { xs: 4, md: 6 },
+              textAlign: 'center',
+            }}
+          >
+            {[
+              { number: '3+', label: 'Years Experience', desc: 'In fintech & banking' },
+              { number: '25+', label: 'APIs Built', desc: 'Production-ready systems' },
+              { number: '30%', label: 'Performance Boost', desc: 'System optimization' },
+            ].map((stat, index) => (
+              <Box
+                key={index}
+                sx={{
+                  opacity: 0,
+                  animation: `slideUp 0.8s ease-out ${0.2 + index * 0.1}s forwards`,
+                }}
+              >
+                <Typography
+                  variant="h2"
+                  sx={{
+                    mb: 1,
+                    background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  {stat.number}
+                </Typography>
+                <Typography variant="h6" sx={{ mb: 0.5, color: 'text.primary' }}>
+                  {stat.label}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                  {stat.desc}
+                </Typography>
+              </Box>
+            ))}
           </Box>
         </Container>
       </Box>

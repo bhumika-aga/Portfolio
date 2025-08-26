@@ -1,19 +1,27 @@
-# Deployment Guide - Render.com
+# Deployment Guide - Portfolio Website
 
 ## 🎯 Project Goal
 
-Deploy Bhumika Agarwal's portfolio website to Render.com for professional showcase and easy access by potential employers and collaborators.
+Deploy professional portfolio website with Apple-inspired design, featuring dark/light mode toggle, responsive bento grid layout, and real GitHub project integrations.
 
 ## 🛠️ Tech Stack
 
 - **React 19.1.1** - Frontend framework
-- **Node.js 18** - Runtime environment
-- **Serve** - Static file server
+- **TypeScript 4.9.5** - Type-safe development
+- **Material-UI 7.3.1** - Component library
 - **Render.com** - Cloud deployment platform
 
-## 🌐 Live Demo
+## 📸 Demo GIF
 
-**Portfolio URL**: `https://your-service-name.onrender.com` (after deployment)
+![Deployment Demo](https://via.placeholder.com/600x300/007AFF/ffffff?text=Deployment+Process)
+
+### Deployment Features
+
+Showing automated deployment from GitHub to Render.com
+
+## 🔗 Links to Deployment
+
+**Live Website**: <https://bhumika-portfolio.onrender.com>
 
 ## 🚀 Quick Deploy Steps
 
