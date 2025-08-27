@@ -1,9 +1,15 @@
 import {
   BusinessCenter,
+  CloudDone,
   Code,
+  DataObject,
   Download,
+  IntegrationInstructions,
   School,
+  Security,
+  Storage,
   TrendingUp,
+  Web,
 } from "@mui/icons-material";
 import {
   Box,
@@ -168,115 +174,182 @@ const About: React.FC = () => {
   const skillCategories = [
     {
       category: "Backend Development",
+      icon: <Code />,
       skills: [
-        { name: "Java & Spring Boot", level: 95, color: "#007AFF" },
-        { name: "REST APIs & Microservices", level: 92, color: "#5AC8FA" },
-        { name: "MySQL & Database Design", level: 88, color: "#00C896" },
+        { name: "Java & Spring Boot", icon: <Code />, color: "#007AFF" },
+        {
+          name: "REST APIs & Microservices",
+          icon: <IntegrationInstructions />,
+          color: "#5AC8FA",
+        },
+        {
+          name: "MySQL & Database Design",
+          icon: <Storage />,
+          color: "#00C896",
+        },
       ],
     },
     {
       category: "Frontend Development",
+      icon: <Web />,
       skills: [
-        { name: "ReactJS & TypeScript", level: 90, color: "#007AFF" },
-        { name: "JavaScript & Modern ES6+", level: 88, color: "#5AC8FA" },
-        { name: "UI/UX Design & Prototyping", level: 85, color: "#00C896" },
+        { name: "ReactJS & TypeScript", icon: <Web />, color: "#007AFF" },
+        {
+          name: "JavaScript & Modern ES6+",
+          icon: <DataObject />,
+          color: "#5AC8FA",
+        },
+        {
+          name: "UI/UX Design & Prototyping",
+          icon: <TrendingUp />,
+          color: "#00C896",
+        },
       ],
     },
     {
       category: "Security & DevOps",
+      icon: <Security />,
       skills: [
-        { name: "JWT Authentication & Security", level: 90, color: "#007AFF" },
-        { name: "Docker & Containerization", level: 85, color: "#5AC8FA" },
-        { name: "Financial Systems & Compliance", level: 88, color: "#00C896" },
+        {
+          name: "JWT Authentication & Security",
+          icon: <Security />,
+          color: "#007AFF",
+        },
+        {
+          name: "Docker & Containerization",
+          icon: <CloudDone />,
+          color: "#5AC8FA",
+        },
+        {
+          name: "Financial Systems & Compliance",
+          icon: <BusinessCenter />,
+          color: "#00C896",
+        },
       ],
     },
   ];
 
   return (
     <Box sx={{ position: "relative", overflow: "hidden" }}>
-      {/* Hero Section */}
+      {/* Hero Section - Centered About Me with Resume Download */}
       <Box
         sx={{
-          pt: { xs: 12, md: 16 },
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          pt: { xs: 8, md: 10 },
           pb: { xs: 8, md: 12 },
           background:
             theme.palette.mode === "dark"
-              ? "radial-gradient(ellipse at top, rgba(0, 122, 255, 0.1) 0%, rgba(0, 0, 0, 0.95) 50%)"
-              : "radial-gradient(ellipse at top, rgba(90, 200, 250, 0.08) 0%, rgba(255, 255, 255, 0.95) 50%)",
+              ? "radial-gradient(ellipse at center, rgba(0, 122, 255, 0.1) 0%, rgba(0, 0, 0, 0.95) 70%)"
+              : "radial-gradient(ellipse at center, rgba(90, 200, 250, 0.08) 0%, rgba(255, 255, 255, 0.95) 70%)",
         }}
       >
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: "center", mb: { xs: 8, md: 12 } }}>
+        <Container maxWidth="md">
+          <Box sx={{ textAlign: "center" }}>
             <Typography
               variant="subtitle1"
               sx={{
                 mb: 2,
                 color: "primary.main",
-                fontWeight: 500,
+                fontWeight: 600,
                 letterSpacing: "0.5px",
                 textTransform: "uppercase",
+                fontSize: { xs: "0.9rem", md: "1rem" },
               }}
             >
               My Journey
             </Typography>
-            <Typography variant="h1" sx={{ mb: 3 }}>
+            <Typography
+              variant="h1"
+              sx={{
+                mb: 4,
+                fontSize: { xs: "2.2rem", md: "3rem" },
+                background:
+                  theme.palette.mode === "dark"
+                    ? "linear-gradient(135deg, #ffffff 0%, #5AC8FA 50%, #007AFF 100%)"
+                    : "linear-gradient(135deg, #1D1D1F 0%, #007AFF 50%, #5AC8FA 100%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
               About Me
             </Typography>
             <Typography
               variant="body1"
               sx={{
-                maxWidth: 680,
+                maxWidth: 700,
                 mx: "auto",
                 color: "text.secondary",
+                fontSize: { xs: "1.1rem", md: "1.2rem" },
+                lineHeight: 1.7,
+                mb: { xs: 6, md: 8 },
               }}
             >
               A passionate software engineer with 3+ years of experience
               building scalable applications and secure financial systems that
-              impact millions of users.
+              impact millions of users worldwide. Currently developing
+              next-generation trading platforms at JPMorgan Chase & Co.
             </Typography>
-          </Box>
-        </Container>
-      </Box>
 
-      {/* Resume Download & Experience Section */}
-      <Box
-        ref={timelineRef}
-        sx={{
-          py: { xs: 4, md: 6 },
-          position: "relative",
-        }}
-      >
-        <Container maxWidth="lg">
-          {/* Resume Download Section */}
-          <Box sx={{ textAlign: "center", mb: { xs: 4, md: 6 } }}>
+            {/* Resume Download Button - Bigger and Centered */}
             <Button
               variant="contained"
-              size="medium"
+              size="large"
               startIcon={<Download />}
               href="/Bhumika_Agarwal_Resume.pdf"
               download="Bhumika_Agarwal_Resume.pdf"
               sx={{
-                px: 3,
-                py: 1,
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                borderRadius: 25,
-                boxShadow: "0 2px 8px rgba(0, 122, 255, 0.3)",
+                px: { xs: 4, md: 6 },
+                py: { xs: 1.5, md: 2 },
+                fontSize: { xs: "1rem", md: "1.1rem" },
+                fontWeight: 600,
+                borderRadius: 50,
+                boxShadow: "0 6px 20px rgba(0, 122, 255, 0.3)",
                 "&:hover": {
-                  transform: "translateY(-1px)",
-                  boxShadow: "0 4px 12px rgba(0, 122, 255, 0.4)",
+                  transform: "translateY(-3px)",
+                  boxShadow: "0 10px 30px rgba(0, 122, 255, 0.4)",
                 },
               }}
             >
               Download Resume
             </Button>
           </Box>
+        </Container>
+      </Box>
 
+      {/* Work Experience Section - Appears on Scroll */}
+      <Box
+        ref={timelineRef}
+        sx={{
+          py: { xs: 6, md: 8 },
+          position: "relative",
+          background:
+            theme.palette.mode === "dark"
+              ? "rgba(0, 0, 0, 0.5)"
+              : "rgba(255, 255, 255, 0.5)",
+          backdropFilter: "blur(20px)",
+          borderTop: `0.5px solid ${theme.palette.divider}`,
+        }}
+      >
+        <Container maxWidth="lg">
           {/* Work Experience Header */}
           <Box sx={{ textAlign: "center", mb: { xs: 4, md: 6 } }}>
             <Typography
               variant="h2"
-              sx={{ mb: 1, fontSize: { xs: "1.5rem", md: "2rem" } }}
+              sx={{
+                mb: 2,
+                fontSize: { xs: "1.8rem", md: "2.2rem" },
+                background:
+                  theme.palette.mode === "dark"
+                    ? "linear-gradient(135deg, #ffffff 0%, #5AC8FA 50%, #007AFF 100%)"
+                    : "linear-gradient(135deg, #1D1D1F 0%, #007AFF 50%, #5AC8FA 100%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
             >
               Work Experience
             </Typography>
@@ -284,13 +357,15 @@ const About: React.FC = () => {
               variant="body1"
               sx={{
                 color: "text.secondary",
-                maxWidth: 500,
+                maxWidth: 580,
                 mx: "auto",
-                fontSize: "0.9rem",
+                fontSize: { xs: "1rem", md: "1.1rem" },
+                lineHeight: 1.6,
               }}
             >
               Professional journey from internships to Software Engineer II at
-              JPMorgan Chase & Co.
+              JPMorgan Chase & Co., building enterprise systems that serve
+              millions.
             </Typography>
           </Box>
 
@@ -335,7 +410,7 @@ const About: React.FC = () => {
                 key={event.id}
                 sx={{
                   position: "relative",
-                  mb: 4,
+                  mb: 3,
                   opacity: 0,
                   animation: `slideInUp 0.6s ease-out ${
                     index * 0.15
@@ -421,7 +496,7 @@ const About: React.FC = () => {
                     },
                   }}
                 >
-                  <CardContent sx={{ p: 3 }}>
+                  <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
                     {/* Header with Year Badge */}
                     <Box
                       sx={{
@@ -579,7 +654,7 @@ const About: React.FC = () => {
       {/* Education Section */}
       <Box
         sx={{
-          py: { xs: 8, md: 12 },
+          py: { xs: 4, md: 6 },
           background:
             theme.palette.mode === "dark"
               ? "rgba(0, 0, 0, 0.5)"
@@ -590,13 +665,25 @@ const About: React.FC = () => {
       >
         <Container maxWidth="lg">
           {/* Education Header */}
-          <Box sx={{ textAlign: "center", mb: { xs: 6, md: 8 } }}>
-            <Typography variant="h2" sx={{ mb: 2 }}>
+          <Box sx={{ textAlign: "center", mb: { xs: 3, md: 4 } }}>
+            <Typography
+              variant="h2"
+              sx={{
+                mb: 1,
+                fontSize: { xs: "1.4rem", md: "1.8rem" },
+              }}
+            >
               Education
             </Typography>
             <Typography
               variant="body1"
-              sx={{ color: "text.secondary", maxWidth: 600, mx: "auto" }}
+              sx={{
+                color: "text.secondary",
+                maxWidth: 480,
+                mx: "auto",
+                fontSize: { xs: "0.85rem", md: "0.9rem" },
+                lineHeight: 1.5,
+              }}
             >
               Academic foundation in Computer Science Engineering from
               University of Petroleum and Energy Studies.
@@ -727,7 +814,7 @@ const About: React.FC = () => {
       {/* Interactive Skills Showcase */}
       <Box
         sx={{
-          py: { xs: 6, md: 8 },
+          py: { xs: 3, md: 4 },
           background:
             theme.palette.mode === "dark"
               ? "radial-gradient(ellipse at center, rgba(0, 122, 255, 0.05) 0%, rgba(28, 28, 30, 0.8) 50%)"
@@ -756,7 +843,7 @@ const About: React.FC = () => {
           <Box
             sx={{
               textAlign: "center",
-              mb: { xs: 4, md: 6 },
+              mb: { xs: 2, md: 3 },
               position: "relative",
             }}
           >
@@ -765,19 +852,19 @@ const About: React.FC = () => {
               sx={{
                 mb: 1,
                 color: "primary.main",
-                fontWeight: 600,
-                letterSpacing: "0.5px",
+                fontWeight: 500,
+                letterSpacing: "0.3px",
                 textTransform: "uppercase",
-                fontSize: { xs: "0.8rem", md: "0.9rem" },
+                fontSize: { xs: "0.7rem", md: "0.8rem" },
               }}
             >
               Technical Arsenal
             </Typography>
             <Typography
-              variant="h2"
+              variant="h3"
               sx={{
-                mb: 2,
-                fontSize: { xs: "1.8rem", md: "2.2rem" },
+                mb: 1.5,
+                fontSize: { xs: "1.4rem", md: "1.6rem" },
                 background:
                   theme.palette.mode === "dark"
                     ? "linear-gradient(135deg, #ffffff 0%, #5AC8FA 50%, #007AFF 100%)"
@@ -790,17 +877,16 @@ const About: React.FC = () => {
               Skills & Expertise
             </Typography>
             <Typography
-              variant="body1"
+              variant="body2"
               sx={{
                 color: "text.secondary",
-                maxWidth: 560,
+                maxWidth: 480,
                 mx: "auto",
-                fontSize: { xs: "0.9rem", md: "1rem" },
-                lineHeight: 1.6,
+                fontSize: { xs: "0.8rem", md: "0.85rem" },
+                lineHeight: 1.5,
               }}
             >
-              Mastery forged through 3+ years of building enterprise-grade
-              systems and financial applications.
+              Technologies and tools I use to build exceptional software.
             </Typography>
           </Box>
 
@@ -813,8 +899,8 @@ const About: React.FC = () => {
                 md: "repeat(2, 1fr)",
                 lg: "repeat(3, 1fr)",
               },
-              gap: { xs: 2, md: 3 },
-              mb: { xs: 4, md: 6 },
+              gap: { xs: 1.5, md: 2 },
+              mb: { xs: 2, md: 3 },
             }}
           >
             {skillCategories.map((category, categoryIndex) => (
@@ -870,70 +956,43 @@ const About: React.FC = () => {
                       transform: "translateX(0)",
                     },
                     "& .skill-orb": {
-                      transform: "scale(1.1) rotate(180deg)",
-                    },
-                    "& .skill-progress": {
-                      "& .MuiLinearProgress-bar": {
-                        animation: "pulse 1.5s ease-in-out infinite",
-                        "@keyframes pulse": {
-                          "0%": { opacity: 1 },
-                          "50%": { opacity: 0.7 },
-                          "100%": { opacity: 1 },
-                        },
-                      },
+                      transform: "scale(1.1)",
                     },
                   },
                 }}
               >
-                <CardContent sx={{ p: { xs: 2.5, md: 3 }, height: "100%" }}>
-                  {/* Category Header with animated orb */}
-                  <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+                <CardContent sx={{ p: { xs: 2, md: 2.5 }, height: "100%" }}>
+                  {/* Category Header with icon */}
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                     <Box
                       className="skill-orb"
                       sx={{
-                        width: 32,
-                        height: 32,
-                        borderRadius: "50%",
-                        background: `conic-gradient(from 0deg, ${
+                        width: 36,
+                        height: 36,
+                        borderRadius: 2,
+                        background: `linear-gradient(135deg, ${
                           category.skills[0]?.color || "#007AFF"
-                        }, ${category.skills[1]?.color || "#5AC8FA"}, ${
+                        }15, ${category.skills[0]?.color || "#007AFF"}08)`,
+                        border: `2px solid ${
                           category.skills[0]?.color || "#007AFF"
-                        })`,
+                        }20`,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         mr: 2,
+                        color: category.skills[0]?.color || "#007AFF",
                         transition:
                           "all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                        position: "relative",
-                        "&::before": {
-                          content: '""',
-                          position: "absolute",
-                          inset: 2,
-                          borderRadius: "50%",
-                          background:
-                            theme.palette.mode === "dark"
-                              ? "#1C1C1E"
-                              : "#FFFFFF",
-                        },
-                        "&::after": {
-                          content: '""',
-                          position: "absolute",
-                          inset: 6,
-                          borderRadius: "50%",
-                          background: `linear-gradient(135deg, ${
-                            category.skills[0]?.color || "#007AFF"
-                          }60, ${category.skills[1]?.color || "#5AC8FA"}60)`,
-                          zIndex: 1,
-                        },
                       }}
-                    />
+                    >
+                      {category.icon}
+                    </Box>
                     <Typography
                       variant="h6"
                       sx={{
                         color: "text.primary",
                         fontWeight: 600,
-                        fontSize: { xs: "0.95rem", md: "1.1rem" },
+                        fontSize: { xs: "0.9rem", md: "1rem" },
                         letterSpacing: "-0.01em",
                       }}
                     >
@@ -941,16 +1000,22 @@ const About: React.FC = () => {
                     </Typography>
                   </Box>
 
-                  {/* Interactive Skills List */}
+                  {/* Simple Skills List with Icons */}
                   {category.skills.map((skill, skillIndex) => (
                     <Box
                       key={skillIndex}
-                      className="skill-progress"
                       sx={{
-                        mb: skillIndex === category.skills.length - 1 ? 0 : 2.5,
+                        display: "flex",
+                        alignItems: "center",
+                        mb: skillIndex === category.skills.length - 1 ? 0 : 1.5,
+                        p: 1.5,
+                        borderRadius: 2,
+                        background: `linear-gradient(135deg, ${skill.color}08, ${skill.color}04)`,
+                        border: `1px solid ${skill.color}15`,
+                        transition: "all 0.3s ease",
                         opacity: 0,
                         animation: `slideInUp 0.6s ease-out ${
-                          categoryIndex * 0.1 + skillIndex * 0.05
+                          categoryIndex * 0.1 + skillIndex * 0.1
                         }s forwards`,
                         "@keyframes slideInUp": {
                           "0%": {
@@ -962,138 +1027,39 @@ const About: React.FC = () => {
                             transform: "translateY(0)",
                           },
                         },
+                        "&:hover": {
+                          background: `linear-gradient(135deg, ${skill.color}15, ${skill.color}08)`,
+                          transform: "translateX(4px)",
+                          border: `1px solid ${skill.color}25`,
+                        },
                       }}
                     >
-                      {/* Skill Header */}
                       <Box
                         sx={{
+                          width: 28,
+                          height: 28,
+                          borderRadius: "50%",
+                          background: `linear-gradient(135deg, ${skill.color}, ${skill.color}CC)`,
                           display: "flex",
                           alignItems: "center",
-                          justifyContent: "space-between",
-                          mb: 1,
+                          justifyContent: "center",
+                          mr: 1.5,
+                          color: "white",
+                          fontSize: "0.8rem",
                         }}
                       >
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            fontWeight: 500,
-                            fontSize: { xs: "0.85rem", md: "0.9rem" },
-                            color: "text.primary",
-                          }}
-                        >
-                          {skill.name}
-                        </Typography>
-
-                        {/* Animated percentage badge */}
-                        <Box
-                          sx={{
-                            px: 1.5,
-                            py: 0.3,
-                            borderRadius: 25,
-                            background: `linear-gradient(135deg, ${skill.color}15, ${skill.color}08)`,
-                            border: `1px solid ${skill.color}25`,
-                            color: skill.color,
-                            fontSize: { xs: "0.7rem", md: "0.75rem" },
-                            fontWeight: 600,
-                            backdropFilter: "blur(10px)",
-                            minWidth: 40,
-                            textAlign: "center",
-                            transition: "all 0.3s ease",
-                          }}
-                        >
-                          {skill.level}%
-                        </Box>
+                        {skill.icon}
                       </Box>
-
-                      {/* Custom Animated Progress Bar */}
-                      <Box
+                      <Typography
+                        variant="body2"
                         sx={{
-                          position: "relative",
-                          height: 6,
-                          borderRadius: 25,
-                          background:
-                            theme.palette.mode === "dark"
-                              ? "rgba(255,255,255,0.08)"
-                              : "rgba(0,0,0,0.06)",
-                          overflow: "hidden",
+                          fontWeight: 500,
+                          fontSize: { xs: "0.8rem", md: "0.85rem" },
+                          color: "text.primary",
                         }}
                       >
-                        {/* Progress Fill */}
-                        <Box
-                          sx={{
-                            position: "relative",
-                            left: 0,
-                            top: 0,
-                            height: "100%",
-                            width: `${skill.level}%`,
-                            background: `linear-gradient(90deg, ${skill.color}, ${skill.color}CC, ${skill.color}80)`,
-                            borderRadius: 25,
-                            transition:
-                              "all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                            animation: `fillProgress-${categoryIndex}-${skillIndex} 2s ease-out ${
-                              categoryIndex * 0.2 + skillIndex * 0.1
-                            }s`,
-                            "&::after": {
-                              content: '""',
-                              position: "absolute",
-                              top: 0,
-                              right: -20,
-                              width: 20,
-                              height: "100%",
-                              background: `linear-gradient(90deg, ${skill.color}00, ${skill.color}40)`,
-                              animation: "shimmer 2s ease-in-out infinite",
-                              "@keyframes shimmer": {
-                                "0%": { transform: "translateX(-20px)" },
-                                "100%": { transform: "translateX(20px)" },
-                              },
-                            },
-                            [`@keyframes fillProgress-${categoryIndex}-${skillIndex}`]:
-                              {
-                                "0%": { width: "0%" },
-                                "100%": { width: `${skill.level}%` },
-                              },
-                          }}
-                        />
-
-                        {/* Skill level indicator dots */}
-                        {[...Array(5)].map((_, dotIndex) => (
-                          <Box
-                            key={dotIndex}
-                            sx={{
-                              position: "absolute",
-                              left: `${(dotIndex + 1) * 20}%`,
-                              top: "50%",
-                              transform: "translate(-50%, -50%)",
-                              width: 3,
-                              height: 3,
-                              borderRadius: "50%",
-                              background:
-                                skill.level >= (dotIndex + 1) * 20
-                                  ? skill.color
-                                  : theme.palette.mode === "dark"
-                                  ? "rgba(255,255,255,0.2)"
-                                  : "rgba(0,0,0,0.15)",
-                              transition: "all 0.3s ease",
-                              animation:
-                                skill.level >= (dotIndex + 1) * 20
-                                  ? `dotGlow 1.5s ease-in-out ${
-                                      dotIndex * 0.1
-                                    }s infinite alternate`
-                                  : "none",
-                              "@keyframes dotGlow": {
-                                "0%": {
-                                  opacity: 0.6,
-                                  transform: "translate(-50%, -50%) scale(1)",
-                                },
-                                "100%": {
-                                  opacity: 1,
-                                  transform: "translate(-50%, -50%) scale(1.3)",
-                                },
-                              },
-                            }}
-                          />
-                        ))}
-                      </Box>
+                        {skill.name}
+                      </Typography>
                     </Box>
                   ))}
                 </CardContent>

@@ -119,7 +119,6 @@ const Projects: React.FC = () => {
         "JUnit",
         "Spring Boot",
       ],
-      liveUrl: "https://pdf-generator-demo.onrender.com",
       githubUrl: "https://github.com/bhumika-aga/DynamicPDFGenerator",
     },
     {
@@ -137,15 +136,14 @@ const Projects: React.FC = () => {
         "HTTP Client",
         "Maven",
       ],
-      liveUrl: "https://weather-pincode-api.onrender.com",
       githubUrl: "https://github.com/bhumika-aga/WeatherInfoForPincode",
     },
   ];
 
   return (
-    <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
+    <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
       {/* Hero Section */}
-      <Box sx={{ textAlign: "center", mb: { xs: 4, md: 6 } }}>
+      <Box sx={{ textAlign: "center", mb: { xs: 3, md: 4 } }}>
         <Typography
           variant="subtitle1"
           sx={{
@@ -179,7 +177,7 @@ const Projects: React.FC = () => {
           variant="body1"
           sx={{
             fontSize: { xs: "0.9rem", md: "1rem" },
-            maxWidth: 640,
+            maxWidth: 580,
             mx: "auto",
             color: "text.secondary",
             lineHeight: 1.6,
@@ -191,629 +189,280 @@ const Projects: React.FC = () => {
         </Typography>
       </Box>
 
-      {/* Dynamic Bento Grid */}
-      <Box sx={{ mb: { xs: 4, md: 6 } }}>
+      {/* Projects Bento Grid */}
+      <Box sx={{ mb: { xs: 3, md: 4 } }}>
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              md: "repeat(12, 1fr)",
-            },
+            gridTemplateColumns: { xs: "1fr", md: "repeat(12, 1fr)" },
             gridTemplateRows: {
-              xs: "repeat(6, 280px)",
-              md: "repeat(3, 220px)",
+              xs: "auto",
+              md: "repeat(3, minmax(300px, auto))",
             },
-            gap: { xs: 2, md: 2.5 },
-            mb: 4,
+            gap: { xs: 2.5, md: 3 },
+            mb: 3,
           }}
         >
-          {/* Hero Project - Large Asymmetric Card */}
-          {projects.slice(0, 1).map((project, index) => (
-            <Card
-              key={project.id}
-              sx={{
-                gridColumn: { xs: "1", md: "1 / 8" },
-                gridRow: { xs: "1", md: "1 / 3" },
-                borderRadius: 4,
-                overflow: "hidden",
-                position: "relative",
-                background: `linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url(${project.image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                color: "white",
-                transition: "all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                border: "none",
-                opacity: 0,
-                animation: `slideInUp 0.8s ease-out ${index * 0.1}s forwards`,
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(90, 200, 250, 0.05))",
-                  opacity: 0,
-                  transition: "opacity 0.3s ease",
-                },
-                "&:hover": {
-                  transform: "translateY(-8px) scale(1.02)",
-                  boxShadow: (theme) =>
-                    theme.palette.mode === "dark"
-                      ? "0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1)"
-                      : "0 20px 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.05)",
-                  "&::before": {
-                    opacity: 1,
-                  },
-                  "& .project-badge": {
-                    transform: "translateY(-4px)",
-                    boxShadow: "0 8px 25px rgba(0, 122, 255, 0.3)",
-                  },
-                },
-                "@keyframes slideInUp": {
-                  "0%": {
-                    opacity: 0,
-                    transform: "translateY(60px)",
-                  },
-                  "100%": {
-                    opacity: 1,
-                    transform: "translateY(0)",
-                  },
-                },
-              }}
-            >
-              {/* Featured Badge */}
-              <Box
-                className="project-badge"
-                sx={{
-                  position: "absolute",
-                  top: 16,
-                  left: 16,
-                  px: 2,
-                  py: 0.5,
-                  borderRadius: 25,
-                  background: "rgba(0, 122, 255, 0.9)",
-                  backdropFilter: "blur(20px)",
-                  color: "white",
-                  fontSize: "0.7rem",
-                  fontWeight: 600,
-                  zIndex: 2,
-                  transition: "all 0.3s ease",
-                }}
-              >
-                🌟 Featured
-              </Box>
+          {projects.map((project, index) => {
+            // Bento grid layout configuration
+            const getBentoLayout = (index: number) => {
+              const layouts = [
+                {
+                  gridColumn: { xs: "1", md: "1 / 8" },
+                  gridRow: { xs: "auto", md: "1 / 3" },
+                }, // Large left
+                {
+                  gridColumn: { xs: "1", md: "8 / 13" },
+                  gridRow: { xs: "auto", md: "1 / 2" },
+                }, // Small top right
+                {
+                  gridColumn: { xs: "1", md: "8 / 13" },
+                  gridRow: { xs: "auto", md: "2 / 3" },
+                }, // Small bottom right
+                {
+                  gridColumn: { xs: "1", md: "1 / 5" },
+                  gridRow: { xs: "auto", md: "3 / 4" },
+                }, // Medium bottom left
+                {
+                  gridColumn: { xs: "1", md: "5 / 9" },
+                  gridRow: { xs: "auto", md: "3 / 4" },
+                }, // Medium bottom center
+                {
+                  gridColumn: { xs: "1", md: "9 / 13" },
+                  gridRow: { xs: "auto", md: "3 / 4" },
+                }, // Medium bottom right
+              ];
+              return layouts[index] || layouts[3]; // Default to medium if more than 6 projects
+            };
 
-              <CardContent
+            return (
+              <Card
+                key={project.id}
                 sx={{
-                  p: { xs: 3, md: 4 },
-                  height: "100%",
+                  ...getBentoLayout(index),
+                  borderRadius: 3,
+                  overflow: "hidden",
+                  position: "relative",
+                  background: (theme) =>
+                    theme.palette.mode === "dark"
+                      ? "rgba(28, 28, 30, 0.9)"
+                      : "rgba(255, 255, 255, 0.95)",
+                  backdropFilter: "blur(20px) saturate(180%)",
+                  border: (theme) =>
+                    `1px solid ${
+                      theme.palette.mode === "dark"
+                        ? "rgba(255, 255, 255, 0.08)"
+                        : "rgba(0, 0, 0, 0.05)"
+                    }`,
+                  transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "flex-end",
-                  position: "relative",
-                  zIndex: 1,
+                  opacity: 0,
+                  animation: `slideInUp 0.6s ease-out ${index * 0.1}s forwards`,
+                  "&:hover": {
+                    transform: "translateY(-6px)",
+                    boxShadow: (theme) =>
+                      theme.palette.mode === "dark"
+                        ? "0 16px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(0, 122, 255, 0.2)"
+                        : "0 16px 40px rgba(0,0,0,0.15), 0 0 0 1px rgba(0, 122, 255, 0.15)",
+                  },
+                  "@keyframes slideInUp": {
+                    "0%": {
+                      opacity: 0,
+                      transform: "translateY(30px)",
+                    },
+                    "100%": {
+                      opacity: 1,
+                      transform: "translateY(0)",
+                    },
+                  },
                 }}
               >
-                <Box>
-                  <Typography
-                    variant="h4"
+                {project.featured && (
+                  <Box
                     sx={{
-                      mb: 2,
-                      fontWeight: 700,
-                      fontSize: { xs: "1.4rem", md: "1.8rem" },
-                      lineHeight: 1.2,
-                      textShadow: "0 2px 8px rgba(0,0,0,0.3)",
+                      position: "absolute",
+                      top: 12,
+                      right: 12,
+                      px: 1.5,
+                      py: 0.5,
+                      borderRadius: 12,
+                      background: "rgba(0, 122, 255, 0.9)",
+                      backdropFilter: "blur(10px)",
+                      color: "white",
+                      fontSize: "0.65rem",
+                      fontWeight: 600,
+                      zIndex: 2,
+                    }}
+                  >
+                    Featured
+                  </Box>
+                )}
+                <CardMedia
+                  component="img"
+                  height={index === 0 ? "200" : "160"} // Taller image for large card
+                  image={project.image}
+                  alt={project.title}
+                  sx={{
+                    objectFit: "cover",
+                    filter: "brightness(0.9) saturate(1.1)",
+                    transition: "all 0.3s ease",
+                  }}
+                />
+                <CardContent
+                  sx={{
+                    p: { xs: 2.5, md: 3 },
+                    flexGrow: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "100%",
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      mb: 1.5,
+                      fontWeight: 600,
+                      fontSize: { xs: "1rem", md: "1.1rem" },
+                      color: "text.primary",
+                      lineHeight: 1.3,
                     }}
                   >
                     {project.title}
                   </Typography>
                   <Typography
-                    variant="body1"
+                    variant="body2"
                     sx={{
-                      mb: 3,
-                      opacity: 0.95,
-                      fontSize: { xs: "0.9rem", md: "1rem" },
+                      mb: 2,
+                      color: "text.secondary",
+                      fontSize: { xs: "0.85rem", md: "0.9rem" },
                       lineHeight: 1.5,
-                      textShadow: "0 1px 4px rgba(0,0,0,0.2)",
+                      flex: "1 1 auto",
+                      overflow: "hidden",
+                      display: "-webkit-box",
+                      WebkitLineClamp: index === 0 ? 4 : 3, // More lines for large card
+                      WebkitBoxOrient: "vertical",
                     }}
                   >
-                    {project.description.substring(0, 200)}...
+                    {project.description}
                   </Typography>
                   <Box
-                    sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 3 }}
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: 0.5,
+                      mb: 2.5,
+                      minHeight: "32px",
+                    }}
                   >
-                    {project.technologies.slice(0, 5).map((tech, techIndex) => (
+                    {project.technologies.slice(0, 4).map((tech, techIndex) => (
                       <Chip
                         key={techIndex}
                         label={tech}
                         size="small"
                         sx={{
-                          bgcolor: "rgba(255,255,255,0.15)",
+                          fontSize: "0.7rem",
+                          height: 24,
+                          bgcolor: "primary.main",
                           color: "white",
-                          border: "1px solid rgba(255,255,255,0.25)",
-                          fontSize: "0.75rem",
-                          height: 26,
-                          backdropFilter: "blur(10px)",
-                          transition: "all 0.2s ease",
                           "&:hover": {
-                            bgcolor: "rgba(255,255,255,0.25)",
+                            bgcolor: "primary.dark",
                             transform: "translateY(-1px)",
                           },
                         }}
                       />
                     ))}
                   </Box>
-                </Box>
-                <Box sx={{ display: "flex", gap: 1.5 }}>
-                  <Button
-                    variant="contained"
-                    startIcon={<Launch />}
-                    component="a"
-                    href={project.liveUrl!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      px: 3,
-                      py: 1,
-                      fontSize: "0.8rem",
-                      fontWeight: 600,
-                      borderRadius: 25,
-                      background: "rgba(255,255,255,0.9)",
-                      color: "#1D1D1F",
-                      backdropFilter: "blur(20px)",
-                      boxShadow: "0 4px 12px rgba(255,255,255,0.2)",
-                      "&:hover": {
-                        background: "rgba(255,255,255,1)",
-                        transform: "translateY(-2px)",
-                        boxShadow: "0 6px 20px rgba(255,255,255,0.3)",
-                      },
-                    }}
-                  >
-                    Live Demo
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    startIcon={<GitHub />}
-                    component="a"
-                    href={project.githubUrl!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      px: 3,
-                      py: 1,
-                      fontSize: "0.8rem",
-                      fontWeight: 600,
-                      borderRadius: 25,
-                      borderColor: "rgba(255,255,255,0.4)",
-                      color: "white",
-                      backdropFilter: "blur(20px)",
-                      "&:hover": {
-                        borderColor: "rgba(255,255,255,0.8)",
-                        bgcolor: "rgba(255,255,255,0.1)",
-                        transform: "translateY(-2px)",
-                      },
-                    }}
-                  >
-                    Source
-                  </Button>
-                  {project.apiUrl && (
-                    <Button
-                      variant="text"
-                      startIcon={<Api />}
-                      component="a"
-                      href={project.apiUrl!}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      sx={{
-                        color: "rgba(255,255,255,0.8)",
-                        fontSize: "0.75rem",
-                        px: 1,
-                        py: 1,
-                        minWidth: "auto",
-                        borderRadius: 20,
-                        "&:hover": {
-                          color: "white",
-                          bgcolor: "rgba(255,255,255,0.1)",
-                        },
-                      }}
-                    >
-                      API
-                    </Button>
-                  )}
-                </Box>
-              </CardContent>
-            </Card>
-          ))}
-
-          {/* Top Right Project */}
-          {projects.slice(1, 2).map((project, index) => (
-            <Card
-              key={project.id}
-              sx={{
-                gridColumn: { xs: "1", md: "8 / 13" },
-                gridRow: { xs: "2", md: "1" },
-                borderRadius: 3,
-                overflow: "hidden",
-                position: "relative",
-                background: (theme) =>
-                  theme.palette.mode === "dark"
-                    ? "rgba(28, 28, 30, 0.9)"
-                    : "rgba(255, 255, 255, 0.95)",
-                backdropFilter: "blur(20px) saturate(180%)",
-                border: (theme) =>
-                  `1px solid ${
-                    theme.palette.mode === "dark"
-                      ? "rgba(255, 255, 255, 0.08)"
-                      : "rgba(0, 0, 0, 0.05)"
-                  }`,
-                transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                opacity: 0,
-                animation: `slideInUp 0.8s ease-out ${
-                  0.2 + index * 0.1
-                }s forwards`,
-                "&:hover": {
-                  transform: "translateY(-6px)",
-                  boxShadow: (theme) =>
-                    theme.palette.mode === "dark"
-                      ? "0 16px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(0, 122, 255, 0.2)"
-                      : "0 16px 40px rgba(0,0,0,0.15), 0 0 0 1px rgba(0, 122, 255, 0.15)",
-                },
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="120"
-                image={project.image}
-                alt={project.title}
-                sx={{
-                  objectFit: "cover",
-                  filter: "brightness(0.9) saturate(1.1)",
-                  transition: "all 0.3s ease",
-                }}
-              />
-              <CardContent sx={{ p: { xs: 2.5, md: 3 } }}>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    mb: 1.5,
-                    fontWeight: 600,
-                    fontSize: { xs: "1rem", md: "1.1rem" },
-                    color: "text.primary",
-                    lineHeight: 1.3,
-                  }}
-                >
-                  {project.title}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    mb: 2,
-                    color: "text.secondary",
-                    fontSize: "0.85rem",
-                    lineHeight: 1.5,
-                  }}
-                >
-                  {project.description.substring(0, 120)}...
-                </Typography>
-                <Box
-                  sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2.5 }}
-                >
-                  {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                    <Chip
-                      key={techIndex}
-                      label={tech}
-                      size="small"
-                      sx={{
-                        fontSize: "0.7rem",
-                        height: 22,
-                        bgcolor: "primary.main",
-                        color: "white",
-                        "&:hover": {
-                          bgcolor: "primary.dark",
-                          transform: "translateY(-1px)",
-                        },
-                      }}
-                    />
-                  ))}
-                </Box>
-                <Box sx={{ display: "flex", gap: 1 }}>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    startIcon={<Launch />}
-                    component="a"
-                    href={project.liveUrl!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      flex: 1,
-                      fontSize: "0.75rem",
-                      py: 0.8,
-                      borderRadius: 20,
-                      fontWeight: 600,
-                    }}
-                  >
-                    Demo
-                  </Button>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    startIcon={<GitHub />}
-                    component="a"
-                    href={project.githubUrl!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      flex: 1,
-                      fontSize: "0.75rem",
-                      py: 0.8,
-                      borderRadius: 20,
-                      fontWeight: 500,
-                    }}
-                  >
-                    Code
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          ))}
-
-          {/* Middle Right Project */}
-          {projects.slice(2, 3).map((project, index) => (
-            <Card
-              key={project.id}
-              sx={{
-                gridColumn: { xs: "1", md: "8 / 13" },
-                gridRow: { xs: "3", md: "2" },
-                borderRadius: 3,
-                overflow: "hidden",
-                position: "relative",
-                background: `linear-gradient(135deg, rgba(90, 200, 250, 0.8), rgba(0, 122, 255, 0.9)), url(${project.image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundBlendMode: "overlay",
-                color: "white",
-                transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                opacity: 0,
-                animation: `slideInUp 0.8s ease-out ${
-                  0.3 + index * 0.1
-                }s forwards`,
-                "&:hover": {
-                  transform: "translateY(-6px) rotate(-1deg)",
-                  boxShadow: "0 16px 40px rgba(0, 122, 255, 0.3)",
-                },
-              }}
-            >
-              <CardContent sx={{ p: { xs: 2.5, md: 3 }, height: "100%" }}>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    mb: 1.5,
-                    fontWeight: 600,
-                    fontSize: { xs: "1rem", md: "1.1rem" },
-                    textShadow: "0 2px 8px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  {project.title}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    mb: 2,
-                    opacity: 0.95,
-                    fontSize: "0.85rem",
-                    lineHeight: 1.5,
-                    textShadow: "0 1px 4px rgba(0,0,0,0.2)",
-                  }}
-                >
-                  {project.description.substring(0, 100)}...
-                </Typography>
-                <Box
-                  sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2.5 }}
-                >
-                  {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                    <Chip
-                      key={techIndex}
-                      label={tech}
-                      size="small"
-                      sx={{
-                        bgcolor: "rgba(255,255,255,0.15)",
-                        color: "white",
-                        border: "1px solid rgba(255,255,255,0.25)",
-                        fontSize: "0.7rem",
-                        height: 22,
-                        backdropFilter: "blur(10px)",
-                      }}
-                    />
-                  ))}
-                </Box>
-                <Box sx={{ display: "flex", gap: 1 }}>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    startIcon={<Launch />}
-                    component="a"
-                    href={project.liveUrl!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      borderColor: "rgba(255,255,255,0.4)",
-                      color: "white",
-                      fontSize: "0.75rem",
-                      px: 2,
-                      py: 0.8,
-                      borderRadius: 20,
-                      "&:hover": {
-                        borderColor: "white",
-                        bgcolor: "rgba(255,255,255,0.1)",
-                      },
-                    }}
-                  >
-                    Demo
-                  </Button>
-                  {project.apiUrl && (
-                    <Button
-                      size="small"
-                      variant="text"
-                      startIcon={<Api />}
-                      component="a"
-                      href={project.apiUrl!}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      sx={{
-                        color: "rgba(255,255,255,0.8)",
-                        fontSize: "0.7rem",
-                        px: 1,
-                        py: 0.8,
-                        minWidth: "auto",
-                      }}
-                    >
-                      API
-                    </Button>
-                  )}
-                </Box>
-              </CardContent>
-            </Card>
-          ))}
-
-          {/* Bottom Row Projects */}
-          {projects.slice(3, 6).map((project, index) => (
-            <Card
-              key={project.id}
-              sx={{
-                gridColumn: {
-                  xs: "1",
-                  md: index === 0 ? "1 / 5" : index === 1 ? "5 / 9" : "9 / 13",
-                },
-                gridRow: { xs: `${4 + index}`, md: "3" },
-                borderRadius: 3,
-                overflow: "hidden",
-                background: (theme) =>
-                  theme.palette.mode === "dark"
-                    ? "rgba(28, 28, 30, 0.8)"
-                    : "rgba(255, 255, 255, 0.9)",
-                backdropFilter: "blur(20px)",
-                border: (theme) =>
-                  `1px solid ${
-                    theme.palette.mode === "dark"
-                      ? "rgba(255, 255, 255, 0.05)"
-                      : "rgba(0, 0, 0, 0.05)"
-                  }`,
-                transition: "all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                opacity: 0,
-                animation: `slideInUp 0.8s ease-out ${
-                  0.4 + index * 0.1
-                }s forwards`,
-                "&:hover": {
-                  transform: `translateY(-4px) ${
-                    index % 2 === 0 ? "rotate(1deg)" : "rotate(-1deg)"
-                  }`,
-                  boxShadow: (theme) =>
-                    theme.palette.mode === "dark"
-                      ? "0 12px 32px rgba(0,0,0,0.2)"
-                      : "0 12px 32px rgba(0,0,0,0.1)",
-                },
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="100"
-                image={project.image}
-                alt={project.title}
-                sx={{
-                  objectFit: "cover",
-                  filter: "brightness(0.85) saturate(1.2)",
-                }}
-              />
-              <CardContent sx={{ p: 2 }}>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    mb: 1,
-                    fontWeight: 600,
-                    fontSize: "0.95rem",
-                    color: "text.primary",
-                    lineHeight: 1.3,
-                  }}
-                >
-                  {project.title}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    mb: 1.5,
-                    color: "text.secondary",
-                    fontSize: "0.8rem",
-                    lineHeight: 1.4,
-                  }}
-                >
-                  {project.description.substring(0, 80)}...
-                </Typography>
-                <Box
-                  sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2 }}
-                >
-                  {project.technologies.slice(0, 2).map((tech, techIndex) => (
-                    <Chip
-                      key={techIndex}
-                      label={tech}
-                      size="small"
-                      variant="outlined"
-                      sx={{
-                        fontSize: "0.65rem",
-                        height: 20,
-                        color: "primary.main",
-                        borderColor: "primary.main",
-                      }}
-                    />
-                  ))}
-                </Box>
-                <Box sx={{ display: "flex", gap: 0.5 }}>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    startIcon={<Launch />}
-                    component="a"
-                    href={project.liveUrl!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      flex: 1,
-                      fontSize: "0.7rem",
-                      py: 0.5,
-                      borderRadius: 15,
-                      fontWeight: 600,
-                      minWidth: 0,
-                    }}
-                  >
-                    Demo
-                  </Button>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    startIcon={<GitHub />}
-                    component="a"
-                    href={project.githubUrl!}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      flex: 1,
-                      fontSize: "0.7rem",
-                      py: 0.5,
-                      borderRadius: 15,
-                      minWidth: 0,
-                    }}
-                  >
-                    Code
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          ))}
+                  <Box sx={{ display: "flex", gap: 1, mt: "auto" }}>
+                    {project.liveUrl ? (
+                      <>
+                        <Button
+                          size="small"
+                          variant="contained"
+                          startIcon={<Launch />}
+                          component="a"
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          sx={{
+                            flex: 1,
+                            fontSize: "0.75rem",
+                            py: 0.8,
+                            borderRadius: 20,
+                            fontWeight: 600,
+                          }}
+                        >
+                          Live Demo
+                        </Button>
+                        <Button
+                          size="small"
+                          variant="outlined"
+                          startIcon={<GitHub />}
+                          component="a"
+                          href={project.githubUrl!}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          sx={{
+                            flex: 1,
+                            fontSize: "0.75rem",
+                            py: 0.8,
+                            borderRadius: 20,
+                            fontWeight: 500,
+                          }}
+                        >
+                          GitHub
+                        </Button>
+                      </>
+                    ) : (
+                      <Button
+                        size="small"
+                        variant="contained"
+                        startIcon={<GitHub />}
+                        component="a"
+                        href={project.githubUrl!}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          width: "100%",
+                          fontSize: "0.75rem",
+                          py: 0.8,
+                          borderRadius: 20,
+                          fontWeight: 600,
+                        }}
+                      >
+                        View on GitHub
+                      </Button>
+                    )}
+                    {project.apiUrl && (
+                      <Button
+                        size="small"
+                        variant="text"
+                        startIcon={<Api />}
+                        component="a"
+                        href={project.apiUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          fontSize: "0.7rem",
+                          px: 1,
+                          py: 0.8,
+                          minWidth: "auto",
+                          color: "primary.main",
+                        }}
+                      >
+                        API
+                      </Button>
+                    )}
+                  </Box>
+                </CardContent>
+              </Card>
+            );
+          })}
         </Box>
       </Box>
 
       {/* Call to Action */}
-      <Box sx={{ textAlign: "center", mt: { xs: 4, md: 6 } }}>
+      <Box sx={{ textAlign: "center", mt: { xs: 3, md: 4 } }}>
         <Typography
           variant="h6"
           sx={{
