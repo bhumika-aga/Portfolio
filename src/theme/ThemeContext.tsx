@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { PaletteMode } from '@mui/material/styles';
+import { PaletteMode } from "@mui/material/styles";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 interface ThemeContextType {
   mode: PaletteMode;
@@ -11,7 +11,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const useThemeMode = () => {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error('useThemeMode must be used within a ThemeProvider');
+    throw new Error("useThemeMode must be used within a ThemeProvider");
   }
   return context;
 };
@@ -20,20 +20,22 @@ interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-export const ThemeModeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+export const ThemeModeProvider: React.FC<ThemeProviderProps> = ({
+  children,
+}) => {
   const [mode, setMode] = useState<PaletteMode>(() => {
-    const savedMode = localStorage.getItem('themeMode');
-    return (savedMode as PaletteMode) || 'light';
+    const savedMode = localStorage.getItem("themeMode");
+    return (savedMode as PaletteMode) || "light";
   });
 
   const toggleColorMode = () => {
-    const newMode = mode === 'light' ? 'dark' : 'light';
+    const newMode = mode === "light" ? "dark" : "light";
     setMode(newMode);
-    localStorage.setItem('themeMode', newMode);
+    localStorage.setItem("themeMode", newMode);
   };
 
   useEffect(() => {
-    localStorage.setItem('themeMode', mode);
+    localStorage.setItem("themeMode", mode);
   }, [mode]);
 
   return (

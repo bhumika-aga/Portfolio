@@ -44,10 +44,12 @@ git push origin main
    - **Build Command**: `npm install && npm run build`
    - **Start Command**: `npx serve -s build -p $PORT`
    - **Node Version**: `18`
+   - **Publish Directory**: `build`
 
 ### 3. Environment Variables
 
 - `NODE_VERSION`: `18`
+- Auto-deploy enabled via `render.yaml`
 
 ## 🔗 Links
 

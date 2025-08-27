@@ -3,7 +3,7 @@ services:
     name: bhumika-portfolio
     runtime: node
     buildCommand: npm install && npm run build
-    startCommand: npx serve -s build -p $PORT
+    startCommand: serve -s build -p $PORT
     envVars:
       - key: NODE_VERSION
         value: "18"

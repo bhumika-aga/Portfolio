@@ -23,7 +23,7 @@ export const getTheme = (mode: PaletteMode) => createTheme({
     },
     grey: {
       50: '#F2F2F7',
-      100: '#E5E5EA', 
+      100: '#E5E5EA',
       200: '#D1D1D6',
       300: '#C7C7CC',
       400: '#AEAEB2',
@@ -38,88 +38,88 @@ export const getTheme = (mode: PaletteMode) => createTheme({
   typography: {
     fontFamily: 'system-ui, -apple-system, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
     h1: {
-      fontSize: '3.5rem', // 56px - Apple's hero titles (like iPhone page)
-      fontWeight: 600, // Apple uses 600, not 700
-      lineHeight: 1.07,
+      fontSize: '2.25rem', // 36px - Medium hero titles
+      fontWeight: 600,
+      lineHeight: 1.1,
       letterSpacing: '-0.005em',
       '@media (max-width:768px)': {
-        fontSize: '2.5rem',
-        lineHeight: 1.1,
+        fontSize: '1.75rem',
+        lineHeight: 1.2,
       },
     },
     h2: {
-      fontSize: '2.5rem', // 40px - Apple's section headers 
+      fontSize: '1.75rem', // 28px - Medium section headers 
       fontWeight: 600,
-      lineHeight: 1.1,
+      lineHeight: 1.15,
       letterSpacing: '-0.003em',
       '@media (max-width:768px)': {
-        fontSize: '2rem',
+        fontSize: '1.375rem',
       },
     },
     h3: {
-      fontSize: '1.75rem', // 28px - Apple's subsection headers
+      fontSize: '1.375rem', // 22px - Medium subsection headers
       fontWeight: 600,
-      lineHeight: 1.14,
+      lineHeight: 1.16,
       letterSpacing: '-0.003em',
       '@media (max-width:768px)': {
-        fontSize: '1.5rem',
+        fontSize: '1.125rem',
       },
     },
     h4: {
-      fontSize: '1.5rem', // 24px - Apple's card headers
+      fontSize: '1.125rem', // 18px - Medium card headers
       fontWeight: 600,
-      lineHeight: 1.17,
+      lineHeight: 1.2,
       letterSpacing: '-0.002em',
     },
     h5: {
-      fontSize: '1.25rem', // 20px - Small headers
+      fontSize: '1.125rem', // 18px - Smaller headers
       fontWeight: 600,
       lineHeight: 1.2,
       letterSpacing: '-0.001em',
     },
     h6: {
-      fontSize: '1.125rem', // 18px - Tiny headers
+      fontSize: '1rem', // 16px - Tiny headers
       fontWeight: 600,
       lineHeight: 1.22,
     },
     body1: {
-      fontSize: '1.125rem', // 18px - Apple's body text (they use larger text)
-      lineHeight: 1.38,
-      fontWeight: 400,
-      letterSpacing: '-0.002em',
-      '@media (max-width:768px)': {
-        fontSize: '1rem',
-        lineHeight: 1.47,
-      },
-    },
-    body2: {
       fontSize: '1rem', // 16px - Smaller body text
       lineHeight: 1.47,
       fontWeight: 400,
       letterSpacing: '-0.002em',
+      '@media (max-width:768px)': {
+        fontSize: '0.9rem',
+        lineHeight: 1.5,
+      },
     },
-    subtitle1: {
-      fontSize: '1.125rem', // 18px - Apple's subtitles
-      fontWeight: 400, // Apple uses 400 for subtitles, not 500
-      lineHeight: 1.38,
+    body2: {
+      fontSize: '0.875rem', // 14px - Smaller body text
+      lineHeight: 1.5,
+      fontWeight: 400,
       letterSpacing: '-0.002em',
     },
-    subtitle2: {
-      fontSize: '1rem', // 16px - Small subtitles  
+    subtitle1: {
+      fontSize: '1rem', // 16px - Smaller subtitles
       fontWeight: 400,
       lineHeight: 1.47,
       letterSpacing: '-0.002em',
     },
-    caption: {
-      fontSize: '0.875rem', // 14px - Apple's fine print
+    subtitle2: {
+      fontSize: '0.875rem', // 14px - Small subtitles  
       fontWeight: 400,
-      lineHeight: 1.43,
+      lineHeight: 1.5,
+      letterSpacing: '-0.002em',
+    },
+    caption: {
+      fontSize: '0.75rem', // 12px - Apple's fine print
+      fontWeight: 400,
+      lineHeight: 1.5,
       letterSpacing: '-0.001em',
-      color: mode === 'dark' ? '#98989D' : '#86868B', // Apple's secondary text
+      color: mode === 'dark' ? '#98989D' : '#86868B',
     },
   },
   shape: {
-    borderRadius: 12, // Apple's signature corner radius
+    borderRadius: 6, // Compact corner radius
   },
   components: {
     MuiCssBaseline: {
@@ -154,10 +154,10 @@ export const getTheme = (mode: PaletteMode) => createTheme({
           borderRadius: 980, // Apple's pill-shaped buttons
           textTransform: 'none',
           fontWeight: 500,
-          fontSize: '1rem',
+          fontSize: '0.875rem',
           letterSpacing: '-0.003em',
           transition: 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-          minHeight: 44, // Apple's minimum touch target
+          minHeight: 32, // Medium touch target
           position: 'relative',
           overflow: 'hidden',
         },
@@ -198,7 +198,7 @@ export const getTheme = (mode: PaletteMode) => createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 16, // Apple's signature corner radius for cards
+          borderRadius: 10, // Compact corner radius for cards
           backgroundColor: mode === 'dark' ? '#1C1C1E' : '#ffffff',
           border: `0.5px solid ${mode === 'dark' ? 'rgba(255, 255, 255, 0.13)' : 'rgba(0, 0, 0, 0.04)'}`,
           boxShadow: mode === 'dark'
@@ -221,7 +221,7 @@ export const getTheme = (mode: PaletteMode) => createTheme({
             left: 0,
             right: 0,
             height: 1,
-            background: mode === 'dark' 
+            background: mode === 'dark'
               ? 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)'
               : 'linear-gradient(90deg, transparent, rgba(0,122,255,0.1), transparent)',
           },
@@ -231,15 +231,15 @@ export const getTheme = (mode: PaletteMode) => createTheme({
     MuiContainer: {
       styleOverrides: {
         root: {
-          paddingLeft: 20,
-          paddingRight: 20,
+          paddingLeft: 12,
+          paddingRight: 12,
           '@media (min-width: 768px)': {
-            paddingLeft: 24,
-            paddingRight: 24,
+            paddingLeft: 16,
+            paddingRight: 16,
           },
           '@media (min-width: 1024px)': {
-            paddingLeft: 32,
-            paddingRight: 32,
+            paddingLeft: 20,
+            paddingRight: 20,
           },
         },
       },
@@ -247,9 +247,9 @@ export const getTheme = (mode: PaletteMode) => createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
+          borderRadius: 4,
           fontWeight: 500,
-          fontSize: '0.875rem',
+          fontSize: '0.7rem',
           backgroundColor: mode === 'dark' ? 'rgba(142, 142, 147, 0.16)' : 'rgba(0, 122, 255, 0.1)',
           color: mode === 'dark' ? '#5AC8FA' : '#007AFF',
           border: `1px solid ${mode === 'dark' ? 'rgba(90, 200, 250, 0.3)' : 'rgba(0, 122, 255, 0.2)'}`,
@@ -262,8 +262,8 @@ export const getTheme = (mode: PaletteMode) => createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: mode === 'dark' 
-            ? 'rgba(28, 28, 30, 0.8)' 
+          backgroundColor: mode === 'dark'
+            ? 'rgba(28, 28, 30, 0.8)'
             : 'rgba(255, 255, 255, 0.8)',
           backdropFilter: 'saturate(180%) blur(20px)',
           borderBottom: `0.5px solid ${mode === 'dark' ? 'rgba(255, 255, 255, 0.13)' : 'rgba(0, 0, 0, 0.04)'}`,

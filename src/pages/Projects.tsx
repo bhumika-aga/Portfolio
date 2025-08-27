@@ -1,4 +1,4 @@
-import { GitHub, Launch, Api } from "@mui/icons-material";
+import { Api, GitHub, Launch } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -29,7 +29,7 @@ const Projects: React.FC = () => {
       id: 1,
       title: "HealthSync - Hospital Management System",
       description:
-        "Modern hospital management system with patient management, treatment planning, and insurance claims processing. Features multi-language support, comprehensive dashboards, and JWT authentication with role-based access control.",
+        "Modern hospital management platform with patient management, treatment tracking, and secure authentication. Features comprehensive dashboards and multi-language support.",
       image:
         "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=800&q=80",
       featured: true,
@@ -48,7 +48,7 @@ const Projects: React.FC = () => {
       id: 2,
       title: "ReelCritic - Movie Review Platform",
       description:
-        "A sophisticated movie review platform with IMDb-inspired design. Features movie browsing, reviews & ratings, YouTube trailer integration, and admin management system with secure JWT authentication.",
+        "IMDb-inspired movie review platform with trailer integration, user ratings, and admin management. Features modern design and secure JWT authentication.",
       image:
         "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80",
       featured: true,
@@ -67,7 +67,7 @@ const Projects: React.FC = () => {
       id: 3,
       title: "MediFlow - Mail-Order Pharmacy",
       description:
-        "A next-generation mail-order pharmacy platform built with microservices architecture. Features HIPAA compliance, prescription management, JWT authentication, and responsive design with light/dark mode support.",
+        "Next-generation mail-order pharmacy platform with microservices architecture. Features HIPAA compliance, prescription management, and responsive design.",
       image:
         "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=800&q=80",
       featured: true,
@@ -167,13 +167,13 @@ const Projects: React.FC = () => {
 
       {/* Featured Projects - Bento Grid */}
       <Box sx={{ mb: 6 }}>
-        <Typography 
-          variant="h3" 
-          sx={{ 
-            mb: 3, 
+        <Typography
+          variant="h3"
+          sx={{
+            mb: 3,
             fontSize: { xs: "1.25rem", md: "1.5rem" },
             fontWeight: 600,
-            color: 'text.primary'
+            color: "text.primary",
           }}
         >
           Featured Projects
@@ -200,27 +200,54 @@ const Projects: React.FC = () => {
               color: "white",
               position: "relative",
               transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-              border: 'none',
-              boxShadow: (theme) => theme.palette.mode === 'dark' 
-                ? '0 4px 20px rgba(255,255,255,0.1)'
-                : '0 4px 20px rgba(0,0,0,0.1)',
+              border: "none",
+              boxShadow: (theme) =>
+                theme.palette.mode === "dark"
+                  ? "0 4px 20px rgba(255,255,255,0.1)"
+                  : "0 4px 20px rgba(0,0,0,0.1)",
               "&:hover": {
                 transform: "translateY(-2px)",
-                boxShadow: (theme) => theme.palette.mode === 'dark'
-                  ? '0 8px 40px rgba(255,255,255,0.15)'
-                  : '0 8px 40px rgba(0,0,0,0.15)',
+                boxShadow: (theme) =>
+                  theme.palette.mode === "dark"
+                    ? "0 8px 40px rgba(255,255,255,0.15)"
+                    : "0 8px 40px rgba(0,0,0,0.15)",
               },
             }}
           >
-            <CardContent sx={{ p: 3, height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <CardContent
+              sx={{
+                p: 3,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
               <Box>
-                <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 600, fontSize: { xs: "1.25rem", md: "1.4rem" } }}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    mb: 1.5,
+                    fontWeight: 600,
+                    fontSize: { xs: "1.25rem", md: "1.4rem" },
+                  }}
+                >
                   {projects[0].title}
                 </Typography>
-                <Typography variant="body2" sx={{ mb: 2, opacity: 0.9, fontSize: "0.9rem", lineHeight: 1.5 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 2,
+                    opacity: 0.9,
+                    fontSize: "0.9rem",
+                    lineHeight: 1.5,
+                  }}
+                >
                   {projects[0].description.substring(0, 180)}...
                 </Typography>
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2 }}>
+                <Box
+                  sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2 }}
+                >
                   {projects[0].technologies.slice(0, 4).map((tech, index) => (
                     <Chip
                       key={index}
@@ -252,7 +279,10 @@ const Projects: React.FC = () => {
                     fontSize: "0.75rem",
                     px: 2,
                     py: 0.5,
-                    "&:hover": { borderColor: "white", bgcolor: "rgba(255,255,255,0.1)" },
+                    "&:hover": {
+                      borderColor: "white",
+                      bgcolor: "rgba(255,255,255,0.1)",
+                    },
                   }}
                 >
                   Demo
@@ -271,7 +301,10 @@ const Projects: React.FC = () => {
                     fontSize: "0.75rem",
                     px: 2,
                     py: 0.5,
-                    "&:hover": { borderColor: "white", bgcolor: "rgba(255,255,255,0.1)" },
+                    "&:hover": {
+                      borderColor: "white",
+                      bgcolor: "rgba(255,255,255,0.1)",
+                    },
                   }}
                 >
                   Code
@@ -285,12 +318,12 @@ const Projects: React.FC = () => {
                     href={projects[0].apiUrl!}
                     target="_blank"
                     rel="noopener noreferrer"
-                    sx={{ 
+                    sx={{
                       color: "white",
                       fontSize: "0.7rem",
                       px: 1,
                       py: 0.5,
-                      minWidth: 'auto'
+                      minWidth: "auto",
                     }}
                   >
                     API
@@ -312,41 +345,70 @@ const Projects: React.FC = () => {
               backgroundPosition: "center",
               color: "white",
               transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-              border: 'none',
-              boxShadow: (theme) => theme.palette.mode === 'dark'
-                ? '0 2px 12px rgba(255,255,255,0.08)'
-                : '0 2px 12px rgba(0,0,0,0.08)',
+              border: "none",
+              boxShadow: (theme) =>
+                theme.palette.mode === "dark"
+                  ? "0 2px 12px rgba(255,255,255,0.08)"
+                  : "0 2px 12px rgba(0,0,0,0.08)",
               "&:hover": {
                 transform: "translateY(-2px)",
-                boxShadow: (theme) => theme.palette.mode === 'dark'
-                  ? '0 6px 24px rgba(255,255,255,0.12)'
-                  : '0 6px 24px rgba(0,0,0,0.12)',
+                boxShadow: (theme) =>
+                  theme.palette.mode === "dark"
+                    ? "0 6px 24px rgba(255,255,255,0.12)"
+                    : "0 6px 24px rgba(0,0,0,0.12)",
               },
             }}
           >
-            <CardContent sx={{ p: 3, height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <CardContent
+              sx={{
+                p: 3,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
               <Box>
-                <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 600, fontSize: { xs: "1.25rem", md: "1.4rem" } }}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    mb: 1.5,
+                    fontWeight: 600,
+                    fontSize: { xs: "1.25rem", md: "1.4rem" },
+                  }}
+                >
                   {projects[1].title}
                 </Typography>
-                <Typography variant="body2" sx={{ mb: 2, opacity: 0.9, fontSize: "0.9rem", lineHeight: 1.5 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 2,
+                    opacity: 0.9,
+                    fontSize: "0.9rem",
+                    lineHeight: 1.5,
+                  }}
+                >
                   {projects[1].description.substring(0, 150)}...
                 </Typography>
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2 }}>
-                  {projects[1].technologies.slice(0, 4).map((tech, techIndex) => (
-                    <Chip
-                      key={techIndex}
-                      label={tech}
-                      size="small"
-                      sx={{
-                        bgcolor: "rgba(255,255,255,0.2)",
-                        color: "white",
-                        border: "1px solid rgba(255,255,255,0.3)",
-                        fontSize: "0.7rem",
-                        height: 24,
-                      }}
-                    />
-                  ))}
+                <Box
+                  sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2 }}
+                >
+                  {projects[1].technologies
+                    .slice(0, 4)
+                    .map((tech, techIndex) => (
+                      <Chip
+                        key={techIndex}
+                        label={tech}
+                        size="small"
+                        sx={{
+                          bgcolor: "rgba(255,255,255,0.2)",
+                          color: "white",
+                          border: "1px solid rgba(255,255,255,0.3)",
+                          fontSize: "0.7rem",
+                          height: 24,
+                        }}
+                      />
+                    ))}
                 </Box>
               </Box>
               <Box sx={{ display: "flex", gap: 1 }}>
@@ -364,7 +426,10 @@ const Projects: React.FC = () => {
                     fontSize: "0.75rem",
                     px: 2,
                     py: 0.5,
-                    "&:hover": { borderColor: "white", bgcolor: "rgba(255,255,255,0.1)" },
+                    "&:hover": {
+                      borderColor: "white",
+                      bgcolor: "rgba(255,255,255,0.1)",
+                    },
                   }}
                 >
                   Demo
@@ -383,7 +448,10 @@ const Projects: React.FC = () => {
                     fontSize: "0.75rem",
                     px: 2,
                     py: 0.5,
-                    "&:hover": { borderColor: "white", bgcolor: "rgba(255,255,255,0.1)" },
+                    "&:hover": {
+                      borderColor: "white",
+                      bgcolor: "rgba(255,255,255,0.1)",
+                    },
                   }}
                 >
                   Code
@@ -406,27 +474,50 @@ const Projects: React.FC = () => {
                 backgroundPosition: "center",
                 color: "white",
                 transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                border: 'none',
-                boxShadow: (theme) => theme.palette.mode === 'dark'
-                  ? '0 2px 12px rgba(255,255,255,0.08)'
-                  : '0 2px 12px rgba(0,0,0,0.08)',
+                border: "none",
+                boxShadow: (theme) =>
+                  theme.palette.mode === "dark"
+                    ? "0 2px 12px rgba(255,255,255,0.08)"
+                    : "0 2px 12px rgba(0,0,0,0.08)",
                 "&:hover": {
                   transform: "translateY(-2px)",
-                  boxShadow: (theme) => theme.palette.mode === 'dark'
-                    ? '0 6px 24px rgba(255,255,255,0.12)'
-                    : '0 6px 24px rgba(0,0,0,0.12)',
+                  boxShadow: (theme) =>
+                    theme.palette.mode === "dark"
+                      ? "0 6px 24px rgba(255,255,255,0.12)"
+                      : "0 6px 24px rgba(0,0,0,0.12)",
                 },
               }}
             >
-              <CardContent sx={{ p: 3, height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <CardContent
+                sx={{
+                  p: 3,
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Box>
-                  <Typography variant="h5" sx={{ mb: 1.5, fontWeight: 600, fontSize: "1.25rem" }}>
+                  <Typography
+                    variant="h5"
+                    sx={{ mb: 1.5, fontWeight: 600, fontSize: "1.25rem" }}
+                  >
                     {project.title}
                   </Typography>
-                  <Typography variant="body2" sx={{ mb: 2, opacity: 0.9, fontSize: "0.875rem", lineHeight: 1.5 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      mb: 2,
+                      opacity: 0.9,
+                      fontSize: "0.875rem",
+                      lineHeight: 1.5,
+                    }}
+                  >
                     {project.description.substring(0, 200)}...
                   </Typography>
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2 }}>
+                  <Box
+                    sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2 }}
+                  >
                     {project.technologies.slice(0, 5).map((tech, techIndex) => (
                       <Chip
                         key={techIndex}
@@ -458,7 +549,10 @@ const Projects: React.FC = () => {
                       fontSize: "0.75rem",
                       px: 2,
                       py: 0.5,
-                      "&:hover": { borderColor: "white", bgcolor: "rgba(255,255,255,0.1)" },
+                      "&:hover": {
+                        borderColor: "white",
+                        bgcolor: "rgba(255,255,255,0.1)",
+                      },
                     }}
                   >
                     Demo
@@ -477,7 +571,10 @@ const Projects: React.FC = () => {
                       fontSize: "0.75rem",
                       px: 2,
                       py: 0.5,
-                      "&:hover": { borderColor: "white", bgcolor: "rgba(255,255,255,0.1)" },
+                      "&:hover": {
+                        borderColor: "white",
+                        bgcolor: "rgba(255,255,255,0.1)",
+                      },
                     }}
                   >
                     Code
@@ -491,12 +588,12 @@ const Projects: React.FC = () => {
                       href={project.apiUrl!}
                       target="_blank"
                       rel="noopener noreferrer"
-                      sx={{ 
+                      sx={{
                         color: "white",
                         fontSize: "0.7rem",
                         px: 1,
                         py: 0.5,
-                        minWidth: 'auto'
+                        minWidth: "auto",
                       }}
                     >
                       API
@@ -511,13 +608,13 @@ const Projects: React.FC = () => {
 
       {/* Other Projects - Clean Grid */}
       <Box>
-        <Typography 
-          variant="h3" 
-          sx={{ 
-            mb: 3, 
+        <Typography
+          variant="h3"
+          sx={{
+            mb: 3,
             fontSize: { xs: "1.25rem", md: "1.5rem" },
             fontWeight: 600,
-            color: 'text.primary'
+            color: "text.primary",
           }}
         >
           Other Projects
@@ -525,7 +622,11 @@ const Projects: React.FC = () => {
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" },
+            gridTemplateColumns: {
+              xs: "1fr",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(3, 1fr)",
+            },
             gap: 2,
           }}
         >
@@ -534,16 +635,18 @@ const Projects: React.FC = () => {
               key={project.id}
               sx={{
                 borderRadius: 3,
-                border: 'none',
-                boxShadow: (theme) => theme.palette.mode === 'dark'
-                  ? '0 1px 8px rgba(255,255,255,0.06)'
-                  : '0 1px 8px rgba(0,0,0,0.06)',
+                border: "none",
+                boxShadow: (theme) =>
+                  theme.palette.mode === "dark"
+                    ? "0 1px 8px rgba(255,255,255,0.06)"
+                    : "0 1px 8px rgba(0,0,0,0.06)",
                 transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                 "&:hover": {
                   transform: "translateY(-2px)",
-                  boxShadow: (theme) => theme.palette.mode === 'dark'
-                    ? '0 4px 20px rgba(255,255,255,0.1)'
-                    : '0 4px 20px rgba(0,0,0,0.1)',
+                  boxShadow: (theme) =>
+                    theme.palette.mode === "dark"
+                      ? "0 4px 20px rgba(255,255,255,0.1)"
+                      : "0 4px 20px rgba(0,0,0,0.1)",
                 },
               }}
             >
@@ -555,12 +658,20 @@ const Projects: React.FC = () => {
                 sx={{ objectFit: "cover" }}
               />
               <CardContent sx={{ p: 2.5 }}>
-                <Typography variant="h6" sx={{ mb: 1, fontWeight: 600, fontSize: "1.1rem" }}>
+                <Typography
+                  variant="h6"
+                  sx={{ mb: 1, fontWeight: 600, fontSize: "1.1rem" }}
+                >
                   {project.title}
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{ mb: 2, color: "text.secondary", fontSize: "0.875rem", lineHeight: 1.5 }}
+                  sx={{
+                    mb: 2,
+                    color: "text.secondary",
+                    fontSize: "0.875rem",
+                    lineHeight: 1.5,
+                  }}
                 >
                   {project.description.substring(0, 120)}...
                 </Typography>
@@ -575,12 +686,14 @@ const Projects: React.FC = () => {
                         sx={{
                           fontSize: "0.7rem",
                           height: 22,
-                          bgcolor: (theme) => theme.palette.mode === 'dark' 
-                            ? 'rgba(255,255,255,0.05)'
-                            : 'rgba(0,0,0,0.03)',
-                          borderColor: (theme) => theme.palette.mode === 'dark'
-                            ? 'rgba(255,255,255,0.1)'
-                            : 'rgba(0,0,0,0.1)',
+                          bgcolor: (theme) =>
+                            theme.palette.mode === "dark"
+                              ? "rgba(255,255,255,0.05)"
+                              : "rgba(0,0,0,0.03)",
+                          borderColor: (theme) =>
+                            theme.palette.mode === "dark"
+                              ? "rgba(255,255,255,0.1)"
+                              : "rgba(0,0,0,0.1)",
                         }}
                       />
                     ))}
@@ -595,14 +708,14 @@ const Projects: React.FC = () => {
                     href={project.liveUrl!}
                     target="_blank"
                     rel="noopener noreferrer"
-                    sx={{ 
-                      flex: 1, 
+                    sx={{
+                      flex: 1,
                       fontSize: "0.75rem",
                       py: 0.7,
-                      boxShadow: 'none',
-                      '&:hover': {
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
-                      }
+                      boxShadow: "none",
+                      "&:hover": {
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                      },
                     }}
                   >
                     Demo
@@ -615,10 +728,10 @@ const Projects: React.FC = () => {
                     href={project.githubUrl!}
                     target="_blank"
                     rel="noopener noreferrer"
-                    sx={{ 
-                      flex: 1, 
+                    sx={{
+                      flex: 1,
                       fontSize: "0.75rem",
-                      py: 0.7
+                      py: 0.7,
                     }}
                   >
                     Code
@@ -632,11 +745,11 @@ const Projects: React.FC = () => {
                       href={project.apiUrl!}
                       target="_blank"
                       rel="noopener noreferrer"
-                      sx={{ 
+                      sx={{
                         fontSize: "0.7rem",
                         px: 1,
                         py: 0.7,
-                        minWidth: 'auto'
+                        minWidth: "auto",
                       }}
                     >
                       API

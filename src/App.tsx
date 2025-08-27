@@ -3,8 +3,8 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { Box, CssBaseline } from "@mui/material";
-import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
+import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
