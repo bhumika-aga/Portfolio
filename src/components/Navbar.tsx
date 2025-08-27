@@ -111,11 +111,12 @@ const Navbar: React.FC = () => {
                 display: { xs: "none", md: "flex" },
                 backgroundColor:
                   mode === "dark"
-                    ? "rgba(58, 58, 60, 0.6)"
-                    : "rgba(242, 242, 247, 0.8)",
-                backdropFilter: "blur(20px)",
-                borderRadius: 8,
-                padding: "3px",
+                    ? "rgba(58, 58, 60, 0.8)"
+                    : "rgba(242, 242, 247, 0.9)",
+                backdropFilter: "saturate(180%) blur(20px)",
+                borderRadius: 6,
+                padding: "2px",
+                gap: 1,
                 border: `0.5px solid ${
                   mode === "dark"
                     ? "rgba(255, 255, 255, 0.13)"
@@ -123,8 +124,8 @@ const Navbar: React.FC = () => {
                 }`,
                 boxShadow:
                   mode === "dark"
-                    ? "0 4px 12px rgba(0, 0, 0, 0.5)"
-                    : "0 4px 12px rgba(0, 0, 0, 0.1)",
+                    ? "0 2px 8px rgba(0, 0, 0, 0.3)"
+                    : "0 2px 8px rgba(0, 0, 0, 0.08)",
               }}
             >
               {navItems.map((item) => {
@@ -135,10 +136,10 @@ const Navbar: React.FC = () => {
                     component={Link}
                     to={item.path}
                     sx={{
-                      minWidth: 64,
-                      height: 28,
-                      borderRadius: 6,
-                      fontSize: "0.75rem",
+                      minWidth: 56,
+                      height: 24,
+                      borderRadius: 4,
+                      fontSize: "0.7rem",
                       fontWeight: 500,
                       color: isActive
                         ? mode === "dark"

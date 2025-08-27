@@ -13,7 +13,7 @@ Deploy professional portfolio website with Apple-inspired design, featuring dark
 
 ## 📸 Demo GIF
 
-![Deployment Demo](https://via.placeholder.com/600x300/007AFF/ffffff?text=Deployment+Process)
+![Deployment Demo](https://my-portfolio-ri4w.onrender.com)
 
 ### Deployment Features
 
@@ -21,7 +21,7 @@ Showing automated deployment from GitHub to Render.com
 
 ## 🔗 Links to Deployment
 
-**Live Website**: <https://bhumika-portfolio.onrender.com>
+**Live Website**: <https://my-portfolio-ri4w.onrender.com>
 
 ## 🚀 Quick Deploy Steps
 

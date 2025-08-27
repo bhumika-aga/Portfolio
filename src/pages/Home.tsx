@@ -104,7 +104,7 @@ const Home: React.FC = () => {
           <Box
             sx={{
               textAlign: "center",
-              py: { xs: 6, md: 8 },
+              py: { xs: 4, md: 6 },
               transform: `translateY(${scrollY * -0.3}px)`, // Parallax effect
             }}
           >
@@ -173,8 +173,8 @@ const Home: React.FC = () => {
               }}
             >
               Creating exceptional digital experiences with modern technologies.
-              Specialized in building scalable applications and secure financial
-              systems that serve millions of users worldwide.
+              Currently developing secure financial systems at JPMorgan Chase &
+              Co. that serve millions of users worldwide.
             </Typography>
 
             {/* CTA Buttons */}
@@ -301,7 +301,7 @@ const Home: React.FC = () => {
       {/* Quick Stats Section */}
       <Box
         sx={{
-          py: { xs: 6, md: 8 },
+          py: { xs: 4, md: 6 },
           background:
             theme.palette.mode === "dark"
               ? "rgba(28, 28, 30, 0.5)"
@@ -323,17 +323,17 @@ const Home: React.FC = () => {
               {
                 number: "3+",
                 label: "Years Experience",
-                desc: "In fintech & banking",
+                desc: "In fintech & banking systems",
               },
               {
                 number: "25+",
-                label: "APIs Built",
+                label: "REST APIs Built",
                 desc: "Production-ready systems",
               },
               {
-                number: "30%",
-                label: "Performance Boost",
-                desc: "System optimization",
+                number: "JPMorgan",
+                label: "Current Role",
+                desc: "Software Engineer II",
               },
             ].map((stat, index) => (
               <Box

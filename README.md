@@ -14,7 +14,7 @@ Professional portfolio website showcasing full-stack development expertise with 
 
 ## 📸 Demo GIF
 
-![Portfolio Demo](https://via.placeholder.com/800x450/007AFF/ffffff?text=Portfolio+Demo+-+Interactive+UI+%26+Projects)
+![Portfolio Demo](https://my-portfolio-ri4w.onrender.com)
 
 ### Demo Features
 
@@ -22,7 +22,7 @@ Demo showing responsive bento grid layout, dark/light theme toggle, interactive 
 
 ## 🔗 Links to Deployment
 
-**Live Portfolio**: [https://bhumika-portfolio.onrender.com](https://bhumika-portfolio.onrender.com)
+**Live Portfolio**: [Quick Link](https://my-portfolio-ri4w.onrender.com)
 
 ## ✨ Key Features
 
