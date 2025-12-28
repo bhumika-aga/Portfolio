@@ -4,7 +4,6 @@ import {
   GitHub,
   LinkedIn,
   LocationOn,
-  Phone,
 } from "@mui/icons-material";
 import {
   Box,
@@ -50,12 +49,6 @@ const Footer: React.FC = () => {
         label: "Email",
         value: "bhumika.aga@gmail.com",
         href: "mailto:bhumika.aga@gmail.com",
-      },
-      {
-        icon: <Phone />,
-        label: "Phone",
-        value: "+91 9315351119",
-        href: "tel:+919315351119",
       },
       {
         icon: <LocationOn />,

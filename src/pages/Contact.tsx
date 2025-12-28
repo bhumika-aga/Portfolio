@@ -1,11 +1,4 @@
-import {
-  Email,
-  GitHub,
-  LinkedIn,
-  LocationOn,
-  Phone,
-  Send,
-} from "@mui/icons-material";
+import { Email, GitHub, LinkedIn, LocationOn, Send } from "@mui/icons-material";
 import {
   Alert,
   Box,
@@ -49,12 +42,6 @@ const Contact: React.FC = () => {
       title: "Email",
       value: "bhumika.aga@gmail.com",
       link: "mailto:bhumika.aga@gmail.com",
-    },
-    {
-      icon: <Phone />,
-      title: "Phone",
-      value: "+91 9315351119",
-      link: "tel:+919315351119",
     },
     {
       icon: <LocationOn />,
