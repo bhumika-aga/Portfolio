@@ -43,110 +43,77 @@ const About: React.FC = () => {
   const workExperience: TimelineEvent[] = [
     {
       id: "jpmorgan",
-      year: "2024-Present",
+      year: "Oct 2024 - Present",
       title: "Software Engineer II",
-      company: "JPMorgan Chase & Co.",
+      company: "JP Morgan Chase & Co.",
       description:
-        "Currently developing secure financial systems and trading applications serving millions of users worldwide at one of the world's leading investment banks.",
+        "Building full-stack enhancements for internal trading tools, developing UI components and extending backend services to improve trader efficiency at one of the world's leading investment banks.",
       icon: <BusinessCenter />,
       color: "#007AFF",
       achievements: [
-        "Building secure REST endpoints with advanced authentication",
-        "Developing React.js and TypeScript UI components for financial platforms",
-        "Implementing robust testing strategies with comprehensive coverage",
-        "Contributing to critical financial systems infrastructure",
+        "Built full-stack enhancements for internal trading tools, developing UI components in React.js and Angular and extending backend services in Java + Spring Boot, improving trader efficiency by 30%.",
+        "Implemented secure token-based authorization and RBAC, leading to a 35% improvement in access control compliance.",
+        "Improved backend reliability through expanded JUnit test coverage, reaching 70%+.",
+        "Reduced FARM breaks by 40% through database optimizations and microservices resiliency",
+        "Set up complete infrastructure: GitHub repos, AWS ECS clusters, DNS, Route 53, and IaC",
+        "Learning and experimenting with Camunda for workflow-driven service orchestration",
       ],
       skills: [
+        "Java 17",
         "Spring Boot",
         "React.js",
-        "TypeScript",
-        "Financial Systems",
-        "Security",
-        "Trading Systems",
+        "Angular",
+        "AWS ECS",
+        "Camunda",
       ],
     },
     {
       id: "cognizant",
-      year: "July 2022-2024",
+      year: "Jul 2022 - Jul 2024",
       title: "Junior Software Engineer",
-      company: "Cognizant Technology Solutions",
+      company: "Cognizant",
       description:
-        "Developed enterprise-grade fintech and healthcare solutions with focus on backend optimization and security.",
+        "Developed backend modules in Spring Boot and contributed to React-based UI integration for banking workflows with focus on performance optimization and security.",
       icon: <BusinessCenter />,
       color: "#007AFF",
       achievements: [
-        "Built 25+ Spring Boot REST APIs improving response times by 30%",
-        "Implemented JWT authentication and Role-Based Access Control",
-        "Achieved 90% unit test coverage using JUnit and Mockito",
-        "Led API integration with React frontends in Agile teams",
-      ],
-      skills: ["Spring Boot", "Java", "ReactJS", "REST APIs", "JUnit", "MySQL"],
-    },
-    {
-      id: "cognizant-trainee",
-      year: "Jan-June 2022",
-      title: "Software Engineer Trainee",
-      company: "Cognizant Technology Solutions",
-      description:
-        "Developed comprehensive pharmaceutical system using microservices architecture during training program.",
-      icon: <BusinessCenter />,
-      color: "#007AFF",
-      achievements: [
-        "Built mail-order pharmacy platform with 5 Spring Boot microservices",
-        "Implemented JWT authentication with real-time validation",
-        "Designed 25+ REST APIs for authentication and inventory management",
-        "Achieved 99.9% uptime with Docker deployment on Render",
+        "Developed backend modules in Spring Boot and contributed to React-based UI integration for banking workflows.",
+        "Designed REST APIs and optimized application performance, reducing response times by 30%",
+        "Implemented JWT/OAuth2 authentication and multi-layer authorization",
+        "Led test automation efforts, achieving 90%+ test coverage",
+        "Collaborated across Agile teams for full-stack development and sprint delivery",
       ],
       skills: [
         "Spring Boot",
-        "React 18",
-        "TypeScript",
-        "Docker",
-        "Microservices",
-      ],
-    },
-    {
-      id: "foxmula",
-      year: "May-July 2021",
-      title: "Software Developer Intern",
-      company: "Foxmula- The Smart Way",
-      description:
-        "Backend Java development internship focusing on building robust server-side applications and API development.",
-      icon: <Code />,
-      color: "#5AC8FA",
-      achievements: [
-        "Developed backend Java applications with focus on performance",
-        "Worked on API development and database integration",
-        "Gained hands-on experience in enterprise Java development",
-        "Collaborated with senior developers on production systems",
-      ],
-      skills: [
         "Java",
-        "Backend Development",
-        "API Development",
-        "Database Integration",
+        "React",
+        "REST APIs",
+        "JWT/OAuth2",
+        "Agile",
       ],
     },
     {
-      id: "ibm",
-      year: "Jan-May 2021",
-      title: "UI/UX Design Intern",
-      company: "IBM",
+      id: "cognizant-trainee",
+      year: "Jan 2022 - Jun 2022",
+      title: "Software Engineer Trainee",
+      company: "Cognizant",
       description:
-        "UI/UX design internship focusing on user interface design, user experience research, and design thinking methodologies.",
-      icon: <TrendingUp />,
-      color: "#5AC8FA",
+        "Built a full-stack pharmaceutical benefits system using React + TypeScript and Spring Boot microservices during intensive training program.",
+      icon: <BusinessCenter />,
+      color: "#007AFF",
       achievements: [
-        "Designed user interfaces for enterprise applications",
-        "Conducted user experience research and usability testing",
-        "Applied design thinking principles to solve complex problems",
-        "Created wireframes and prototypes for web applications",
+        "Built a full-stack pharmaceutical benefits system using React + TypeScript and Spring Boot microservices.",
+        "Implemented JWT authentication with real-time checks, reducing failed registrations by 60%",
+        "Developed and integrated 25+ REST APIs for the platform",
+        "Containerized and deployed using Docker Compose with 99.9% uptime",
+        "Documented system design and deployment workflows in 75+ pages",
       ],
       skills: [
-        "UI/UX Design",
-        "Design Thinking",
-        "Prototyping",
-        "User Research",
+        "Spring Boot",
+        "React",
+        "TypeScript",
+        "Docker Compose",
+        "Microservices",
       ],
     },
   ];
@@ -155,19 +122,14 @@ const About: React.FC = () => {
   const education: TimelineEvent[] = [
     {
       id: "education",
-      year: "June 2018-July 2022",
-      title: "B.Tech Computer Science",
-      company: "University of Petroleum and Energy Studies",
+      year: "Jun 2018 - Jun 2022",
+      title: "B.Tech in Computer Science Engineering",
+      company: "University of Petroleum and Energy Studies, Dehradun",
       description:
-        "Bachelor of Technology in Computer Science Engineering with focus on software development and system design. Graduated in July 2022.",
+        "Bachelor of Technology in Computer Science Engineering with focus on full-stack architecture, authentication/authorization, distributed systems, and software development.",
       icon: <School />,
       color: "#5AC8FA",
-      achievements: [
-        "Strong foundation in computer science fundamentals",
-        "Specialized in software engineering and algorithms",
-        "Built multiple full-stack web applications during coursework",
-        "Active participant in coding competitions and tech events",
-      ],
+      achievements: [],
     },
   ];
 
@@ -176,14 +138,19 @@ const About: React.FC = () => {
       category: "Backend Development",
       icon: <Code />,
       skills: [
-        { name: "Java & Spring Boot", icon: <Code />, color: "#007AFF" },
+        { name: "Java 17 & Spring Boot", icon: <Code />, color: "#007AFF" },
         {
           name: "REST APIs & Microservices",
           icon: <IntegrationInstructions />,
           color: "#5AC8FA",
         },
         {
-          name: "MySQL & Database Design",
+          name: "MySQL & MongoDB",
+          icon: <Storage />,
+          color: "#00C896",
+        },
+        {
+          name: "Hibernate & JPA",
           icon: <Storage />,
           color: "#00C896",
         },
@@ -193,35 +160,35 @@ const About: React.FC = () => {
       category: "Frontend Development",
       icon: <Web />,
       skills: [
-        { name: "ReactJS & TypeScript", icon: <Web />, color: "#007AFF" },
+        { name: "React.js & Angular", icon: <Web />, color: "#007AFF" },
         {
-          name: "JavaScript & Modern ES6+",
+          name: "TypeScript & JavaScript",
           icon: <DataObject />,
           color: "#5AC8FA",
         },
         {
-          name: "UI/UX Design & Prototyping",
+          name: "Material-UI & HTML/CSS",
           icon: <TrendingUp />,
           color: "#00C896",
         },
       ],
     },
     {
-      category: "Security & DevOps",
+      category: "Cloud & DevOps",
       icon: <Security />,
       skills: [
         {
-          name: "JWT Authentication & Security",
-          icon: <Security />,
+          name: "AWS ECS & Route 53",
+          icon: <CloudDone />,
           color: "#007AFF",
         },
         {
-          name: "Docker & Containerization",
-          icon: <CloudDone />,
+          name: "Docker & CI/CD",
+          icon: <Security />,
           color: "#5AC8FA",
         },
         {
-          name: "Financial Systems & Compliance",
+          name: "Infrastructure-as-Code & Workflow Automation",
           icon: <BusinessCenter />,
           color: "#00C896",
         },
@@ -288,10 +255,13 @@ const About: React.FC = () => {
                 mb: { xs: 6, md: 8 },
               }}
             >
-              A passionate software engineer with 3+ years of experience
-              building scalable applications and secure financial systems that
-              impact millions of users worldwide. Currently developing
-              next-generation trading platforms at JPMorgan Chase & Co.
+              Full-stack developer with hands-on experience building scalable
+              backend services, interactive front-end ap- plications, and
+              cloud-based deployments. Skilled in Java, Spring Boot, React,
+              Angular, REST API design, and AWS. Experienced in setting up
+              infrastructure end-to-end, implementing secure authentication, and
+              op- timizing systems for performance and reliability. Currently
+              learning workflow automation with Camunda7.
             </Typography>
 
             {/* Resume Download Button - Bigger and Centered */}
@@ -363,9 +333,9 @@ const About: React.FC = () => {
                 lineHeight: 1.6,
               }}
             >
-              Professional journey from internships to Software Engineer II at
-              JPMorgan Chase & Co., building enterprise systems that serve
-              millions.
+              Professional journey from trainee to Software Engineer II at JP
+              Morgan Chase & Co., building enterprise systems and trading
+              platforms.
             </Typography>
           </Box>
 

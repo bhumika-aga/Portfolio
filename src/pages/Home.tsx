@@ -132,7 +132,7 @@ const Home: React.FC = () => {
                 },
               }}
             >
-              Software Engineer II
+              Full-Stack Developer
             </Typography>
 
             {/* Main Title */}
@@ -172,9 +172,10 @@ const Home: React.FC = () => {
                 animation: "slideUp 1s ease-out 0.6s forwards",
               }}
             >
-              Creating exceptional digital experiences with modern technologies.
-              Currently developing secure financial systems at JPMorgan Chase &
-              Co. that serve millions of users worldwide.
+              Building scalable backend services, interactive front-end
+              applications, and cloud-based deployments. Software Engineer II at
+              JP Morgan Chase & Co., skilled in Java, Spring Boot, React,
+              Angular, and AWS.
             </Typography>
 
             {/* CTA Buttons */}
