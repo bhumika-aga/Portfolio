@@ -11,62 +11,185 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
+/**
+ * Email validation regex pattern.
+ * Validates standard email format: local@domain.extension
+ */
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/**
+ * Form data interface for contact form state.
+ */
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+/**
+ * Form errors interface for validation state.
+ */
+interface FormErrors {
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+}
+
+/**
+ * Initial form state.
+ */
+const initialFormData: FormData = {
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+};
+
+/**
+ * Contact information data.
+ */
+const contactInfo = [
+  {
+    icon: <Email />,
+    title: "Email",
+    value: "bhumika.aga@gmail.com",
+    link: "mailto:bhumika.aga@gmail.com",
+  },
+  {
+    icon: <LocationOn />,
+    title: "Location",
+    value: "Mumbai, Maharashtra",
+    link: "https://maps.google.com/?q=Mumbai,Maharashtra",
+  },
+];
+
+/**
+ * Social media links data.
+ */
+const socialLinks = [
+  {
+    icon: <LinkedIn />,
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/bhumika-aga",
+  },
+  {
+    icon: <GitHub />,
+    name: "GitHub",
+    url: "https://github.com/bhumika-aga",
+  },
+];
+
+/**
+ * Contact page component with form validation and contact information.
+ */
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  /**
+   * Validates the form data and returns validation errors.
+   */
+  const validateForm = (): FormErrors => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!EMAIL_REGEX.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!formData.subject.trim()) {
+      newErrors.subject = "Subject is required";
+    } else if (formData.subject.trim().length < 3) {
+      newErrors.subject = "Subject must be at least 3 characters";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+    }
+
+    return newErrors;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /**
+   * Handles input field changes and clears field-specific errors.
+   */
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Clear error for the field being edited
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  /**
+   * Handles form submission with validation.
+   */
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // Simulate form submission (replace with actual API call)
+    // In production, integrate with email service like Formspree, EmailJS, or custom backend
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    setIsSubmitting(false);
     setShowSuccess(true);
+    setFormData(initialFormData);
+    setErrors({});
+
+    // Hide success message after 5 seconds
     setTimeout(() => setShowSuccess(false), 5000);
-    setFormData({ name: "", email: "", subject: "", message: "" });
   };
 
-  const contactInfo = [
-    {
-      icon: <Email />,
-      title: "Email",
-      value: "bhumika.aga@gmail.com",
-      link: "mailto:bhumika.aga@gmail.com",
+  /**
+   * Common text field styling.
+   */
+  const textFieldStyles = {
+    "& .MuiOutlinedInput-root": {
+      borderRadius: 2,
+      fontSize: { xs: "0.9rem", md: "1rem" },
+      "& fieldset": {
+        borderColor: (theme: { palette: { mode: string } }) =>
+          theme.palette.mode === "dark"
+            ? "rgba(255, 255, 255, 0.12)"
+            : "rgba(0, 0, 0, 0.12)",
+      },
+      "&:hover fieldset": {
+        borderColor: "primary.main",
+      },
     },
-    {
-      icon: <LocationOn />,
-      title: "Location",
-      value: "Mumbai, Maharashtra",
-      link: "#",
+    "& .MuiInputLabel-root": {
+      fontSize: { xs: "0.9rem", md: "1rem" },
     },
-  ];
-
-  const socialLinks = [
-    {
-      icon: <LinkedIn />,
-      name: "LinkedIn",
-      url: "https://www.linkedin.com/in/bhumika-aga",
-    },
-    {
-      icon: <GitHub />,
-      name: "GitHub",
-      url: "https://github.com/bhumika-aga",
-    },
-  ];
+  };
 
   return (
     <Box sx={{ position: "relative", overflow: "hidden" }}>
-      {/* Hero Section - Centered Get In Touch */}
+      {/* Hero Section */}
       <Box
         sx={{
           minHeight: "100vh",
@@ -130,7 +253,7 @@ const Contact: React.FC = () => {
             </Typography>
           </Box>
 
-          {/* Contact Information and Social Links - Centered */}
+          {/* Contact Information and Social Links */}
           <Box
             sx={{
               display: "grid",
@@ -158,6 +281,12 @@ const Contact: React.FC = () => {
                   key={index}
                   component="a"
                   href={info.link}
+                  target={info.link.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    info.link.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
                   sx={{
                     display: "flex",
                     alignItems: "center",
@@ -259,6 +388,7 @@ const Contact: React.FC = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={social.name}
                     sx={{
                       bgcolor: "primary.main",
                       color: "white",
@@ -298,7 +428,7 @@ const Contact: React.FC = () => {
         </Container>
       </Box>
 
-      {/* Contact Form Section - Appears on Scroll */}
+      {/* Contact Form Section */}
       <Box
         sx={{
           py: { xs: 6, md: 8 },
@@ -344,198 +474,140 @@ const Contact: React.FC = () => {
           </Box>
 
           {/* Contact Form */}
-          <Box>
-            <Card
-              sx={{
-                p: { xs: 4, md: 5 },
-                background: (theme) =>
+          <Card
+            sx={{
+              p: { xs: 4, md: 5 },
+              background: (theme) =>
+                theme.palette.mode === "dark"
+                  ? "rgba(28, 28, 30, 0.8)"
+                  : "rgba(255, 255, 255, 0.95)",
+              backdropFilter: "blur(20px) saturate(180%)",
+              border: (theme) =>
+                `1px solid ${
                   theme.palette.mode === "dark"
-                    ? "rgba(28, 28, 30, 0.8)"
-                    : "rgba(255, 255, 255, 0.95)",
-                backdropFilter: "blur(20px) saturate(180%)",
-                border: (theme) =>
-                  `1px solid ${
-                    theme.palette.mode === "dark"
-                      ? "rgba(255, 255, 255, 0.08)"
-                      : "rgba(0, 0, 0, 0.05)"
-                  }`,
-                borderRadius: 3,
-                maxWidth: 600,
-                mx: "auto",
-              }}
-            >
-              {showSuccess && (
-                <Alert
-                  severity="success"
-                  sx={{
-                    mb: 3,
-                    borderRadius: 2,
-                    fontSize: { xs: "0.85rem", md: "0.9rem" },
-                  }}
-                >
-                  Thank you for your message! I'll get back to you soon.
-                </Alert>
-              )}
-              <Box component="form" onSubmit={handleSubmit}>
+                    ? "rgba(255, 255, 255, 0.08)"
+                    : "rgba(0, 0, 0, 0.05)"
+                }`,
+              borderRadius: 3,
+              maxWidth: 600,
+              mx: "auto",
+            }}
+          >
+            {showSuccess && (
+              <Alert
+                severity="success"
+                sx={{
+                  mb: 3,
+                  borderRadius: 2,
+                  fontSize: { xs: "0.85rem", md: "0.9rem" },
+                }}
+              >
+                Thank you for your message! I'll get back to you soon.
+              </Alert>
+            )}
+            <Box component="form" onSubmit={handleSubmit} noValidate>
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
+                  gap: { xs: 2.5, md: 3 },
+                }}
+              >
+                <Box>
+                  <TextField
+                    fullWidth
+                    label="Full Name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    error={Boolean(errors.name)}
+                    helperText={errors.name}
+                    required
+                    variant="outlined"
+                    size="medium"
+                    sx={textFieldStyles}
+                  />
+                </Box>
+                <Box>
+                  <TextField
+                    fullWidth
+                    label="Email Address"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    error={Boolean(errors.email)}
+                    helperText={errors.email}
+                    required
+                    variant="outlined"
+                    size="medium"
+                    sx={textFieldStyles}
+                  />
+                </Box>
+                <Box sx={{ gridColumn: { xs: "1", sm: "1 / -1" } }}>
+                  <TextField
+                    fullWidth
+                    label="Subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    error={Boolean(errors.subject)}
+                    helperText={errors.subject}
+                    required
+                    variant="outlined"
+                    size="medium"
+                    sx={textFieldStyles}
+                  />
+                </Box>
+                <Box sx={{ gridColumn: { xs: "1", sm: "1 / -1" } }}>
+                  <TextField
+                    fullWidth
+                    label="Your Message"
+                    name="message"
+                    multiline
+                    rows={5}
+                    value={formData.message}
+                    onChange={handleChange}
+                    error={Boolean(errors.message)}
+                    helperText={errors.message}
+                    required
+                    variant="outlined"
+                    sx={textFieldStyles}
+                  />
+                </Box>
                 <Box
                   sx={{
-                    display: "grid",
-                    gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
-                    gap: { xs: 2.5, md: 3 },
+                    gridColumn: { xs: "1", sm: "1 / -1" },
+                    textAlign: "center",
                   }}
                 >
-                  <Box>
-                    <TextField
-                      fullWidth
-                      label="Full Name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      variant="outlined"
-                      size="medium"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 2,
-                          fontSize: { xs: "0.9rem", md: "1rem" },
-                          "& fieldset": {
-                            borderColor: (theme) =>
-                              theme.palette.mode === "dark"
-                                ? "rgba(255, 255, 255, 0.12)"
-                                : "rgba(0, 0, 0, 0.12)",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "primary.main",
-                          },
-                        },
-                        "& .MuiInputLabel-root": {
-                          fontSize: { xs: "0.9rem", md: "1rem" },
-                        },
-                      }}
-                    />
-                  </Box>
-                  <Box>
-                    <TextField
-                      fullWidth
-                      label="Email Address"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      variant="outlined"
-                      size="medium"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 2,
-                          fontSize: { xs: "0.9rem", md: "1rem" },
-                          "& fieldset": {
-                            borderColor: (theme) =>
-                              theme.palette.mode === "dark"
-                                ? "rgba(255, 255, 255, 0.12)"
-                                : "rgba(0, 0, 0, 0.12)",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "primary.main",
-                          },
-                        },
-                        "& .MuiInputLabel-root": {
-                          fontSize: { xs: "0.9rem", md: "1rem" },
-                        },
-                      }}
-                    />
-                  </Box>
-                  <Box sx={{ gridColumn: { xs: "1", sm: "1 / -1" } }}>
-                    <TextField
-                      fullWidth
-                      label="Subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      variant="outlined"
-                      size="medium"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 2,
-                          fontSize: { xs: "0.9rem", md: "1rem" },
-                          "& fieldset": {
-                            borderColor: (theme) =>
-                              theme.palette.mode === "dark"
-                                ? "rgba(255, 255, 255, 0.12)"
-                                : "rgba(0, 0, 0, 0.12)",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "primary.main",
-                          },
-                        },
-                        "& .MuiInputLabel-root": {
-                          fontSize: { xs: "0.9rem", md: "1rem" },
-                        },
-                      }}
-                    />
-                  </Box>
-                  <Box sx={{ gridColumn: { xs: "1", sm: "1 / -1" } }}>
-                    <TextField
-                      fullWidth
-                      label="Your Message"
-                      name="message"
-                      multiline
-                      rows={5}
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      variant="outlined"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 2,
-                          fontSize: { xs: "0.9rem", md: "1rem" },
-                          "& fieldset": {
-                            borderColor: (theme) =>
-                              theme.palette.mode === "dark"
-                                ? "rgba(255, 255, 255, 0.12)"
-                                : "rgba(0, 0, 0, 0.12)",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "primary.main",
-                          },
-                        },
-                        "& .MuiInputLabel-root": {
-                          fontSize: { xs: "0.9rem", md: "1rem" },
-                        },
-                      }}
-                    />
-                  </Box>
-                  <Box
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    disabled={isSubmitting}
+                    endIcon={<Send />}
                     sx={{
-                      gridColumn: { xs: "1", sm: "1 / -1" },
-                      textAlign: "center",
+                      px: { xs: 4, md: 6 },
+                      py: { xs: 1.2, md: 1.5 },
+                      fontSize: { xs: "1rem", md: "1.1rem" },
+                      fontWeight: 600,
+                      borderRadius: 50,
+                      boxShadow: "0 6px 20px rgba(0, 122, 255, 0.3)",
+                      "&:hover": {
+                        transform: "translateY(-3px)",
+                        boxShadow: "0 10px 30px rgba(0, 122, 255, 0.4)",
+                      },
+                      "&:disabled": {
+                        opacity: 0.7,
+                      },
                     }}
                   >
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      endIcon={<Send />}
-                      sx={{
-                        px: { xs: 4, md: 6 },
-                        py: { xs: 1.2, md: 1.5 },
-                        fontSize: { xs: "1rem", md: "1.1rem" },
-                        fontWeight: 600,
-                        borderRadius: 50,
-                        boxShadow: "0 6px 20px rgba(0, 122, 255, 0.3)",
-                        "&:hover": {
-                          transform: "translateY(-3px)",
-                          boxShadow: "0 10px 30px rgba(0, 122, 255, 0.4)",
-                        },
-                      }}
-                    >
-                      Send Message
-                    </Button>
-                  </Box>
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </Button>
                 </Box>
               </Box>
-            </Card>
-          </Box>
+            </Box>
+          </Card>
         </Container>
       </Box>
     </Box>

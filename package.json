@@ -29,7 +29,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "serve": "serve -s build -p 3000"
+    "serve": "serve -s build -p 3000",
+    "lint": "eslint src/ --ext .ts,.tsx --max-warnings 0",
+    "lint:fix": "eslint src/ --ext .ts,.tsx --fix",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "validate": "npm run type-check && npm run lint && npm run format:check"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +57,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
+    "prettier": "^3.7.4",
     "serve": "^14.2.4"
   }
 }

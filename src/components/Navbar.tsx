@@ -166,8 +166,8 @@ const Navbar: React.FC = () => {
                             ? "#007AFF"
                             : "#ffffff"
                           : mode === "dark"
-                          ? "rgba(255, 255, 255, 0.1)"
-                          : "rgba(0, 0, 0, 0.04)",
+                            ? "rgba(255, 255, 255, 0.1)"
+                            : "rgba(0, 0, 0, 0.04)",
                         color: isActive
                           ? mode === "dark"
                             ? "#ffffff"
@@ -245,8 +245,8 @@ const Navbar: React.FC = () => {
                       backgroundColor: isActive
                         ? "primary.main"
                         : mode === "dark"
-                        ? "rgba(58, 58, 60, 0.6)"
-                        : "rgba(242, 242, 247, 0.8)",
+                          ? "rgba(58, 58, 60, 0.6)"
+                          : "rgba(242, 242, 247, 0.8)",
                       backdropFilter: "blur(20px)",
                       transition:
                         "all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)",

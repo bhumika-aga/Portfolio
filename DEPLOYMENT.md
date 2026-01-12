@@ -1,10 +1,10 @@
 # Deployment Guide - Portfolio Website
 
-## 🎯 Project Goal
+## Project Goal
 
 Deploy professional portfolio website featuring advanced Bento grid layouts, compact component design, and optimized user experience with seamless Render.com integration for optimal performance and zero-downtime deployments.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **React 19.1.1** - Frontend framework with concurrent features
 - **TypeScript 4.9.5** - Type-safe development environment
@@ -12,25 +12,19 @@ Deploy professional portfolio website featuring advanced Bento grid layouts, com
 - **Render.com** - Cloud deployment and hosting platform
 - **Node.js 18** - Runtime environment for build processes
 
-## 📸 Demo GIF
+## Links
 
-![Deployment Demo](https://my-portfolio-ri4w.onrender.com)
+- **Live Portfolio**: [https://my-portfolio-ri4w.onrender.com](https://my-portfolio-ri4w.onrender.com)
+- **Render Dashboard**: [https://dashboard.render.com](https://dashboard.render.com)
 
-Demo showcasing optimized Bento grid project displays, compact footer design, enhanced button alignment, and seamless deployment pipeline with automatic production updates
-
-## 🔗 Links to Deployment
-
-**Live Portfolio**: [https://my-portfolio-ri4w.onrender.com](https://my-portfolio-ri4w.onrender.com)
-**Render Dashboard**: [https://dashboard.render.com](https://dashboard.render.com)
-
-## 🚀 Quick Deploy Steps
+## Quick Deploy Steps
 
 ### 1. GitHub Repository Setup
 
 ```bash
 # Ensure all changes are committed
 git add .
-git commit -m "Portfolio website ready for deployment 🚀"
+git commit -m "Portfolio website ready for deployment"
 git push origin main
 ```
 
@@ -38,7 +32,7 @@ git push origin main
 
 1. **Create Account** at [render.com](https://render.com)
 2. **Connect GitHub Repository**
-   - New → Web Service
+   - New -> Web Service
    - Connect GitHub account
    - Select portfolio repository
 3. **Service Configuration**:
@@ -74,14 +68,14 @@ services:
     healthCheckPath: /
 ```
 
-## 📊 Performance Optimization
+## Performance Optimization
 
-- **Build Size**: ~156KB gzipped JavaScript bundle (optimized with Bento grid and footer)
+- **Build Size**: ~156KB gzipped JavaScript bundle
 - **Build Time**: ~2-3 minutes on Render.com
 - **Cold Start**: <5 seconds
 - **Health Check**: Enabled at root path (`/`)
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Common Build Issues
 
@@ -106,14 +100,14 @@ services:
    serve -s build -p $PORT
    ```
 
-## 🔄 Continuous Deployment
+## Continuous Deployment
 
 - **Auto-deploy**: Enabled for `main` branch pushes
 - **Build Notifications**: Available via Render dashboard
 - **Rollback Support**: Previous deployment versions accessible
 - **Custom Domain**: Configurable in Render settings
 
-## 📈 Monitoring & Analytics
+## Monitoring and Analytics
 
 - **Uptime Monitoring**: Built into Render.com platform
 - **Performance Metrics**: Available in dashboard
@@ -122,4 +116,4 @@ services:
 
 ---
 
-**Deployment Status**: ✅ Active | **Last Updated**: January 2025 | **Build**: Successful
+**Deployment Status**: Active | **Last Updated**: January 2025 | **Build**: Successful
