@@ -12,7 +12,7 @@ A professional portfolio website showcasing full-stack development expertise wit
 
 ## Live Demo
 
-**Live Portfolio**: [https://my-portfolio-ri4w.onrender.com](https://my-portfolio-ri4w.onrender.com)
+**Live Portfolio**: [https://bhumika-portfolio-zkq0.onrender.com](https://bhumika-portfolio-zkq0.onrender.com)
 
 ## Key Features
 
@@ -99,4 +99,4 @@ This portfolio follows Apple's design principles with clean typography, generous
 
 ---
 
-**Built by Bhumika Agarwal** | [Live Demo](https://my-portfolio-ri4w.onrender.com) | [GitHub Repository](https://github.com/bhumika-aga/portfolio)
+**Built by Bhumika Agarwal** | [Live Demo](https://bhumika-portfolio-zkq0.onrender.com) | [GitHub Repository](https://github.com/bhumika-aga/portfolio)

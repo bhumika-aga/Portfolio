@@ -10,7 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Project, projects } from "../data/projects";
+import { Project } from "../data/projects";
+import { pinnedProjects } from "../services/githubService";
 
 /**
  * Bento grid layout configuration for project cards.
@@ -308,6 +309,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
 
 /**
  * Projects page component displaying portfolio projects in a bento grid layout.
+ * Shows only pinned/featured projects from GitHub.
  */
 const Projects: React.FC = () => {
   return (
@@ -354,8 +356,7 @@ const Projects: React.FC = () => {
           }}
         >
           Production-ready applications showcasing full-stack development
-          expertise, from enterprise hospital systems to financial trading
-          platforms.
+          expertise, from enterprise hospital systems to utility tools.
         </Typography>
       </Box>
 
@@ -367,13 +368,13 @@ const Projects: React.FC = () => {
             gridTemplateColumns: { xs: "1fr", md: "repeat(12, 1fr)" },
             gridTemplateRows: {
               xs: "auto",
-              md: "repeat(4, minmax(280px, auto))",
+              md: "repeat(3, minmax(280px, auto))",
             },
             gap: { xs: 2.5, md: 3 },
             mb: 3,
           }}
         >
-          {projects.map((project, index) => (
+          {pinnedProjects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </Box>
