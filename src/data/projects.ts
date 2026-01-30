@@ -115,12 +115,13 @@ export const projects: Project[] = [
     image:
       "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
     technologies: [
-      "TypeScript",
       "Spring Boot",
-      "Angular",
       "MySQL",
       "JWT",
+      "React",
+      "TypeScript",
     ],
+    featured: true,
     liveUrl: "https://examportal-app.onrender.com",
     githubUrl: "https://github.com/bhumika-aga/Examportal-Application",
   },
@@ -138,6 +139,7 @@ export const projects: Project[] = [
       "BPMN",
       "REST API",
     ],
+    featured: true,
     githubUrl: "https://github.com/bhumika-aga/Camunda-POC",
   },
 ];
