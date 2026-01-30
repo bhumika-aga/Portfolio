@@ -121,6 +121,7 @@ export const projects: Project[] = [
       "MySQL",
       "JWT",
     ],
+    liveUrl: "https://examportal-app.onrender.com",
     githubUrl: "https://github.com/bhumika-aga/Examportal-Application",
   },
   {
