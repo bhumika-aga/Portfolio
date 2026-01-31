@@ -1,7 +1,7 @@
 /**
  * Project data configuration for the portfolio website.
  * This centralized file makes it easy to add, update, or remove projects.
- * 
+ *
  * These projects match the pinned repositories on GitHub profile.
  */
 
@@ -20,7 +20,7 @@ export interface Project {
 /**
  * Featured projects displayed in the portfolio.
  * Projects are ordered by importance/recency - featured projects first.
- * 
+ *
  * Synced with GitHub pinned repos:
  * 1. RegulatoryApprovalSystem
  * 2. Mail-Order-Pharmacy
@@ -46,7 +46,8 @@ export const projects: Project[] = [
       "JWT",
       "Docker",
     ],
-    liveUrl: "https://regulatory-approval-system.onrender.com/camunda/app/cockpit/",
+    liveUrl:
+      "https://regulatory-approval-system.onrender.com/camunda/app/cockpit/",
     githubUrl: "https://github.com/bhumika-aga/RegulatoryApprovalSystem",
   },
   {
@@ -114,13 +115,7 @@ export const projects: Project[] = [
       "Online exam portal system for conducting secure digital examinations. Features question management, timer functionality, automated grading, and comprehensive reporting capabilities.",
     image:
       "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
-    technologies: [
-      "Spring Boot",
-      "MySQL",
-      "JWT",
-      "React",
-      "TypeScript",
-    ],
+    technologies: ["Spring Boot", "MySQL", "JWT", "React", "TypeScript"],
     featured: true,
     liveUrl: "https://examportal-app.onrender.com",
     githubUrl: "https://github.com/bhumika-aga/Examportal-Application",
@@ -132,13 +127,7 @@ export const projects: Project[] = [
       "Proof of concept demonstrating Camunda BPMN workflow engine integration with Spring Boot. Showcases business process automation, task management, and workflow orchestration patterns.",
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-    technologies: [
-      "Java",
-      "Spring Boot",
-      "Camunda BPM",
-      "BPMN",
-      "REST API",
-    ],
+    technologies: ["Java", "Spring Boot", "Camunda BPM", "BPMN", "REST API"],
     featured: true,
     githubUrl: "https://github.com/bhumika-aga/Camunda-POC",
   },

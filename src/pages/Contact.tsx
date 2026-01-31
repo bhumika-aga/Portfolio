@@ -1,3 +1,4 @@
+import emailjs from "@emailjs/browser";
 import { Email, GitHub, LinkedIn, LocationOn, Send } from "@mui/icons-material";
 import {
   Alert,
@@ -88,6 +89,7 @@ const Contact: React.FC = () => {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<FormErrors>({});
   const [showSuccess, setShowSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   /**
@@ -143,6 +145,7 @@ const Contact: React.FC = () => {
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
 
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
@@ -152,17 +155,33 @@ const Contact: React.FC = () => {
 
     setIsSubmitting(true);
 
-    // Simulate form submission (replace with actual API call)
-    // In production, integrate with email service like Formspree, EmailJS, or custom backend
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      await emailjs.send(
+        "service_qyshzkm",
+        "template_iqmbcfh",
+        {
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        "pv-fupzZWRHcDulzh"
+      );
 
-    setIsSubmitting(false);
-    setShowSuccess(true);
-    setFormData(initialFormData);
-    setErrors({});
+      setShowSuccess(true);
+      setFormData(initialFormData);
+      setErrors({});
 
-    // Hide success message after 5 seconds
-    setTimeout(() => setShowSuccess(false), 5000);
+      // Hide success message after 5 seconds
+      setTimeout(() => setShowSuccess(false), 5000);
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      setSubmitError(
+        "Failed to send message. Please try again later or contact me directly via email."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   /**
@@ -503,6 +522,18 @@ const Contact: React.FC = () => {
                 }}
               >
                 Thank you for your message! I'll get back to you soon.
+              </Alert>
+            )}
+            {submitError && (
+              <Alert
+                severity="error"
+                sx={{
+                  mb: 3,
+                  borderRadius: 2,
+                  fontSize: { xs: "0.85rem", md: "0.9rem" },
+                }}
+              >
+                {submitError}
               </Alert>
             )}
             <Box component="form" onSubmit={handleSubmit} noValidate>

@@ -10,11 +10,11 @@ import { Project, projects } from "../data/projects";
  * Returns only the curated pinned projects with their hosted URLs
  */
 export const fetchGitHubProjects = async (): Promise<Project[]> => {
-    // Return pinned projects from the centralized data file
-    return Promise.resolve(projects.filter(p => p.featured));
+  // Return pinned projects from the centralized data file
+  return Promise.resolve(projects.filter((p) => p.featured));
 };
 
 /**
  * Export pinned projects for direct access
  */
-export const pinnedProjects = projects.filter(p => p.featured);
+export const pinnedProjects = projects.filter((p) => p.featured);
