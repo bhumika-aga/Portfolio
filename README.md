@@ -31,7 +31,7 @@ A professional portfolio website showcasing full-stack development expertise wit
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22+
 - EmailJS Account (Service ID, Template ID, Public Key)
 
 ### Installation
@@ -100,7 +100,7 @@ Optimized for **Render.com** deployment with included `render.yaml` configuratio
 
 - **Build Command**: `npm install && npm run build`
 - **Start Command**: `serve -s build -p $PORT`
-- **Node Version**: 18
+- **Node Version**: 22
 - **Auto-deploy**: Enabled via GitHub integration
 
 ## Design Philosophy
