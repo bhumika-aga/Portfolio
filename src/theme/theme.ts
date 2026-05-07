@@ -1,275 +1,117 @@
 import { createTheme, PaletteMode } from "@mui/material/styles";
 
+export const ACCENT = "#34D399";
+export const monoFont = '"JetBrains Mono", ui-monospace, Menlo, monospace';
+
+export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
+
+export const glassBg = (mode: PaletteMode) => ({
+  background:
+    mode === "dark" ? "rgba(255,255,255,0.028)" : "rgba(255,255,255,0.6)",
+  backdropFilter: "blur(12px) saturate(160%)",
+  WebkitBackdropFilter: "blur(12px) saturate(160%)",
+});
+
+export const glassBorder = (mode: PaletteMode) =>
+  mode === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.07)";
+
 export const getTheme = (mode: PaletteMode) =>
   createTheme({
     palette: {
       mode,
       primary: {
-        main: "#007AFF", // Apple's signature blue
-        light: "#5AC8FA",
-        dark: "#0051D0",
-      },
-      secondary: {
-        main: "#5AC8FA", // Soft blue
-        light: "#88D5FF",
-        dark: "#0099CC",
+        main: ACCENT,
       },
       background: {
-        default: mode === "dark" ? "#000000" : "#ffffff",
-        paper: mode === "dark" ? "#1C1C1E" : "#F2F2F7",
+        default: mode === "dark" ? "#0A0A0A" : "#FAFAFA",
+        paper: mode === "dark" ? "#111111" : "#FFFFFF",
       },
       text: {
-        primary: mode === "dark" ? "#ffffff" : "#1D1D1F",
-        secondary: mode === "dark" ? "#98989D" : "#86868B",
+        primary: mode === "dark" ? "#E5E5E5" : "#171717",
+        secondary: "#737373",
       },
-      grey: {
-        50: "#F2F2F7",
-        100: "#E5E5EA",
-        200: "#D1D1D6",
-        300: "#C7C7CC",
-        400: "#AEAEB2",
-        500: "#8E8E93",
-        600: "#636366",
-        700: "#48484A",
-        800: "#3A3A3C",
-        900: "#1C1C1E",
-      },
-      divider:
-        mode === "dark" ? "rgba(255, 255, 255, 0.13)" : "rgba(0, 0, 0, 0.04)",
+      divider: mode === "dark" ? "#262626" : "#E5E5E5",
     },
     typography: {
       fontFamily:
-        'system-ui, -apple-system, "SF Pro Display", "Segoe UI", Roboto, sans-serif',
+        '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
       h1: {
-        fontSize: "2.25rem", // 36px - Medium hero titles
-        fontWeight: 600,
-        lineHeight: 1.1,
-        letterSpacing: "-0.005em",
-        "@media (max-width:768px)": {
-          fontSize: "1.75rem",
-          lineHeight: 1.2,
-        },
+        fontSize: "3.25rem",
+        fontWeight: 700,
+        lineHeight: 1.0,
+        letterSpacing: "-0.04em",
+        "@media (max-width:900px)": { fontSize: "2.5rem" },
+        "@media (max-width:600px)": { fontSize: "2rem" },
       },
       h2: {
-        fontSize: "1.75rem", // 28px - Medium section headers
+        fontSize: "1.5rem",
         fontWeight: 600,
-        lineHeight: 1.15,
-        letterSpacing: "-0.003em",
-        "@media (max-width:768px)": {
-          fontSize: "1.375rem",
-        },
+        lineHeight: 1.2,
+        letterSpacing: "-0.02em",
       },
       h3: {
-        fontSize: "1.375rem", // 22px - Medium subsection headers
+        fontSize: "1.0625rem",
         fontWeight: 600,
-        lineHeight: 1.16,
-        letterSpacing: "-0.003em",
-        "@media (max-width:768px)": {
-          fontSize: "1.125rem",
-        },
+        lineHeight: 1.3,
+        letterSpacing: "-0.01em",
       },
       h4: {
-        fontSize: "1.125rem", // 18px - Medium card headers
+        fontSize: "0.9375rem",
         fontWeight: 600,
-        lineHeight: 1.2,
-        letterSpacing: "-0.002em",
-      },
-      h5: {
-        fontSize: "1.125rem", // 18px - Smaller headers
-        fontWeight: 600,
-        lineHeight: 1.2,
-        letterSpacing: "-0.001em",
-      },
-      h6: {
-        fontSize: "1rem", // 16px - Tiny headers
-        fontWeight: 600,
-        lineHeight: 1.22,
+        lineHeight: 1.35,
       },
       body1: {
-        fontSize: "1rem", // 16px - Smaller body text
-        lineHeight: 1.47,
-        fontWeight: 400,
-        letterSpacing: "-0.002em",
-        "@media (max-width:768px)": {
-          fontSize: "0.9rem",
-          lineHeight: 1.5,
-        },
+        fontSize: "0.9375rem",
+        lineHeight: 1.7,
+        letterSpacing: "-0.003em",
       },
       body2: {
-        fontSize: "0.875rem", // 14px - Smaller body text
-        lineHeight: 1.5,
-        fontWeight: 400,
-        letterSpacing: "-0.002em",
+        fontSize: "0.875rem",
+        lineHeight: 1.65,
+        letterSpacing: "-0.003em",
       },
       subtitle1: {
-        fontSize: "1rem", // 16px - Smaller subtitles
-        fontWeight: 400,
-        lineHeight: 1.47,
-        letterSpacing: "-0.002em",
-      },
-      subtitle2: {
-        fontSize: "0.875rem", // 14px - Small subtitles
-        fontWeight: 400,
+        fontSize: "0.875rem",
+        fontWeight: 500,
         lineHeight: 1.5,
-        letterSpacing: "-0.002em",
+        letterSpacing: "-0.003em",
       },
       caption: {
-        fontSize: "0.75rem", // 12px - Apple's fine print
-        fontWeight: 400,
+        fontSize: "0.75rem",
         lineHeight: 1.5,
-        letterSpacing: "-0.001em",
-        color: mode === "dark" ? "#98989D" : "#86868B",
+        color: "#737373",
       },
     },
     shape: {
-      borderRadius: 6, // Compact corner radius
+      borderRadius: 8,
     },
     components: {
       MuiCssBaseline: {
         styleOverrides: {
           body: {
             scrollBehavior: "smooth",
-            overflowX: "hidden",
-            backgroundColor: mode === "dark" ? "#000000" : "#ffffff",
-            color: mode === "dark" ? "#ffffff" : "#1D1D1F",
-          },
-          "*": {
-            "&::-webkit-scrollbar": {
-              width: 4,
-              height: 4,
-            },
-            "&::-webkit-scrollbar-track": {
-              backgroundColor: "transparent",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              backgroundColor: mode === "dark" ? "#48484A" : "#C7C7CC",
-              borderRadius: 2,
-              "&:hover": {
-                backgroundColor: mode === "dark" ? "#636366" : "#AEAEB2",
-              },
-            },
-          },
-        },
-      },
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            borderRadius: 980, // Apple's pill-shaped buttons
-            textTransform: "none",
-            fontWeight: 500,
-            fontSize: "0.875rem",
-            letterSpacing: "-0.003em",
-            transition: "all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-            minHeight: 32, // Medium touch target
-            position: "relative",
-            overflow: "hidden",
-          },
-          contained: {
-            background: "linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%)",
-            color: "#ffffff",
-            border: "none",
-            boxShadow:
-              "0 1px 3px rgba(0, 122, 255, 0.4), 0 1px 2px rgba(0, 122, 255, 0.6)",
-            "&:hover": {
-              background: "linear-gradient(135deg, #0051D0 0%, #007AFF 100%)",
-              boxShadow:
-                "0 4px 14px rgba(0, 122, 255, 0.4), 0 2px 6px rgba(0, 122, 255, 0.6)",
-              transform: "translateY(-1px)",
-            },
-            "&:active": {
-              transform: "translateY(0)",
-              transition: "all 0.1s",
-            },
-          },
-          outlined: {
-            borderWidth: 1.5,
-            borderColor: "#007AFF",
-            color: "#007AFF",
-            backgroundColor: "transparent",
-            "&:hover": {
-              borderWidth: 1.5,
-              backgroundColor: "rgba(0, 122, 255, 0.04)",
-              transform: "translateY(-1px)",
-            },
-          },
-          text: {
-            color: "#007AFF",
-            "&:hover": {
-              backgroundColor: "rgba(0, 122, 255, 0.04)",
-            },
-          },
-        },
-      },
-      MuiCard: {
-        styleOverrides: {
-          root: {
-            borderRadius: 10, // Compact corner radius for cards
-            backgroundColor: mode === "dark" ? "#1C1C1E" : "#ffffff",
-            border: `0.5px solid ${mode === "dark" ? "rgba(255, 255, 255, 0.13)" : "rgba(0, 0, 0, 0.04)"}`,
-            boxShadow:
+            backgroundImage:
               mode === "dark"
-                ? "0 1px 3px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 0.95)"
-                : "0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)",
-            backdropFilter: "blur(20px)",
-            transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-            position: "relative",
-            overflow: "hidden",
-            "&:hover": {
-              transform: "translateY(-4px)",
-              boxShadow:
-                mode === "dark"
-                  ? "0 8px 25px rgba(0, 0, 0, 0.9), 0 4px 10px rgba(0, 0, 0, 0.95)"
-                  : "0 8px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.20)",
-            },
-            "&::before": {
-              content: '""',
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 1,
-              background:
-                mode === "dark"
-                  ? "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)"
-                  : "linear-gradient(90deg, transparent, rgba(0,122,255,0.1), transparent)",
-            },
+                ? `radial-gradient(ellipse 110% 55% at 0% 0%, rgba(52,211,153,0.07) 0%, transparent 55%),
+                   radial-gradient(ellipse 80% 50% at 100% 100%, rgba(52,211,153,0.045) 0%, transparent 55%)`
+                : `radial-gradient(ellipse 110% 55% at 0% 0%, rgba(52,211,153,0.08) 0%, transparent 55%),
+                   radial-gradient(ellipse 80% 50% at 100% 100%, rgba(52,211,153,0.055) 0%, transparent 55%)`,
+            backgroundAttachment: "fixed",
           },
-        },
-      },
-      MuiContainer: {
-        styleOverrides: {
-          root: {
-            paddingLeft: 12,
-            paddingRight: 12,
-            "@media (min-width: 768px)": {
-              paddingLeft: 16,
-              paddingRight: 16,
-            },
-            "@media (min-width: 1024px)": {
-              paddingLeft: 20,
-              paddingRight: 20,
-            },
+          "a:focus-visible, button:focus-visible": {
+            outline: `2px solid ${ACCENT}`,
+            outlineOffset: "2px",
+            borderRadius: "4px",
           },
-        },
-      },
-      MuiChip: {
-        styleOverrides: {
-          root: {
-            borderRadius: 4,
-            fontWeight: 500,
-            fontSize: "0.7rem",
-            backgroundColor:
-              mode === "dark"
-                ? "rgba(142, 142, 147, 0.16)"
-                : "rgba(0, 122, 255, 0.1)",
-            color: mode === "dark" ? "#5AC8FA" : "#007AFF",
-            border: `1px solid ${mode === "dark" ? "rgba(90, 200, 250, 0.3)" : "rgba(0, 122, 255, 0.2)"}`,
-            "&:hover": {
-              backgroundColor:
-                mode === "dark"
-                  ? "rgba(90, 200, 250, 0.2)"
-                  : "rgba(0, 122, 255, 0.15)",
-            },
+          "*::-webkit-scrollbar": {
+            width: "4px",
+          },
+          "*::-webkit-scrollbar-track": {
+            background: "transparent",
+          },
+          "*::-webkit-scrollbar-thumb": {
+            background: mode === "dark" ? "#262626" : "#D4D4D4",
+            borderRadius: "2px",
           },
         },
       },
@@ -278,26 +120,33 @@ export const getTheme = (mode: PaletteMode) =>
           root: {
             backgroundColor:
               mode === "dark"
-                ? "rgba(28, 28, 30, 0.8)"
-                : "rgba(255, 255, 255, 0.8)",
-            backdropFilter: "saturate(180%) blur(20px)",
-            borderBottom: `0.5px solid ${mode === "dark" ? "rgba(255, 255, 255, 0.13)" : "rgba(0, 0, 0, 0.04)"}`,
+                ? "rgba(10, 10, 10, 0.72)"
+                : "rgba(250, 250, 250, 0.72)",
+            backdropFilter: "blur(20px) saturate(180%)",
+            WebkitBackdropFilter: "blur(20px) saturate(180%)",
             boxShadow: "none",
           },
         },
       },
-      MuiLinearProgress: {
+      MuiChip: {
         styleOverrides: {
           root: {
-            borderRadius: 4,
-            backgroundColor:
-              mode === "dark"
-                ? "rgba(142, 142, 147, 0.16)"
-                : "rgba(0, 0, 0, 0.04)",
+            borderRadius: 6,
+            fontFamily: monoFont,
+            fontSize: "0.6875rem",
+            fontWeight: 400,
+            backgroundColor: "transparent",
+            border: `1px solid ${mode === "dark" ? "#262626" : "#E5E5E5"}`,
+            color: "#737373",
+            height: 22,
+            letterSpacing: "0.01em",
           },
-          bar: {
-            borderRadius: 4,
-            background: "linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%)",
+        },
+      },
+      MuiDivider: {
+        styleOverrides: {
+          root: {
+            borderColor: mode === "dark" ? "#1E1E1E" : "#EBEBEB",
           },
         },
       },

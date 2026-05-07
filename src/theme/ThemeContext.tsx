@@ -1,42 +1,23 @@
-import { PaletteMode } from "@mui/material/styles";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { ThemeContext } from "./ThemeContextDef";
 
-interface ThemeContextType {
-  mode: PaletteMode;
-  toggleColorMode: () => void;
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export const useThemeMode = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useThemeMode must be used within a ThemeProvider");
-  }
-  return context;
-};
-
-interface ThemeProviderProps {
-  children: React.ReactNode;
-}
-
-export const ThemeModeProvider: React.FC<ThemeProviderProps> = ({
+export const ThemeModeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [mode, setMode] = useState<PaletteMode>(() => {
-    const savedMode = localStorage.getItem("themeMode");
-    return (savedMode as PaletteMode) || "light";
+  const [mode, setMode] = useState<"light" | "dark">(() => {
+    const saved = localStorage.getItem("themeMode");
+    if (saved === "dark" || saved === "light") return saved;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   });
-
-  const toggleColorMode = () => {
-    const newMode = mode === "light" ? "dark" : "light";
-    setMode(newMode);
-    localStorage.setItem("themeMode", newMode);
-  };
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
+
+  const toggleColorMode = () =>
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
 
   return (
     <ThemeContext.Provider value={{ mode, toggleColorMode }}>
