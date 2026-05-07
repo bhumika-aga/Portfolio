@@ -81,6 +81,7 @@ export const projects: Project[] = [
       "Docker",
     ],
     githubUrl: "https://github.com/bhumika-aga/Mail-Order-Pharmacy",
+    liveUrl: "https://member-portal-xyt4.onrender.com",
     featured: true,
   },
   {
@@ -96,6 +97,7 @@ export const projects: Project[] = [
     ],
     tech: ["Java", "Spring Boot", "React", "TypeScript", "JWT"],
     githubUrl: "https://github.com/bhumika-aga/Hospital-Management-System",
+    liveUrl: "https://healthsync-portal.onrender.com",
     featured: true,
   },
 ];

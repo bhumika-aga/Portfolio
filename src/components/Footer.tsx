@@ -1,4 +1,4 @@
-import { Box, Divider, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { ACCENT, monoFont } from "../theme/theme";
 
@@ -10,11 +10,16 @@ const LINKS = [
 
 const Footer: React.FC = () => {
   const theme = useTheme();
-  const borderColor = theme.palette.mode === "dark" ? "#262626" : "#E5E5E5";
+  const isDark = theme.palette.mode === "dark";
+  const borderColor = isDark ? "#1E1E1E" : "#EBEBEB";
 
   return (
-    <Box component="footer">
-      <Divider />
+    <Box
+      component="footer"
+      sx={{
+        borderTop: `1px solid ${borderColor}`,
+      }}
+    >
       <Box
         sx={{
           maxWidth: 720,
@@ -31,20 +36,15 @@ const Footer: React.FC = () => {
         <Typography
           sx={{
             fontFamily: monoFont,
-            fontSize: "0.75rem",
+            fontSize: "0.6875rem",
             color: "text.secondary",
+            letterSpacing: "0.02em",
           }}
         >
           © {new Date().getFullYear()} Bhumika Agarwal
         </Typography>
 
-        <Box
-          sx={{
-            display: "flex",
-            gap: 0,
-            borderLeft: `1px solid ${borderColor}`,
-          }}
-        >
+        <Box sx={{ display: "flex", gap: 2.5 }}>
           {LINKS.map((link) => (
             <Box
               key={link.label}
@@ -55,18 +55,17 @@ const Footer: React.FC = () => {
                 link.href.startsWith("http") ? "noopener noreferrer" : undefined
               }
               sx={{
-                px: 2,
-                py: 0.5,
                 fontFamily: monoFont,
-                fontSize: "0.75rem",
+                fontSize: "0.6875rem",
+                letterSpacing: "0.02em",
                 color: "text.secondary",
                 textDecoration: "none",
-                borderRight: `1px solid ${borderColor}`,
-                transition: "color 0.15s ease",
+                transition: "color 0.2s ease",
                 "&:hover": { color: ACCENT },
                 "&:focus-visible": {
                   outline: `2px solid ${ACCENT}`,
-                  outlineOffset: -1,
+                  outlineOffset: 2,
+                  borderRadius: "2px",
                 },
               }}
             >
