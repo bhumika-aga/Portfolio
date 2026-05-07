@@ -2,219 +2,126 @@ import { Brightness4, Brightness7 } from "@mui/icons-material";
 import {
   AppBar,
   Box,
-  Button,
   IconButton,
-  Slide,
   Toolbar,
   Typography,
   useScrollTrigger,
+  useTheme,
 } from "@mui/material";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useThemeMode } from "../theme/ThemeContext";
+import { ACCENT } from "../theme/theme";
+import { useThemeMode } from "../theme/useThemeMode";
 
-interface HideOnScrollProps {
-  children: React.ReactElement;
-}
-
-function HideOnScroll({ children }: HideOnScrollProps) {
-  const trigger = useScrollTrigger({
-    target: undefined,
-  });
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
+const NAV_ITEMS = [
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
+  { label: "Projects", path: "/projects" },
+  { label: "Contact", path: "/contact" },
+];
 
 const Navbar: React.FC = () => {
   const location = useLocation();
   const { mode, toggleColorMode } = useThemeMode();
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0,
-  });
-
-  const navItems = [
-    { label: "Home", path: "/" },
-    { label: "About", path: "/about" },
-    { label: "Projects", path: "/projects" },
-    { label: "Contact", path: "/contact" },
-  ];
+  const theme = useTheme();
+  const scrolled = useScrollTrigger({ disableHysteresis: true, threshold: 0 });
+  const borderColor = theme.palette.mode === "dark" ? "#262626" : "#E5E5E5";
 
   return (
-    <HideOnScroll>
-      <AppBar
-        position="fixed"
-        elevation={0}
+    <AppBar
+      position="fixed"
+      elevation={0}
+      sx={{
+        borderBottom: scrolled
+          ? `1px solid ${borderColor}`
+          : "1px solid transparent",
+        transition: "border-color 0.2s ease",
+      }}
+    >
+      <Box
         sx={{
-          background: trigger
-            ? mode === "dark"
-              ? "rgba(28, 28, 30, 0.85)"
-              : "rgba(255, 255, 255, 0.85)"
-            : "transparent",
-          backdropFilter: trigger ? "saturate(180%) blur(20px)" : "none",
-          borderBottom: trigger
-            ? `0.5px solid ${
-                mode === "dark"
-                  ? "rgba(255, 255, 255, 0.13)"
-                  : "rgba(0, 0, 0, 0.04)"
-              }`
-            : "none",
-          transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          zIndex: 1100,
+          maxWidth: 720,
+          mx: "auto",
+          width: "100%",
+          px: { xs: 3, sm: 4 },
         }}
       >
-        <Box
+        <Toolbar
+          disableGutters
           sx={{
-            maxWidth: "1200px",
-            mx: "auto",
-            width: "100%",
-            px: { xs: 1, md: 1.5 },
-            py: 0.25,
+            minHeight: { xs: 48, md: 56 },
+            justifyContent: "space-between",
           }}
         >
-          <Toolbar
-            disableGutters
+          {/* Brand */}
+          <Typography
+            component={Link}
+            to="/"
+            variant="subtitle1"
             sx={{
-              minHeight: { xs: 40, md: 48 },
-              justifyContent: "space-between",
-              alignItems: "center",
+              color: "text.primary",
+              textDecoration: "none",
+              fontWeight: 600,
+              letterSpacing: "-0.01em",
+              transition: "color 0.15s ease",
+              "&:hover": { color: ACCENT },
             }}
           >
-            {/* Logo/Brand */}
-            <Typography
-              variant="h6"
-              component={Link}
-              to="/"
-              sx={{
-                fontWeight: 600,
-                fontSize: { xs: "0.9rem", md: "1rem" },
-                color: "text.primary",
-                textDecoration: "none",
-                letterSpacing: "-0.01em",
-                transition: "all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                "&:hover": {
-                  color: "primary.main",
-                  textDecoration: "none",
-                },
-              }}
-            >
-              Bhumika Agarwal
-            </Typography>
+            Bhumika Agarwal
+          </Typography>
 
-            {/* Navigation Pills */}
+          {/* Nav + Toggle */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: { xs: 1, md: 2 },
+            }}
+          >
             <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-                backgroundColor:
-                  mode === "dark"
-                    ? "rgba(58, 58, 60, 0.8)"
-                    : "rgba(242, 242, 247, 0.9)",
-                backdropFilter: "saturate(180%) blur(20px)",
-                borderRadius: 6,
-                padding: "2px",
-                gap: 1,
-                border: `0.5px solid ${
-                  mode === "dark"
-                    ? "rgba(255, 255, 255, 0.13)"
-                    : "rgba(0, 0, 0, 0.04)"
-                }`,
-                boxShadow:
-                  mode === "dark"
-                    ? "0 2px 8px rgba(0, 0, 0, 0.3)"
-                    : "0 2px 8px rgba(0, 0, 0, 0.08)",
-              }}
+              component="nav"
+              aria-label="Site navigation"
+              sx={{ display: "flex", gap: { xs: 0.5, md: 1 } }}
             >
-              {navItems.map((item) => {
+              {NAV_ITEMS.map((item) => {
                 const isActive = location.pathname === item.path;
                 return (
-                  <Button
+                  <Box
                     key={item.path}
                     component={Link}
                     to={item.path}
                     sx={{
-                      minWidth: 56,
-                      height: 24,
-                      borderRadius: 4,
-                      fontSize: "0.7rem",
+                      px: { xs: 1, md: 1.5 },
+                      py: 0.5,
+                      fontSize: { xs: "0.75rem", md: "0.8125rem" },
                       fontWeight: 500,
-                      color: isActive
-                        ? mode === "dark"
-                          ? "#ffffff"
-                          : "#1D1D1F"
-                        : "text.secondary",
-                      backgroundColor: isActive
-                        ? mode === "dark"
-                          ? "#007AFF"
-                          : "#ffffff"
-                        : "transparent",
-                      boxShadow: isActive
-                        ? mode === "dark"
-                          ? "0 1px 3px rgba(0, 122, 255, 0.4)"
-                          : "0 1px 3px rgba(0, 0, 0, 0.12)"
-                        : "none",
-                      transition:
-                        "all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                      textTransform: "none",
-                      letterSpacing: "-0.003em",
-                      "&:hover": {
-                        backgroundColor: isActive
-                          ? mode === "dark"
-                            ? "#007AFF"
-                            : "#ffffff"
-                          : mode === "dark"
-                            ? "rgba(255, 255, 255, 0.1)"
-                            : "rgba(0, 0, 0, 0.04)",
-                        color: isActive
-                          ? mode === "dark"
-                            ? "#ffffff"
-                            : "#1D1D1F"
-                          : "text.primary",
-                        transform: "translateY(-0.5px)",
-                      },
-                      "&:active": {
-                        transform: "translateY(0)",
+                      color: isActive ? "text.primary" : "text.secondary",
+                      textDecoration: "none",
+                      borderRadius: "4px",
+                      transition: "color 0.15s ease",
+                      "&:hover": { color: isActive ? "text.primary" : ACCENT },
+                      "&:focus-visible": {
+                        outline: `2px solid ${ACCENT}`,
+                        outlineOffset: 2,
                       },
                     }}
                   >
                     {item.label}
-                  </Button>
+                  </Box>
                 );
               })}
             </Box>
 
-            {/* Theme Toggle */}
             <IconButton
               onClick={toggleColorMode}
+              size="small"
+              aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
               sx={{
+                color: "text.secondary",
                 width: 32,
                 height: 32,
-                backgroundColor:
-                  mode === "dark"
-                    ? "rgba(58, 58, 60, 0.6)"
-                    : "rgba(242, 242, 247, 0.8)",
-                backdropFilter: "blur(20px)",
-                border: `0.5px solid ${
-                  mode === "dark"
-                    ? "rgba(255, 255, 255, 0.13)"
-                    : "rgba(0, 0, 0, 0.04)"
-                }`,
-                color: "text.primary",
-                transition: "all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                "&:hover": {
-                  backgroundColor:
-                    mode === "dark"
-                      ? "rgba(90, 200, 250, 0.2)"
-                      : "rgba(0, 122, 255, 0.1)",
-                  color: "primary.main",
-                  transform: "translateY(-1px)",
-                },
-                "&:active": {
-                  transform: "translateY(0)",
-                },
+                "&:hover": { color: ACCENT },
+                transition: "color 0.15s ease",
               }}
             >
               {mode === "dark" ? (
@@ -223,47 +130,10 @@ const Navbar: React.FC = () => {
                 <Brightness4 sx={{ fontSize: 16 }} />
               )}
             </IconButton>
-
-            {/* Mobile Menu (simplified for now) */}
-            <Box sx={{ display: { xs: "flex", md: "none" }, gap: 0.5 }}>
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.path;
-                return (
-                  <Button
-                    key={item.path}
-                    component={Link}
-                    to={item.path}
-                    size="small"
-                    sx={{
-                      minWidth: "auto",
-                      width: 24,
-                      height: 24,
-                      borderRadius: 5,
-                      fontSize: "0.65rem",
-                      fontWeight: 600,
-                      color: isActive ? "primary.main" : "text.secondary",
-                      backgroundColor: isActive
-                        ? "primary.main"
-                        : mode === "dark"
-                          ? "rgba(58, 58, 60, 0.6)"
-                          : "rgba(242, 242, 247, 0.8)",
-                      backdropFilter: "blur(20px)",
-                      transition:
-                        "all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                      "&:hover": {
-                        transform: "translateY(-0.5px)",
-                      },
-                    }}
-                  >
-                    {item.label[0]} {/* First letter only on mobile */}
-                  </Button>
-                );
-              })}
-            </Box>
-          </Toolbar>
-        </Box>
-      </AppBar>
-    </HideOnScroll>
+          </Box>
+        </Toolbar>
+      </Box>
+    </AppBar>
   );
 };
 

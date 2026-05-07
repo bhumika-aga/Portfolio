@@ -1,124 +1,115 @@
-# Portfolio Website - Bhumika Agarwal
+# portfolio
 
-A professional portfolio website showcasing full-stack development expertise with modern React architecture and Apple-inspired design. Features interactive project showcases, comprehensive skill demonstrations, and seamless contact integration for software engineering opportunities.
+[![Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7?logo=render)](https://render.com)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
+[![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
 
-## Tech Stack
+Personal portfolio for Bhumika Agarwal — Software Engineer II at JPMorgan Chase. Focuses on backend systems (Camunda 7
+BPMN, Apache Kafka, Spring Boot), BFSI platform modernization (credit card disputes, bonds trading), and event-driven
+microservice architecture.
 
-- **React 19.1.1** - Frontend framework with concurrent features
-- **TypeScript 4.9.5** - Type-safe development environment
-- **Material-UI 7.3.1** - Apple-inspired component library and design system
-- **EmailJS** - Client-side email integration for contact form
-- **React Router 6.30.1** - Client-side routing and navigation
-- **Emotion 11.14.x** - CSS-in-JS styling and theming
+---
 
-## Live Demo
+## Stack
 
-**Live Portfolio**: [https://bhumika-portfolio-zkq0.onrender.com](https://bhumika-portfolio-zkq0.onrender.com)
+| Layer     | Choice                                                       |
+|-----------|--------------------------------------------------------------|
+| Framework | React 19 + TypeScript (strict)                               |
+| Build     | Vite 5                                                       |
+| UI        | Material-UI 7 + Emotion                                      |
+| Fonts     | Inter (body) · JetBrains Mono (code, labels) via @fontsource |
+| Animation | Framer Motion (entry fades only)                             |
+| Routing   | React Router v6                                              |
+| Deploy    | Render (static site, free tier)                              |
 
-## Key Features
+## Pages
 
-- **Bento Grid Layout**: Dynamic asymmetric project showcase with intelligent content distribution
-- **Centralized Data Management**: Projects stored in separate data file for easy maintenance
-- **Working Contact Form**: Functional email submission powered by EmailJS
-- **Form Validation**: Comprehensive email and input validation on contact form
-- **Smart Button Alignment**: Conditional project buttons with perfect alignment and spacing
-- **Apple-Inspired Design**: Glass morphism effects with smooth transitions
-- **Dark/Light Mode Toggle**: Persistent theme switching with localStorage
-- **Responsive Design**: Mobile-first architecture with breakpoint optimization
-- **Performance Optimized**: Production-ready builds with TypeScript compilation
+| Route       | Content                                  |
+|-------------|------------------------------------------|
+| `/`         | Name, role, positioning, links           |
+| `/about`    | Bio · Experience timeline · Skills table |
+| `/projects` | Regulatory Approval System · UrbanNexus  |
+| `/contact`  | Email · LinkedIn · GitHub · Resume       |
 
-## Quick Start
+## Project structure
 
-### Prerequisites
-
-- Node.js 22+
-- EmailJS Account (Service ID, Template ID, Public Key)
-
-### Installation
-
-```bash
-# Clone repository
-git clone https://github.com/bhumika-aga/portfolio.git
-
-# Navigate to project
-cd portfolio
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-
-# Build for production
-npm run build
-
-# Serve production build locally
-npm run serve
+```
+portfolio/
+├── index.html              # Vite entry point (meta, OG tags)
+├── vite.config.ts
+├── tsconfig.json
+├── public/
+│   ├── _redirects          # Render SPA routing rule
+│   ├── Bhumika_Agarwal_Resume.pdf
+│   ├── manifest.json
+│   ├── robots.txt
+│   ├── sitemap.xml
+│   ├── og.png              # 1200×630 OG image (see TODOs)
+│   ├── favicon.ico         # see TODOs
+│   ├── apple-touch-icon.png
+│   └── screenshots/        # home.png + projects.png added post-deploy
+└── src/
+    ├── main.tsx
+    ├── App.tsx
+    ├── components/
+    │   ├── Navbar.tsx
+    │   └── Footer.tsx
+    ├── data/
+    │   ├── experience.ts
+    │   ├── projects.ts
+    │   └── skills.ts
+    ├── pages/
+    │   ├── Home.tsx
+    │   ├── About.tsx
+    │   ├── Projects.tsx
+    │   └── Contact.tsx
+    └── theme/
+        ├── theme.ts        # tokens, component overrides
+        └── ThemeContext.tsx
 ```
 
-## EmailJS Configuration
+## Local development
 
-To enable the Contact Form, ensure you have set up your EmailJS account and configured the service with the following template variables:
-
-- `{{name}}`
-- `{{email}}`
-- `{{subject}}`
-- `{{message}}`
-
-## Project Structure
-
-```txt
-portfolio/
-├── src/
-│   ├── components/
-│   │   ├── Footer.tsx          # Footer with social links and scroll-to-top
-│   │   └── Navbar.tsx          # Navigation with theme toggle
-│   ├── data/
-│   │   └── projects.ts         # Centralized project data (Source of Truth)
-│   ├── pages/
-│   │   ├── Home.tsx            # Hero landing page with animations
-│   │   ├── About.tsx           # Professional timeline and skills
-│   │   ├── Projects.tsx        # Bento grid portfolio showcase
-│   │   └── Contact.tsx         # Contact form with EmailJS integration
-│   ├── services/
-│   │   └── githubService.ts    # Data handling service
-│   ├── theme/
-│   │   ├── ThemeContext.tsx    # Dark/light mode context
-│   │   └── theme.ts            # Material-UI theme configuration
-│   ├── App.tsx                 # Main application component
-│   └── index.tsx               # Application entry point
-├── public/
-│   └── Bhumika_Agarwal_Resume.pdf
-├── render.yaml                 # Render.com deployment config
-├── README.md                   # Project documentation
-└── DEPLOYMENT.md               # Deployment guide
+```bash
+# requires Node 20 (see .nvmrc)
+nvm use
+npm install
+npm run dev       # http://localhost:5173
+npm run build     # output → dist/
+npm run preview   # serve dist/ locally
+npm run type-check
+npm run lint
 ```
 
 ## Deployment
 
-Optimized for **Render.com** deployment with included `render.yaml` configuration:
+**Render (static site):**
 
-- **Build Command**: `npm install && npm run build`
-- **Start Command**: `serve -s build -p $PORT`
-- **Node Version**: 22
-- **Auto-deploy**: Enabled via GitHub integration
+1. Connect the GitHub repo at [render.com/new](https://render.com/new).
+2. Choose **Static Site**.
+3. Build command: `npm install && npm run build`
+4. Publish directory: `dist`
+5. No environment variables required.
 
-## Design Philosophy
+Client-side routing is handled by `public/_redirects` — Render rewrites all paths to `/index.html`.
 
-This portfolio follows Apple's design principles with clean typography, generous whitespace, and intuitive navigation. The centered layout approach ensures optimal content consumption across all devices while maintaining visual hierarchy and user engagement.
+Note: Render free tier static sites have no cold-start delay (unlike free web services). First-load performance is fast.
 
-## Architecture Decisions
+## Design notes
 
-A deep dive into the system design:
+- Background: `#0A0A0A` dark / `#FAFAFA` light
+- Text: `#E5E5E5` dark / `#171717` light · dim: `#737373`
+- Accent `#34D399` used only on hover/focus/active states
+- Cards: 1px border, no shadow, no backdrop-filter
+- Container max-width: 720px
+- Fonts loaded via @fontsource — no external network requests
 
-1. **Centralized Project Data**: Projects are stored in `src/data/projects.ts` for easy maintenance and scalability
-2. **Component Separation**: UI components are separated from page components for better code organization
-3. **Theme Context**: Custom React Context for theme management with localStorage persistence
-4. **Form Validation**: Client-side validation with comprehensive error handling
-5. **Responsive Bento Grid**: CSS Grid-based layout that adapts to content and screen size
-6. **Dynamic Rendering Logic**: Automated layout calculations for asymmetric grid designs
-7. **Contact System Implementation**: Serverless email transmission using EmailJS with secure credential management
+## Screenshots
 
----
+`public/screenshots/home.png` and `public/screenshots/projects.png` will be
+added after the first production deploy.
 
-**Built by Bhumika Agarwal** | [Live Demo](https://bhumika-portfolio-zkq0.onrender.com) | [GitHub Repository](https://github.com/bhumika-aga/portfolio)
+## License
+
+MIT — see [LICENSE](./LICENSE).

@@ -1,12 +1,7 @@
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
 import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import About from "./pages/About";
@@ -14,7 +9,8 @@ import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
 import { getTheme } from "./theme/theme";
-import { ThemeModeProvider, useThemeMode } from "./theme/ThemeContext";
+import { ThemeModeProvider } from "./theme/ThemeContext";
+import { useThemeMode } from "./theme/useThemeMode";
 
 const AppContent: React.FC = () => {
   const { mode } = useThemeMode();
@@ -28,7 +24,7 @@ const AppContent: React.FC = () => {
           sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
         >
           <Navbar />
-          <Box component="main" sx={{ flex: 1 }}>
+          <Box component="main" sx={{ flex: 1, pt: "56px" }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -43,12 +39,10 @@ const AppContent: React.FC = () => {
   );
 };
 
-function App() {
-  return (
-    <ThemeModeProvider>
-      <AppContent />
-    </ThemeModeProvider>
-  );
-}
+const App: React.FC = () => (
+  <ThemeModeProvider>
+    <AppContent />
+  </ThemeModeProvider>
+);
 
 export default App;
