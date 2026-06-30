@@ -45,6 +45,7 @@ export const projects: Project[] = [
       "Three role-isolated portals with JWT-based authentication",
       "Transactional booking engine with automated technician matching",
       "JPA @PrePersist hooks for tax and audit-field automation",
+      "25+ REST endpoints with audit trails and overdue-payment automation",
       "Dual-mode H2/MySQL deployment",
     ],
     tech: [

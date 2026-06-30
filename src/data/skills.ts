@@ -11,27 +11,22 @@ export const skills: SkillRow[] = [
   {
     category: "Backend",
     items:
-      "Spring Boot · Spring Security · Spring Data JPA · Hibernate · REST APIs · Microservices · Camunda 7 (BPMN) · JWT · RBAC",
+      "Spring Boot · Camunda 7 (BPMN) · Java Task Handlers · Spring Security · Spring Data JPA · Hibernate · REST APIs · Microservices · JWT · RBAC",
   },
   {
     category: "Frontend",
-    items: "React.js · TypeScript · Material-UI · HTML5 · CSS3",
+    items: "React · TypeScript · JavaScript · Material-UI · HTML5 · CSS3",
   },
   {
-    category: "Data & Messaging",
-    items: "MySQL · MongoDB · Apache Kafka · Event-Driven Architecture",
+    category: "Databases",
+    items: "PostgreSQL · MySQL · Query Optimization",
   },
   {
     category: "Cloud & DevOps",
-    items:
-      "AWS (ECS, EC2, S3, Route 53) · Docker · Blue-Green Deployment · IaC · GitHub Actions · Jenkins · Maven",
+    items: "AWS · Terraform (IaC) · Docker · GitHub Actions · Jenkins · Maven",
   },
   {
-    category: "Observability",
-    items: "Splunk · Dynatrace",
-  },
-  {
-    category: "Testing",
-    items: "JUnit 5 · Mockito",
+    category: "AI & Testing",
+    items: "AI Agents (Claude, GitHub Copilot) · JUnit 5 · Mockito",
   },
 ];

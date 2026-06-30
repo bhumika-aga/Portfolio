@@ -9,14 +9,14 @@ Personal portfolio for Bhumika Agarwal — Software Engineer II at JPMorgan Chas
 BPMN, Apache Kafka, Spring Boot), BFSI platform modernization (credit card disputes, bonds trading), and event-driven
 microservice architecture.
 
-**Live:** https://bhumika-portfolio-zkq0.onrender.com/
+**Live:** <https://bhumika-portfolio-zkq0.onrender.com/>
 
 ---
 
 ## Stack
 
 | Layer     | Choice                                                       | Why                                                                            |
-|-----------|--------------------------------------------------------------|--------------------------------------------------------------------------------|
+| --------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | Framework | React 19 + TypeScript (strict)                               | Component model + type safety without runtime overhead                         |
 | Build     | Vite 5                                                       | Native ESM dev server, <3s cold build, tree-shaking, explicit chunk splitting  |
 | UI        | Material-UI 7 + Emotion                                      | Mature component primitives, theme system, `sx` prop avoids class-name leakage |
@@ -30,7 +30,7 @@ microservice architecture.
 ## Pages
 
 | Route       | Content                                  |
-|-------------|------------------------------------------|
+| ----------- | ---------------------------------------- |
 | `/`         | Name, role, positioning, inline links    |
 | `/about`    | Bio · Experience timeline · Skills table |
 | `/projects` | Regulatory Approval System · UrbanNexus  |
@@ -46,7 +46,7 @@ Vite uses [native ES modules](https://vitejs.dev/guide/why.html) in development 
 for production. `vite.config.ts` defines explicit `manualChunks` so the browser can cache vendor code independently of
 app code:
 
-```
+```txt
 vendor  → react, react-dom, react-router-dom   (~7.7 kB gzip)
 mui     → @mui/material, @mui/icons-material,
           @emotion/react, @emotion/styled        (~49.7 kB gzip)
@@ -65,7 +65,7 @@ The theme lives in `src/theme/theme.ts` and is parameterised by `PaletteMode` (`
 **Token decisions:**
 
 | Token         | Dark      | Light     | Rationale                                          |
-|---------------|-----------|-----------|----------------------------------------------------|
+| ------------- | --------- | --------- | -------------------------------------------------- |
 | Background    | `#0A0A0A` | `#FAFAFA` | Near-black / near-white; avoids pure `#000`/`#fff` |
 | Paper (cards) | `#111111` | `#FFFFFF` | One step lighter than background for depth         |
 | Text primary  | `#E5E5E5` | `#171717` | AA contrast on both backgrounds                    |
@@ -99,7 +99,7 @@ and to avoid circular imports.
 `BrowserRouter` wraps the whole app. Client-side navigation is handled by React Router v6 `<Routes>`. Deep-link support
 on Render is handled by `public/_redirects`:
 
-```
+```txt
 /* /index.html 200
 ```
 
@@ -109,9 +109,9 @@ Page transitions use Framer Motion's `AnimatePresence`:
 
 ```tsx
 <AnimatePresence mode="wait">
-    <motion.div key={location.pathname} variants={pageVariants}>
-        <Routes location={location}>...</Routes>
-    </motion.div>
+  <motion.div key={location.pathname} variants={pageVariants}>
+    <Routes location={location}>...</Routes>
+  </motion.div>
 </AnimatePresence>
 ```
 
@@ -134,7 +134,7 @@ No transforms beyond `y` translation (no scale, no rotate). No continuous loops.
 
 All content lives in typed objects under `src/data/`:
 
-```
+```txt
 experience.ts   → Experience[]   (company, role, location, period, bullets, stack)
 projects.ts     → Project[]      (title, description, tech, githubUrl, liveUrl?)
 skills.ts       → SkillRow[]     (category, items)
@@ -149,7 +149,7 @@ Defining content in typed structures rather than JSX means:
 ### 7. Typography scale
 
 | Variant     | Size      | Weight | Tracking   | Use                       |
-|-------------|-----------|--------|------------|---------------------------|
+| ----------- | --------- | ------ | ---------- | ------------------------- |
 | `h1`        | 3.25rem   | 700    | `−0.04em`  | Hero name                 |
 | `h2`        | 1.5rem    | 600    | `−0.02em`  | Section headings          |
 | `h3`        | 1.0625rem | 600    | `−0.01em`  | Card titles               |
@@ -170,10 +170,10 @@ Only the weights actually used in the theme are imported:
 
 ```ts
 // main.tsx
-import "@fontsource/inter/400.css";   // body
-import "@fontsource/inter/500.css";   // subtitle
-import "@fontsource/inter/600.css";   // headings h2–h4
-import "@fontsource/inter/700.css";   // h1
+import "@fontsource/inter/400.css"; // body
+import "@fontsource/inter/500.css"; // subtitle
+import "@fontsource/inter/600.css"; // headings h2–h4
+import "@fontsource/inter/700.css"; // h1
 import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/700.css";
 ```
@@ -181,7 +181,7 @@ import "@fontsource/jetbrains-mono/700.css";
 ### 9. Shared components
 
 | Component      | File                              | Used by                    |
-|----------------|-----------------------------------|----------------------------|
+| -------------- | --------------------------------- | -------------------------- |
 | `Navbar`       | `src/components/Navbar.tsx`       | `App.tsx` (always visible) |
 | `Footer`       | `src/components/Footer.tsx`       | `App.tsx` (always visible) |
 | `SectionLabel` | `src/components/SectionLabel.tsx` | About, Projects, Contact   |
@@ -219,7 +219,7 @@ The `og:image` references `/og.png` — see TODOs below.
 
 ## Project structure
 
-```
+```txt
 portfolio/
 ├── index.html                  # Vite entry point — all meta/OG tags
 ├── vite.config.ts              # Build config, manual chunk splitting
@@ -306,7 +306,7 @@ to `/about` directly returns a 200 with the SPA shell).
 ## TODOs (manual, post-deploy)
 
 | Item                                           | Why manual                                                                                                                                                                                                                                                               |
-|------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `public/og.png` (1200×630)                     | Requires a browser/canvas render or design tool — cannot be generated at build time without adding a build dependency (sharp, puppeteer). Create in Figma/Canva: `#0A0A0A` background, "Bhumika Agarwal" in JetBrains Mono Bold centered, title beneath, `#34D399` rule. |
 | `public/favicon.ico` + `apple-touch-icon.png`  | Binary assets — export from the same design.                                                                                                                                                                                                                             |
 | `public/screenshots/home.png` + `projects.png` | Take after first deploy; update README image links.                                                                                                                                                                                                                      |

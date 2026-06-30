@@ -2,6 +2,7 @@ import { Box, Chip, Divider, Typography, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
 import SectionLabel from "../components/SectionLabel";
+import { education } from "../data/education";
 import { experience } from "../data/experience";
 import { skills } from "../data/skills";
 import {
@@ -43,17 +44,17 @@ const About: React.FC = () => {
           <Typography variant="body1" sx={{ color: "text.secondary" }}>
             I&apos;m a Software Engineer II at JPMorgan Chase, working on BFSI
             platforms — credit card disputes and bonds trading — where I focus
-            on modernizing legacy systems into resilient, event-driven
+            on modernizing legacy systems into resilient, maintainable
             microservice architectures.
           </Typography>
 
           <Typography variant="body1" sx={{ color: "text.secondary" }}>
-            Day-to-day, I work across Camunda 7 BPMN workflows and Java External
-            Task Workers for the credit card dispute platform, SOAP-to-REST
-            modernization with Kafka SaaS as the asynchronous backbone,
-            infrastructure as code with Blue-Green deployment pipelines, and
-            React-side feature work plus P1 incident response on the bonds
-            trading platform.
+            Day-to-day, I build Java task handlers on Camunda 7 BPMN workflows
+            for a credit card dispute platform that resolves 10,000+ cases a
+            month, re-platform legacy Pega workflows into modern Java — using AI
+            agents to accelerate the analysis — and provision AWS through
+            Terraform-based infrastructure as code, alongside React + TypeScript
+            feature work on the bonds-trading platform.
           </Typography>
 
           <Typography variant="body1" sx={{ color: "text.secondary" }}>
@@ -99,8 +100,15 @@ const About: React.FC = () => {
                 border: `1px solid ${glassBorder(isDark ? "dark" : "light")}`,
                 borderRadius: "10px",
                 p: { xs: 2.5, md: 3.5 },
-                transition: "border-color 0.2s ease, background 0.2s ease",
-                "&:hover": { borderColor: ACCENT },
+                transition:
+                  "border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease",
+                "&:hover": {
+                  borderColor: ACCENT,
+                  transform: "translateY(-2px)",
+                  boxShadow: isDark
+                    ? "0 10px 30px -12px rgba(52,211,153,0.25)"
+                    : "0 10px 30px -14px rgba(52,211,153,0.3)",
+                },
               }}
             >
               {/* Header row */}
@@ -263,6 +271,82 @@ const About: React.FC = () => {
                   {row.items}
                 </Typography>
               </Box>
+            </Box>
+          ))}
+        </Box>
+      </motion.div>
+
+      <Divider sx={{ my: { xs: 6, md: 8 } }} />
+
+      {/* Education */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
+      >
+        <SectionLabel>Education</SectionLabel>
+        <Typography variant="h2" sx={{ mb: 5, color: "text.primary" }}>
+          Academics
+        </Typography>
+
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+          {education.map((edu) => (
+            <Box
+              key={edu.id}
+              sx={{
+                ...glassBg(isDark ? "dark" : "light"),
+                border: `1px solid ${glassBorder(isDark ? "dark" : "light")}`,
+                borderRadius: "10px",
+                p: { xs: 2.5, md: 3.5 },
+                transition:
+                  "border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease",
+                "&:hover": {
+                  borderColor: ACCENT,
+                  transform: "translateY(-2px)",
+                  boxShadow: isDark
+                    ? "0 10px 30px -12px rgba(52,211,153,0.25)"
+                    : "0 10px 30px -14px rgba(52,211,153,0.3)",
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  flexWrap: "wrap",
+                  gap: 1,
+                  mb: 0.5,
+                }}
+              >
+                <Typography variant="h3" sx={{ color: "text.primary" }}>
+                  {edu.degree}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontFamily: monoFont,
+                    fontSize: "0.6875rem",
+                    color: "text.secondary",
+                    flexShrink: 0,
+                    mt: 0.25,
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  {edu.period}
+                </Typography>
+              </Box>
+
+              <Typography
+                sx={{
+                  fontFamily: monoFont,
+                  fontSize: "0.75rem",
+                  color: ACCENT,
+                  letterSpacing: "0.01em",
+                }}
+              >
+                {edu.institution} · {edu.location}
+              </Typography>
             </Box>
           ))}
         </Box>

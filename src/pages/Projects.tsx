@@ -63,11 +63,14 @@ const Projects: React.FC = () => {
                   border: `1px solid ${isExpanded ? ACCENT : borderColor}`,
                   borderRadius: "10px",
                   overflow: "hidden",
-                  transition: "border-color 0.2s ease",
+                  transition:
+                    "border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease",
                   "&:hover": {
-                    borderColor: isExpanded
-                      ? ACCENT
-                      : theme.palette.text.secondary,
+                    borderColor: ACCENT,
+                    transform: "translateY(-2px)",
+                    boxShadow: isDark
+                      ? "0 10px 30px -12px rgba(52,211,153,0.22)"
+                      : "0 10px 30px -14px rgba(52,211,153,0.28)",
                   },
                 }}
               >
