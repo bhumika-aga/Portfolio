@@ -10,22 +10,21 @@ const LINKS = [
 
 const Footer: React.FC = () => {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-  const borderColor = isDark ? "#1E1E1E" : "#EBEBEB";
 
   return (
     <Box
       component="footer"
       sx={{
-        borderTop: `1px solid ${borderColor}`,
+        mt: { xs: 8, md: 14 },
+        borderTop: `1px solid ${theme.palette.divider}`,
       }}
     >
       <Box
         sx={{
-          maxWidth: 720,
+          maxWidth: 1120,
           mx: "auto",
-          px: { xs: 3, sm: 4 },
-          py: 3,
+          px: { xs: 3, sm: 4, md: 6 },
+          py: 4,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -35,16 +34,16 @@ const Footer: React.FC = () => {
       >
         <Typography
           sx={{
-            fontFamily: monoFont,
-            fontSize: "0.6875rem",
-            color: "text.secondary",
-            letterSpacing: "0.02em",
+            fontWeight: 700,
+            fontSize: "1rem",
+            letterSpacing: "-0.03em",
+            color: "text.primary",
           }}
         >
-          © {new Date().getFullYear()} Bhumika Agarwal
+          Bhumika Agarwal
         </Typography>
 
-        <Box sx={{ display: "flex", gap: 2.5 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2.5 }}>
           {LINKS.map((link) => (
             <Box
               key={link.label}
@@ -56,7 +55,7 @@ const Footer: React.FC = () => {
               }
               sx={{
                 fontFamily: monoFont,
-                fontSize: "0.6875rem",
+                fontSize: "0.75rem",
                 letterSpacing: "0.02em",
                 color: "text.secondary",
                 textDecoration: "none",
@@ -73,6 +72,19 @@ const Footer: React.FC = () => {
             </Box>
           ))}
         </Box>
+
+        <Typography
+          sx={{
+            fontFamily: monoFont,
+            fontSize: "0.6875rem",
+            color: "text.secondary",
+            letterSpacing: "0.02em",
+            width: { xs: "100%", md: "auto" },
+            textAlign: { xs: "left", md: "right" },
+          }}
+        >
+          © {new Date().getFullYear()} · Built with precision.
+        </Typography>
       </Box>
     </Box>
   );

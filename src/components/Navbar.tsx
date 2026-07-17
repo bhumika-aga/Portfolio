@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ACCENT } from "../theme/theme";
+import { ACCENT, accentGlow } from "../theme/theme";
 import { useThemeMode } from "../theme/useThemeMode";
 
 const NAV_ITEMS = [
@@ -24,11 +24,9 @@ const Navbar: React.FC = () => {
   const { mode, toggleColorMode } = useThemeMode();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-  const borderColor = isDark ? "#1E1E1E" : "#EBEBEB";
 
   return (
     <AppBar position="fixed" elevation={0}>
-      {/* Bottom border */}
       <Box
         sx={{
           position: "absolute",
@@ -36,21 +34,21 @@ const Navbar: React.FC = () => {
           left: 0,
           right: 0,
           height: "1px",
-          backgroundColor: borderColor,
+          backgroundColor: theme.palette.divider,
         }}
       />
       <Box
         sx={{
-          maxWidth: 720,
+          maxWidth: 1120,
           mx: "auto",
           width: "100%",
-          px: { xs: 3, sm: 4 },
+          px: { xs: 3, sm: 4, md: 6 },
         }}
       >
         <Toolbar
           disableGutters
           sx={{
-            minHeight: { xs: 48, md: 56 },
+            minHeight: { xs: 56, md: 64 },
             justifyContent: "space-between",
           }}
         >
@@ -58,13 +56,12 @@ const Navbar: React.FC = () => {
           <Typography
             component={Link}
             to="/"
-            variant="subtitle1"
             sx={{
               color: "text.primary",
               textDecoration: "none",
-              fontWeight: 600,
-              letterSpacing: "-0.02em",
-              fontSize: "0.875rem",
+              fontWeight: 700,
+              letterSpacing: "-0.03em",
+              fontSize: "1rem",
               transition: "color 0.2s ease",
               "&:hover": { color: ACCENT },
             }}
@@ -72,7 +69,7 @@ const Navbar: React.FC = () => {
             Bhumika Agarwal
           </Typography>
 
-          {/* Nav + Toggle */}
+          {/* Nav + CTA + Toggle */}
           <Box
             sx={{
               display: "flex",
@@ -95,15 +92,15 @@ const Navbar: React.FC = () => {
                     sx={{
                       px: { xs: 1.25, md: 1.5 },
                       py: 0.75,
-                      fontSize: { xs: "0.75rem", md: "0.8125rem" },
+                      fontSize: { xs: "0.8125rem", md: "0.875rem" },
                       fontWeight: isActive ? 600 : 500,
-                      color: isActive ? "text.primary" : "text.secondary",
+                      color: isActive ? ACCENT : "text.secondary",
                       textDecoration: "none",
                       borderRadius: "6px",
                       position: "relative",
                       transition: "color 0.2s ease",
                       "&:hover": {
-                        color: isActive ? "text.primary" : ACCENT,
+                        color: ACCENT,
                       },
                       "&:focus-visible": {
                         outline: `2px solid ${ACCENT}`,
@@ -116,7 +113,7 @@ const Navbar: React.FC = () => {
                           bottom: -1,
                           left: "50%",
                           transform: "translateX(-50%)",
-                          width: 16,
+                          width: 18,
                           height: "2px",
                           borderRadius: "1px",
                           backgroundColor: ACCENT,
@@ -130,23 +127,58 @@ const Navbar: React.FC = () => {
               })}
             </Box>
 
+            {/* Blue CTA — matches the design's "Hire Me" pill */}
+            <Box
+              component={Link}
+              to="/contact"
+              sx={{
+                display: { xs: "none", sm: "inline-flex" },
+                alignItems: "center",
+                ml: 1,
+                px: 2,
+                py: 0.875,
+                borderRadius: "8px",
+                backgroundColor: ACCENT,
+                color: "#FFFFFF",
+                fontSize: "0.8125rem",
+                fontWeight: 600,
+                letterSpacing: "-0.01em",
+                textDecoration: "none",
+                boxShadow: `0 4px 14px ${accentGlow(0.3)}`,
+                transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                "&:hover": {
+                  transform: "translateY(-1px)",
+                  boxShadow: `0 6px 20px ${accentGlow(0.4)}`,
+                },
+                "&:focus-visible": {
+                  outline: `2px solid ${ACCENT}`,
+                  outlineOffset: 2,
+                },
+              }}
+            >
+              Get in touch
+            </Box>
+
             <IconButton
               onClick={toggleColorMode}
               size="small"
               aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
               sx={{
                 color: "text.secondary",
-                width: 32,
-                height: 32,
+                width: 34,
+                height: 34,
                 ml: 0.5,
-                "&:hover": { color: ACCENT, backgroundColor: "transparent" },
+                "&:hover": {
+                  color: ACCENT,
+                  backgroundColor: isDark ? accentGlow(0.08) : accentGlow(0.06),
+                },
                 transition: "color 0.2s ease",
               }}
             >
               {mode === "dark" ? (
-                <Brightness7 sx={{ fontSize: 15 }} />
+                <Brightness7 sx={{ fontSize: 16 }} />
               ) : (
-                <Brightness4 sx={{ fontSize: 15 }} />
+                <Brightness4 sx={{ fontSize: 16 }} />
               )}
             </IconButton>
           </Box>

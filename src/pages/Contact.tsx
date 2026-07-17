@@ -3,13 +3,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
 import SectionLabel from "../components/SectionLabel";
-import {
-  ACCENT,
-  EASE_OUT_EXPO,
-  glassBg,
-  glassBorder,
-  monoFont,
-} from "../theme/theme";
+import { ACCENT, accentGlow, EASE_OUT_EXPO, monoFont } from "../theme/theme";
 
 const CONTACT_ITEMS = [
   {
@@ -75,9 +69,9 @@ const Contact: React.FC = () => {
 
         <Box
           sx={{
-            ...glassBg(isDark ? "dark" : "light"),
-            border: `1px solid ${glassBorder(isDark ? "dark" : "light")}`,
-            borderRadius: "10px",
+            backgroundColor: "background.paper",
+            border: `1px solid ${theme.palette.divider}`,
+            borderRadius: "16px",
             overflow: "hidden",
           }}
         >
@@ -100,16 +94,14 @@ const Contact: React.FC = () => {
                   py: { xs: 2, md: 2.25 },
                   borderBottom:
                     i < CONTACT_ITEMS.length - 1
-                      ? `1px solid ${glassBorder(isDark ? "dark" : "light")}`
+                      ? `1px solid ${theme.palette.divider}`
                       : "none",
                   textDecoration: "none",
                   color: "text.secondary",
                   transition: "color 0.2s ease, background-color 0.2s ease",
                   "&:hover": {
                     color: ACCENT,
-                    backgroundColor: isDark
-                      ? "rgba(52,211,153,0.035)"
-                      : "rgba(52,211,153,0.03)",
+                    backgroundColor: accentGlow(isDark ? 0.05 : 0.035),
                   },
                   "&:focus-visible": {
                     outline: `2px solid ${ACCENT}`,

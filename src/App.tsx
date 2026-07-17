@@ -64,7 +64,7 @@ const AppContent: React.FC = () => {
             component="main"
             sx={{
               flex: 1,
-              pt: "56px",
+              pt: { xs: "56px", md: "64px" },
               display: "flex",
               flexDirection: "column",
             }}

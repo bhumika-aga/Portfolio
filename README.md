@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
 
 Personal portfolio for Bhumika Agarwal — Software Engineer II at JPMorgan Chase. Focuses on backend systems (Camunda 7
-BPMN, Apache Kafka, Spring Boot), BFSI platform modernization (credit card disputes, bonds trading), and event-driven
-microservice architecture.
+BPMN, Spring Boot, Microservices), BFSI platform modernization (credit card disputes), and cloud infrastructure (AWS,
+Terraform). Built around a minimalist blue design system with a dark/light theme and bento-grid project layouts.
 
 **Live:** <https://bhumika-portfolio-zkq0.onrender.com/>
 
@@ -16,7 +16,7 @@ microservice architecture.
 ## Stack
 
 | Layer     | Choice                                                       | Why                                                                            |
-| --------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+|-----------|--------------------------------------------------------------|--------------------------------------------------------------------------------|
 | Framework | React 19 + TypeScript (strict)                               | Component model + type safety without runtime overhead                         |
 | Build     | Vite 5                                                       | Native ESM dev server, <3s cold build, tree-shaking, explicit chunk splitting  |
 | UI        | Material-UI 7 + Emotion                                      | Mature component primitives, theme system, `sx` prop avoids class-name leakage |
@@ -29,12 +29,15 @@ microservice architecture.
 
 ## Pages
 
-| Route       | Content                                  |
-| ----------- | ---------------------------------------- |
-| `/`         | Name, role, positioning, inline links    |
-| `/about`    | Bio · Experience timeline · Skills table |
-| `/projects` | Regulatory Approval System · UrbanNexus  |
-| `/contact`  | Email · LinkedIn · GitHub · Resume PDF   |
+| Route       | Content                                                                           |
+|-------------|-----------------------------------------------------------------------------------|
+| `/`         | Hero (status pill, headline, CTAs) · Featured Work bento · Core Stack list        |
+| `/about`    | Bio · Philosophy cards · Experience · Technical arsenal table · Academics         |
+| `/projects` | "Systems & Architecture" bento — 5 projects, featured card with animated terminal |
+| `/contact`  | Email · LinkedIn · GitHub · Resume PDF                                            |
+
+**Featured projects** (`src/data/projects.ts`): Regulatory Approval System · MediFlow · UrbanNexus · HealthSync · Exam
+Portal — all deployed, each mapped to an icon via `src/components/projectIcons.tsx`.
 
 ---
 
@@ -49,9 +52,9 @@ app code:
 ```txt
 vendor  → react, react-dom, react-router-dom   (~7.7 kB gzip)
 mui     → @mui/material, @mui/icons-material,
-          @emotion/react, @emotion/styled        (~49.7 kB gzip)
+          @emotion/react, @emotion/styled        (~50.6 kB gzip)
 motion  → framer-motion                         (~37.8 kB gzip)
-index   → application code                      (~63.5 kB gzip)
+index   → application code                      (~66.9 kB gzip)
 ```
 
 @emotion packages are co-located with `mui` because they are MUI's styling engine — putting them together ensures a
@@ -64,14 +67,17 @@ The theme lives in `src/theme/theme.ts` and is parameterised by `PaletteMode` (`
 
 **Token decisions:**
 
-| Token         | Dark      | Light     | Rationale                                          |
-| ------------- | --------- | --------- | -------------------------------------------------- |
-| Background    | `#0A0A0A` | `#FAFAFA` | Near-black / near-white; avoids pure `#000`/`#fff` |
-| Paper (cards) | `#111111` | `#FFFFFF` | One step lighter than background for depth         |
-| Text primary  | `#E5E5E5` | `#171717` | AA contrast on both backgrounds                    |
-| Text dim      | `#737373` | same      | Secondary content, labels                          |
-| Border        | `#1E1E1E` | `#E8E8E8` | Subtle, non-harsh separation                       |
-| Accent        | `#34D399` | same      | Used **only** on hover/focus/active — never static |
+| Token         | Dark      | Light     | Rationale                                       |
+|---------------|-----------|-----------|-------------------------------------------------|
+| Background    | `#0A0A0A` | `#FBF9F8` | Near-black / warm near-white; avoids pure black |
+| Paper (cards) | `#111111` | `#FFFFFF` | One step lighter than background for depth      |
+| Text primary  | `#E8E8E8` | `#1B1C1C` | AA contrast on both backgrounds                 |
+| Text dim      | `#8B8B8B` | `#414754` | Secondary content, labels                       |
+| Divider       | `#232323` | `#E4E2E2` | Subtle, non-harsh separation                    |
+| Accent        | `#0070F3` | same      | Vibrant blue — used for CTAs, highlights, hover |
+
+The accent is exported from `theme.ts` as `ACCENT` alongside `ACCENT_RGB` and an `accentGlow(alpha)` helper, so every
+blue tint (button shadows, hover backgrounds, card glows, the terminal card) derives from one source of truth.
 
 `EASE_OUT_EXPO = [0.16, 1, 0.3, 1]` is exported alongside theme tokens so every Framer Motion transition uses the same
 cubic-bezier — fast deceleration, feels intentional.
@@ -80,7 +86,7 @@ cubic-bezier — fast deceleration, feels intentional.
 
 - `MuiCssBaseline` — smooth scroll, focus rings, custom scrollbar
 - `MuiAppBar` — backdrop-filter blur (20px, saturate 180%), semi-transparent background
-- `MuiChip` — monospace font, muted border, no fill
+- `MuiChip` — monospace font, accent-tinted fill (`accentGlow`), accent text, no border
 - `MuiDivider` — border colour from palette
 
 Unused MUI components (Card, Button, Link) have no overrides — there is nothing to override.
@@ -122,10 +128,11 @@ Page transitions use Framer Motion's `AnimatePresence`:
 
 All motion follows one rule: **entry only, no continuous animation**.
 
-- **Hero** (`/`): Staggered `containerVariants` with `staggerChildren: 0.1` — three children (label, name, body, links)
-  each animate `{ opacity: 0, y: 24 } → { opacity: 1, y: 0 }` with `EASE_OUT_EXPO`.
-- **Scroll sections** (`/about`, `/projects`): `whileInView` + `viewport: { once: true }` so each card/section fades in
-  once when it enters the viewport, never re-triggers.
+- **Hero** (`/`): Staggered `containerVariants` with `staggerChildren` — each child (status pill, headline, body,
+  buttons) animates `{ opacity: 0, y: 24 } → { opacity: 1, y: 0 }` with `EASE_OUT_EXPO`.
+- **Scroll sections** (`/`, `/about`, `/projects`): `whileInView` + `viewport: { once: true }` so each card/section
+  fades in once when it enters the viewport, never re-triggers. Bento cards use `Box component={motion.div}` for the
+  entrance and an inner box for the hover lift, so the two transforms never conflict.
 - **Page transitions**: Opacity fade, 250ms in / 150ms out.
 
 No transforms beyond `y` translation (no scale, no rotate). No continuous loops. No autoplay.
@@ -136,8 +143,9 @@ All content lives in typed objects under `src/data/`:
 
 ```txt
 experience.ts   → Experience[]   (company, role, location, period, bullets, stack)
-projects.ts     → Project[]      (title, description, tech, githubUrl, liveUrl?)
+projects.ts     → Project[]      (title, tagline, description, highlights, tech, githubUrl, liveUrl?, featured?, icon, terminalLines?)
 skills.ts       → SkillRow[]     (category, items)
+education.ts    → Education[]    (institution, degree, location, period, coursework?)
 ```
 
 Defining content in typed structures rather than JSX means:
@@ -148,14 +156,15 @@ Defining content in typed structures rather than JSX means:
 
 ### 7. Typography scale
 
-| Variant     | Size      | Weight | Tracking   | Use                       |
-| ----------- | --------- | ------ | ---------- | ------------------------- |
-| `h1`        | 3.25rem   | 700    | `−0.04em`  | Hero name                 |
-| `h2`        | 1.5rem    | 600    | `−0.02em`  | Section headings          |
-| `h3`        | 1.0625rem | 600    | `−0.01em`  | Card titles               |
-| `body1`     | 0.9375rem | 400    | `−0.003em` | Main prose                |
-| `body2`     | 0.875rem  | 400    | `−0.003em` | List items, descriptions  |
-| Mono labels | 0.6875rem | 400    | `+0.08em`  | Section tags, stack chips |
+| Variant     | Size      | Weight | Tracking   | Use                         |
+|-------------|-----------|--------|------------|-----------------------------|
+| `h1`        | 4rem      | 700    | `−0.04em`  | Hero / page headlines       |
+| `h2`        | 2.5rem    | 700    | `−0.03em`  | Section headings            |
+| `h3`        | 1.5rem    | 600    | `−0.02em`  | Card titles                 |
+| `h4`        | 1.125rem  | 600    | `−0.01em`  | Sub-card titles, stack rows |
+| `body1`     | 1rem      | 400    | `−0.003em` | Main prose                  |
+| `body2`     | 0.9375rem | 400    | `−0.003em` | List items, descriptions    |
+| Mono labels | 0.6875rem | 500    | `+0.08em`  | Section tags, stack chips   |
 
 Inter (400–700) is used for all prose. JetBrains Mono is used for section labels, stack chips, dates, and contact rows —
 mono type signals data/code rather than narrative.
@@ -171,24 +180,26 @@ Only the weights actually used in the theme are imported:
 ```ts
 // main.tsx
 import "@fontsource/inter/400.css"; // body
-import "@fontsource/inter/500.css"; // subtitle
-import "@fontsource/inter/600.css"; // headings h2–h4
-import "@fontsource/inter/700.css"; // h1
+import "@fontsource/inter/500.css"; // subtitle, medium headings
+import "@fontsource/inter/600.css"; // headings h3–h4
+import "@fontsource/inter/700.css"; // h1, h2
 import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css"; // labels, chips, terminal card
 import "@fontsource/jetbrains-mono/700.css";
 ```
 
 ### 9. Shared components
 
-| Component      | File                              | Used by                    |
-| -------------- | --------------------------------- | -------------------------- |
-| `Navbar`       | `src/components/Navbar.tsx`       | `App.tsx` (always visible) |
-| `Footer`       | `src/components/Footer.tsx`       | `App.tsx` (always visible) |
-| `SectionLabel` | `src/components/SectionLabel.tsx` | About, Projects, Contact   |
+| Component       | File                              | Used by                      |
+|-----------------|-----------------------------------|------------------------------|
+| `Navbar`        | `src/components/Navbar.tsx`       | `App.tsx` (always visible)   |
+| `Footer`        | `src/components/Footer.tsx`       | `App.tsx` (always visible)   |
+| `SectionLabel`  | `src/components/SectionLabel.tsx` | About, Contact               |
+| `PROJECT_ICONS` | `src/components/projectIcons.tsx` | Home, Projects (bento cards) |
 
 `SectionLabel` is a small presentational component — a monospace uppercase label in accent colour that precedes each
-section heading (e.g. "About", "Work", "Get in touch"). Extracting it prevents duplicating the same `sx` props across
-three pages.
+section heading (e.g. "About", "Get in touch"). `projectIcons.tsx` maps each project's `icon` key to an MUI icon so the
+Home and Projects bento cards share one source of truth.
 
 ### 10. Contact — no third-party services
 
@@ -226,7 +237,7 @@ portfolio/
 ├── tsconfig.json               # Strict TypeScript, ESNext/bundler
 ├── .prettierrc                 # Formatting config
 ├── eslint.config.js            # ESLint 9 flat config (TS + React rules)
-├── .nvmrc                      # Node 20
+├── .nvmrc                      # Node 24
 ├── public/
 │   ├── _redirects              # Render SPA routing rule
 │   ├── Bhumika_Agarwal_Resume.pdf
@@ -238,17 +249,19 @@ portfolio/
     ├── main.tsx                # Entry — font imports, ReactDOM.createRoot
     ├── App.tsx                 # Router, ThemeProvider, AnimatePresence
     ├── components/
-    │   ├── Navbar.tsx          # Fixed top bar, backdrop blur, active dot
-    │   ├── Footer.tsx          # Copyright + social links
-    │   └── SectionLabel.tsx    # Shared mono uppercase label
+    │   ├── Navbar.tsx          # Fixed top bar, backdrop blur, active dot, CTA
+    │   ├── Footer.tsx          # Wordmark + social links
+    │   ├── SectionLabel.tsx    # Shared mono uppercase label
+    │   └── projectIcons.tsx    # icon-key → MUI icon map for bento cards
     ├── data/
     │   ├── experience.ts       # Work history (typed)
-    │   ├── projects.ts         # Side projects (typed)
-    │   └── skills.ts           # Skill rows (typed)
+    │   ├── projects.ts         # Featured projects (typed)
+    │   ├── skills.ts           # Skill rows (typed)
+    │   └── education.ts        # Academics (typed)
     ├── pages/
-    │   ├── Home.tsx            # Hero — staggered spring entrance
-    │   ├── About.tsx           # Bio, experience timeline, skills table
-    │   ├── Projects.tsx        # Project cards with links
+    │   ├── Home.tsx            # Hero · Featured Work bento · Core Stack
+    │   ├── About.tsx           # Bio · Philosophy · Experience · Arsenal · Academics
+    │   ├── Projects.tsx        # Bento grid, featured terminal card
     │   └── Contact.tsx         # Mailto + social + resume download
     └── theme/
         ├── theme.ts            # createTheme, tokens, component overrides
@@ -262,7 +275,7 @@ portfolio/
 ## Local development
 
 ```bash
-# Requires Node 20 (see .nvmrc)
+# Requires Node 24 (see .nvmrc)
 nvm use
 npm install
 npm run dev          # Dev server → http://localhost:5173
@@ -293,12 +306,12 @@ to `/about` directly returns a 200 with the SPA shell).
 
 ## Design notes
 
-- Background: `#0A0A0A` dark / `#FAFAFA` light
-- Text: `#E5E5E5` dark / `#171717` light · dim: `#737373`
-- Accent `#34D399` used only on hover/focus/active — no static decorative use
-- Cards: 1px border, `border-radius: 10px`, no shadow, no blur
-- Navbar: `backdrop-filter: blur(20px) saturate(180%)` — semi-transparent background
-- Container max-width: 720px, centered
+- Background: `#0A0A0A` dark / `#FBF9F8` light
+- Text: `#E8E8E8` dark / `#1B1C1C` light · dim: `#8B8B8B` dark / `#414754` light
+- Accent `#0070F3` (vibrant blue) — CTAs, highlighted headline word, chips, hover/focus, card glows
+- Cards: 1px border, `border-radius: 16px`, hover lift (`translateY(-4px)`) with a soft accent glow shadow
+- Navbar: `backdrop-filter: blur(20px) saturate(180%)` — semi-transparent background, blue "Get in touch" CTA
+- Container max-width: 1120px for content pages (Contact uses a narrower 720px column), centered
 - All fonts self-hosted via @fontsource
 
 ---
@@ -306,8 +319,8 @@ to `/about` directly returns a 200 with the SPA shell).
 ## TODOs (manual, post-deploy)
 
 | Item                                           | Why manual                                                                                                                                                                                                                                                               |
-| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `public/og.png` (1200×630)                     | Requires a browser/canvas render or design tool — cannot be generated at build time without adding a build dependency (sharp, puppeteer). Create in Figma/Canva: `#0A0A0A` background, "Bhumika Agarwal" in JetBrains Mono Bold centered, title beneath, `#34D399` rule. |
+|------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `public/og.png` (1200×630)                     | Requires a browser/canvas render or design tool — cannot be generated at build time without adding a build dependency (sharp, puppeteer). Create in Figma/Canva: `#0A0A0A` background, "Bhumika Agarwal" in JetBrains Mono Bold centered, title beneath, `#0070F3` rule. |
 | `public/favicon.ico` + `apple-touch-icon.png`  | Binary assets — export from the same design.                                                                                                                                                                                                                             |
 | `public/screenshots/home.png` + `projects.png` | Take after first deploy; update README image links.                                                                                                                                                                                                                      |
 | GitHub repo rename                             | Rename from `Portfolio` → `portfolio` (lowercase) in GitHub Settings → Repository name. This has no code impact.                                                                                                                                                         |
