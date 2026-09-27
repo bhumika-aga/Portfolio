@@ -1,29 +1,40 @@
-import { Brightness4, Brightness7 } from "@mui/icons-material";
+import {
+  Brightness4,
+  Brightness7,
+  Menu as MenuIcon,
+} from "@mui/icons-material";
 import {
   AppBar,
   Box,
   IconButton,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { SITE } from "../data/site";
+import { ROUTES } from "../routes";
 import { ACCENT, accentGlow } from "../theme/theme";
 import { useThemeMode } from "../theme/useThemeMode";
 
 const NAV_ITEMS = [
-  { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
-  { label: "Projects", path: "/projects" },
-  { label: "Contact", path: "/contact" },
+  { label: "Home", path: ROUTES.home },
+  { label: "About", path: ROUTES.about },
+  { label: "Projects", path: ROUTES.projects },
+  { label: "Contact", path: ROUTES.contact },
 ];
 
 const Navbar: React.FC = () => {
   const location = useLocation();
+  // GitHub Pages redirects /about → /about/, so ignore trailing slashes.
+  const pathname = location.pathname.replace(/\/+$/, "") || "/";
   const { mode, toggleColorMode } = useThemeMode();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+  const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
 
   return (
     <AppBar position="fixed" elevation={0}>
@@ -55,18 +66,19 @@ const Navbar: React.FC = () => {
           {/* Brand */}
           <Typography
             component={Link}
-            to="/"
+            to={ROUTES.home}
             sx={{
               color: "text.primary",
               textDecoration: "none",
               fontWeight: 700,
               letterSpacing: "-0.03em",
               fontSize: "1rem",
+              whiteSpace: "nowrap",
               transition: "color 0.2s ease",
               "&:hover": { color: ACCENT },
             }}
           >
-            Bhumika Agarwal
+            {SITE.name}
           </Typography>
 
           {/* Nav + CTA + Toggle */}
@@ -80,10 +92,13 @@ const Navbar: React.FC = () => {
             <Box
               component="nav"
               aria-label="Site navigation"
-              sx={{ display: "flex", gap: { xs: 0, md: 0.5 } }}
+              sx={{
+                display: { xs: "none", sm: "flex" },
+                gap: { sm: 0, md: 0.5 },
+              }}
             >
               {NAV_ITEMS.map((item) => {
-                const isActive = location.pathname === item.path;
+                const isActive = pathname === item.path;
                 return (
                   <Box
                     key={item.path}
@@ -130,7 +145,7 @@ const Navbar: React.FC = () => {
             {/* Blue CTA — matches the design's "Hire Me" pill */}
             <Box
               component={Link}
-              to="/contact"
+              to={ROUTES.contact}
               sx={{
                 display: { xs: "none", sm: "inline-flex" },
                 alignItems: "center",
@@ -181,6 +196,46 @@ const Navbar: React.FC = () => {
                 <Brightness4 sx={{ fontSize: 16 }} />
               )}
             </IconButton>
+
+            {/* Phones: the inline links don't fit beside the name, so collapse them. */}
+            <IconButton
+              onClick={(e) => setMenuAnchor(e.currentTarget)}
+              size="small"
+              aria-label="Open navigation menu"
+              aria-controls={menuAnchor ? "nav-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={Boolean(menuAnchor)}
+              sx={{
+                display: { xs: "inline-flex", sm: "none" },
+                color: "text.secondary",
+                width: 34,
+                height: 34,
+              }}
+            >
+              <MenuIcon sx={{ fontSize: 20 }} />
+            </IconButton>
+            <Menu
+              id="nav-menu"
+              anchorEl={menuAnchor}
+              open={Boolean(menuAnchor)}
+              onClose={() => setMenuAnchor(null)}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+              slotProps={{ paper: { sx: { minWidth: 180, mt: 1 } } }}
+            >
+              {NAV_ITEMS.map((item) => (
+                <MenuItem
+                  key={item.path}
+                  component={Link}
+                  to={item.path}
+                  selected={pathname === item.path}
+                  onClick={() => setMenuAnchor(null)}
+                  sx={{ fontSize: "0.9375rem" }}
+                >
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Menu>
           </Box>
         </Toolbar>
       </Box>

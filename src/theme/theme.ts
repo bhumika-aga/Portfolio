@@ -95,7 +95,6 @@ export const getTheme = (mode: PaletteMode) =>
       MuiCssBaseline: {
         styleOverrides: {
           body: {
-            scrollBehavior: "smooth",
             backgroundImage:
               mode === "dark"
                 ? `radial-gradient(ellipse 110% 55% at 0% 0%, ${accentGlow(0.09)} 0%, transparent 55%),

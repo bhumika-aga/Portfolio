@@ -1,6 +1,6 @@
 # portfolio
 
-[![Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7?logo=render)](https://render.com)
+[![Deploy](https://github.com/bhumika-aga/Portfolio/actions/workflows/deploy.yml/badge.svg)](https://github.com/bhumika-aga/Portfolio/actions/workflows/deploy.yml)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
@@ -9,28 +9,28 @@ Personal portfolio for Bhumika Agarwal — Software Engineer II at JPMorgan Chas
 BPMN, Spring Boot, Microservices), BFSI platform modernization (credit card disputes), and cloud infrastructure (AWS,
 Terraform). Built around a minimalist blue design system with a dark/light theme and bento-grid project layouts.
 
-**Live:** <https://bhumika-portfolio-zkq0.onrender.com/>
+**Live:** <https://bhumika-aga.github.io/Portfolio/>
 
 ---
 
 ## Stack
 
 | Layer     | Choice                                                       | Why                                                                            |
-|-----------|--------------------------------------------------------------|--------------------------------------------------------------------------------|
+| --------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | Framework | React 19 + TypeScript (strict)                               | Component model + type safety without runtime overhead                         |
 | Build     | Vite 5                                                       | Native ESM dev server, <3s cold build, tree-shaking, explicit chunk splitting  |
 | UI        | Material-UI 7 + Emotion                                      | Mature component primitives, theme system, `sx` prop avoids class-name leakage |
 | Fonts     | Inter (body) · JetBrains Mono (code, labels) via @fontsource | Self-hosted — zero external font requests, no FOUT                             |
 | Animation | Framer Motion (entry fades + page transitions only)          | Declarative `variants`, `AnimatePresence` for route transitions                |
-| Routing   | React Router v6                                              | Client-side SPA routing; `_redirects` handles deep-links on Render             |
-| Deploy    | Render (static site)                                         | Free tier static sites have no cold-start delay; `dist/` output                |
+| Routing   | React Router v6                                              | Client-side SPA routing; a static `index.html` per route serves deep links     |
+| Deploy    | GitHub Pages via GitHub Actions                              | Free static hosting; built and deployed on every push to `main`                |
 
 ---
 
 ## Pages
 
 | Route       | Content                                                                           |
-|-------------|-----------------------------------------------------------------------------------|
+| ----------- | --------------------------------------------------------------------------------- |
 | `/`         | Hero (status pill, headline, CTAs) · Featured Work bento · Core Stack list        |
 | `/about`    | Bio · Philosophy cards · Experience · Technical arsenal table · Academics         |
 | `/projects` | "Systems & Architecture" bento — 5 projects, featured card with animated terminal |
@@ -68,7 +68,7 @@ The theme lives in `src/theme/theme.ts` and is parameterised by `PaletteMode` (`
 **Token decisions:**
 
 | Token         | Dark      | Light     | Rationale                                       |
-|---------------|-----------|-----------|-------------------------------------------------|
+| ------------- | --------- | --------- | ----------------------------------------------- |
 | Background    | `#0A0A0A` | `#FBF9F8` | Near-black / warm near-white; avoids pure black |
 | Paper (cards) | `#111111` | `#FFFFFF` | One step lighter than background for depth      |
 | Text primary  | `#E8E8E8` | `#1B1C1C` | AA contrast on both backgrounds                 |
@@ -94,22 +94,22 @@ Unused MUI components (Card, Button, Link) have no overrides — there is nothin
 ### 3. Theme persistence — Context + localStorage
 
 `ThemeContext` (`src/theme/`) is a minimal React Context that holds `mode` and `toggleColorMode`. The provider
-initialises from `localStorage` on mount, falling back to `prefers-color-scheme`. Subsequent changes are persisted to
-`localStorage` via `useEffect`. This avoids flash-of-wrong-theme on reload without requiring SSR.
+initialises from `localStorage`, falling back to `prefers-color-scheme`, and keeps following OS changes until the
+visitor toggles. Only an explicit toggle is saved. Storage access is wrapped in `try/catch` (it can throw when blocked).
+A small inline script in `index.html` sets `<html data-theme>` from the same key before the bundle loads, so the page
+background is correct on first paint (no white flash for dark-mode visitors).
 
 The context definition, provider, and hook are split into three files to keep each file responsible for a single concern
 and to avoid circular imports.
 
 ### 4. Routing and page transitions
 
-`BrowserRouter` wraps the whole app. Client-side navigation is handled by React Router v6 `<Routes>`. Deep-link support
-on Render is handled by `public/_redirects`:
+`BrowserRouter` wraps the whole app, with `basename` set to Vite's `BASE_URL` so it works under a Pages project path
+(`/Portfolio/`). Routes are declared once in `src/routes.ts`.
 
-```txt
-/* /index.html 200
-```
-
-This rule tells Render's CDN to serve `index.html` for any path, letting React Router resolve it on the client.
+GitHub Pages has no SPA rewrite rules, so the `static-hosting` plugin in `vite.config.ts` writes a copy of `index.html`
+to `about/`, `projects/` and `contact/` after each build. Deep links therefore return a 200 with a route-specific
+canonical URL. It also writes `404.html` (unknown paths render the in-app 404 page), `sitemap.xml` and `robots.txt`.
 
 Page transitions use Framer Motion's `AnimatePresence`:
 
@@ -157,7 +157,7 @@ Defining content in typed structures rather than JSX means:
 ### 7. Typography scale
 
 | Variant     | Size      | Weight | Tracking   | Use                         |
-|-------------|-----------|--------|------------|-----------------------------|
+| ----------- | --------- | ------ | ---------- | --------------------------- |
 | `h1`        | 4rem      | 700    | `−0.04em`  | Hero / page headlines       |
 | `h2`        | 2.5rem    | 700    | `−0.03em`  | Section headings            |
 | `h3`        | 1.5rem    | 600    | `−0.02em`  | Card titles                 |
@@ -191,7 +191,7 @@ import "@fontsource/jetbrains-mono/700.css";
 ### 9. Shared components
 
 | Component       | File                              | Used by                      |
-|-----------------|-----------------------------------|------------------------------|
+| --------------- | --------------------------------- | ---------------------------- |
 | `Navbar`        | `src/components/Navbar.tsx`       | `App.tsx` (always visible)   |
 | `Footer`        | `src/components/Footer.tsx`       | `App.tsx` (always visible)   |
 | `SectionLabel`  | `src/components/SectionLabel.tsx` | About, Contact               |
@@ -217,14 +217,13 @@ No EmailJS, no Formspree, no backend. No environment variables required.
 `index.html` includes:
 
 - `<title>`, `<meta name="description">`, `<meta name="keywords">`
-- Open Graph (`og:type`, `og:url`, `og:title`, `og:description`, `og:image`)
-- Twitter card (`summary_large_image`)
-- `<link rel="canonical">`
-- `<link rel="manifest">` → `public/manifest.json` (PWA manifest)
-- `public/robots.txt` — allows all crawlers
-- `public/sitemap.xml` — four URLs with priority/frequency hints
+- Open Graph (`og:type`, `og:url`, `og:title`, `og:description`)
+- Twitter card (`summary`)
+- `<link rel="canonical">` — `%SITE_URL%` is replaced at build time with the Pages URL
+- `<link rel="icon">` → `public/favicon.svg`, `<link rel="manifest">` → `public/manifest.json`
+- `robots.txt` and `sitemap.xml` — generated at build time from `src/routes.ts`
 
-The `og:image` references `/og.png` — see TODOs below.
+There is no `og:image` yet — see TODOs below.
 
 ---
 
@@ -232,22 +231,21 @@ The `og:image` references `/og.png` — see TODOs below.
 
 ```txt
 portfolio/
-├── index.html                  # Vite entry point — all meta/OG tags
-├── vite.config.ts              # Build config, manual chunk splitting
+├── index.html                  # Vite entry point — all meta/OG tags, pre-paint theme script
+├── vite.config.ts              # Build config, chunk splitting, static-hosting plugin
+├── .github/workflows/deploy.yml # Build + deploy to GitHub Pages on push to main
 ├── tsconfig.json               # Strict TypeScript, ESNext/bundler
 ├── .prettierrc                 # Formatting config
 ├── eslint.config.js            # ESLint 9 flat config (TS + React rules)
 ├── .nvmrc                      # Node 24
 ├── public/
-│   ├── _redirects              # Render SPA routing rule
 │   ├── Bhumika_Agarwal_Resume.pdf
-│   ├── manifest.json
-│   ├── robots.txt
-│   ├── sitemap.xml
-│   └── og.png                  # TODO: see below
+│   ├── favicon.svg
+│   └── manifest.json
 └── src/
     ├── main.tsx                # Entry — font imports, ReactDOM.createRoot
     ├── App.tsx                 # Router, ThemeProvider, AnimatePresence
+    ├── routes.ts               # Route paths (also read by vite.config.ts)
     ├── components/
     │   ├── Navbar.tsx          # Fixed top bar, backdrop blur, active dot, CTA
     │   ├── Footer.tsx          # Wordmark + social links
@@ -257,12 +255,14 @@ portfolio/
     │   ├── experience.ts       # Work history (typed)
     │   ├── projects.ts         # Featured projects (typed)
     │   ├── skills.ts           # Skill rows (typed)
-    │   └── education.ts        # Academics (typed)
+    │   ├── education.ts        # Academics (typed)
+    │   └── site.ts             # Name, email, social links, résumé URL
     ├── pages/
     │   ├── Home.tsx            # Hero · Featured Work bento · Core Stack
     │   ├── About.tsx           # Bio · Philosophy · Experience · Arsenal · Academics
     │   ├── Projects.tsx        # Bento grid, featured terminal card
-    │   └── Contact.tsx         # Mailto + social + resume download
+    │   ├── Contact.tsx         # Mailto + social + resume download
+    │   └── NotFound.tsx        # Catch-all 404
     └── theme/
         ├── theme.ts            # createTheme, tokens, component overrides
         ├── ThemeContextDef.ts  # Context type + createContext
@@ -291,16 +291,23 @@ npm run format:check # Prettier check (CI)
 
 ## Deployment
 
-**Render — static site:**
+**GitHub Pages — via GitHub Actions** (`.github/workflows/deploy.yml`):
 
-1. Connect the GitHub repo at [render.com/new](https://render.com/new).
-2. Choose **Static Site**.
-3. Build command: `npm install && npm run build`
-4. Publish directory: `dist`
-5. No environment variables required.
+1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions** (one-time).
+2. Push to `main`. The workflow lints, builds, and deploys `dist/`.
 
-`public/_redirects` rewrites all paths to `/index.html`, enabling client-side routing from direct URLs (e.g. navigating
-to `/about` directly returns a 200 with the SPA shell).
+`actions/configure-pages` supplies the base path, so the same workflow works for:
+
+- this repo as a project site → `https://bhumika-aga.github.io/Portfolio/`
+- a repo named `bhumika-aga.github.io` (or a custom domain) → served from the root
+
+To replace the résumé, overwrite `public/Bhumika_Agarwal_Resume.pdf` (keep the filename) and push.
+
+Local check of a subpath build:
+
+```bash
+SITE_URL=https://bhumika-aga.github.io/Portfolio npm run build -- --base=/Portfolio/
+```
 
 ---
 
@@ -319,11 +326,11 @@ to `/about` directly returns a 200 with the SPA shell).
 ## TODOs (manual, post-deploy)
 
 | Item                                           | Why manual                                                                                                                                                                                                                                                               |
-|------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `public/og.png` (1200×630)                     | Requires a browser/canvas render or design tool — cannot be generated at build time without adding a build dependency (sharp, puppeteer). Create in Figma/Canva: `#0A0A0A` background, "Bhumika Agarwal" in JetBrains Mono Bold centered, title beneath, `#0070F3` rule. |
-| `public/favicon.ico` + `apple-touch-icon.png`  | Binary assets — export from the same design.                                                                                                                                                                                                                             |
+| `public/apple-touch-icon.png` (180×180)        | Binary asset — export from the same design. `favicon.svg` covers browsers.                                                                                                                                                                                               |
 | `public/screenshots/home.png` + `projects.png` | Take after first deploy; update README image links.                                                                                                                                                                                                                      |
-| GitHub repo rename                             | Rename from `Portfolio` → `portfolio` (lowercase) in GitHub Settings → Repository name. This has no code impact.                                                                                                                                                         |
+| GitHub repo rename (optional)                  | Renaming changes the Pages URL (it is case-sensitive). Renaming to `bhumika-aga.github.io` serves the site from the root. No code change needed — the workflow picks up the new base path.                                                                               |
 
 ---
 

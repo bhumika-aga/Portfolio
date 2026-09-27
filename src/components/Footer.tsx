@@ -1,11 +1,12 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import React from "react";
+import { SITE } from "../data/site";
 import { ACCENT, monoFont } from "../theme/theme";
 
 const LINKS = [
-  { label: "GitHub", href: "https://github.com/bhumika-aga" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/bhumika-aga" },
-  { label: "Email", href: "mailto:bhumika.aga@gmail.com" },
+  { label: "GitHub", href: SITE.github },
+  { label: "LinkedIn", href: SITE.linkedin },
+  { label: "Email", href: `mailto:${SITE.email}` },
 ];
 
 const Footer: React.FC = () => {
@@ -40,7 +41,7 @@ const Footer: React.FC = () => {
             color: "text.primary",
           }}
         >
-          Bhumika Agarwal
+          {SITE.name}
         </Typography>
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 2.5 }}>

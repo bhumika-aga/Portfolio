@@ -3,7 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#FBF9F8" />
+    <meta
+      name="theme-color"
+      content="#FBF9F8"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#0A0A0A"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <title>Bhumika Agarwal — Software Engineer</title>
     <meta
@@ -16,28 +25,54 @@
       content="Bhumika Agarwal, Software Engineer, Java, Spring Boot, Camunda, Kafka, React, BFSI, JPMorgan Chase"
     />
 
-    <link rel="canonical" href="https://bhumika-aga.onrender.com/" />
+    <!-- %SITE_URL% is filled in at build time (vite.config.ts) -->
+    <link rel="canonical" href="%SITE_URL%/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://bhumika-aga.onrender.com/" />
+    <meta property="og:url" content="%SITE_URL%/" />
     <meta property="og:title" content="Bhumika Agarwal — Software Engineer" />
     <meta
       property="og:description"
       content="Backend systems, workflow orchestration, and BFSI modernization. Software Engineer II at JPMorgan Chase."
     />
-    <meta property="og:image" content="/og.png" />
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Bhumika Agarwal — Software Engineer" />
     <meta
       name="twitter:description"
       content="Backend systems, workflow orchestration, and BFSI modernization."
     />
-    <meta name="twitter:image" content="/og.png" />
 
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="/manifest.json" />
+
+    <!-- Paint the saved/OS theme before the bundle loads to avoid a white flash. -->
+    <style>
+      html {
+        background: #fbf9f8;
+        color-scheme: light;
+      }
+      html[data-theme="dark"] {
+        background: #0a0a0a;
+        color-scheme: dark;
+      }
+    </style>
+    <script>
+      (function () {
+        var mode;
+        try {
+          mode = localStorage.getItem("themeMode");
+        } catch (e) {}
+        if (mode !== "light" && mode !== "dark") {
+          mode = matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        }
+        document.documentElement.dataset.theme = mode;
+      })();
+    </script>
   </head>
   <body>
     <noscript>JavaScript is required to run this application.</noscript>

@@ -1,6 +1,6 @@
 import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import React from "react";
 import {
   Route,
@@ -13,7 +13,9 @@ import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
 import Projects from "./pages/Projects";
+import { ROUTES } from "./routes";
 import { getTheme } from "./theme/theme";
 import { ThemeModeProvider } from "./theme/ThemeContext";
 import { useThemeMode } from "./theme/useThemeMode";
@@ -28,7 +30,9 @@ const AnimatedRoutes: React.FC = () => {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
+    // Reset scroll once the old page has faded out, so the new page starts at
+    // the top instead of inheriting the previous page's scroll offset.
+    <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
       <motion.div
         key={location.pathname}
         variants={pageVariants}
@@ -38,10 +42,11 @@ const AnimatedRoutes: React.FC = () => {
         style={{ flex: 1 }}
       >
         <Routes location={location}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path={ROUTES.home} element={<Home />} />
+          <Route path={ROUTES.about} element={<About />} />
+          <Route path={ROUTES.projects} element={<Projects />} />
+          <Route path={ROUTES.contact} element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -55,25 +60,34 @@ const AppContent: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-        <Box
-          sx={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+      <MotionConfig reducedMotion="user">
+        <Router
+          basename={import.meta.env.BASE_URL}
+          future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
         >
-          <Navbar />
           <Box
-            component="main"
             sx={{
-              flex: 1,
-              pt: { xs: "56px", md: "64px" },
+              minHeight: "100vh",
               display: "flex",
               flexDirection: "column",
             }}
           >
-            <AnimatedRoutes />
+            <Navbar />
+            <Box
+              component="main"
+              sx={{
+                flex: 1,
+                pt: { xs: "56px", md: "64px" },
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <AnimatedRoutes />
+            </Box>
+            <Footer />
           </Box>
-          <Footer />
-        </Box>
-      </Router>
+        </Router>
+      </MotionConfig>
     </ThemeProvider>
   );
 };

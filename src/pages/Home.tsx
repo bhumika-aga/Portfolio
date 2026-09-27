@@ -5,6 +5,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { PROJECT_ICONS } from "../components/projectIcons";
 import { projects } from "../data/projects";
+import { RESUME_URL } from "../data/site";
+import { ROUTES } from "../routes";
 import { ACCENT, accentGlow, EASE_OUT_EXPO, monoFont } from "../theme/theme";
 
 const CORE_STACK = [
@@ -146,7 +148,7 @@ const Home: React.FC = () => {
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
                 <Box
                   component={Link}
-                  to="/projects"
+                  to={ROUTES.projects}
                   sx={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -173,7 +175,7 @@ const Home: React.FC = () => {
 
                 <Box
                   component="a"
-                  href="/Bhumika_Agarwal_Resume.pdf"
+                  href={RESUME_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{
@@ -214,7 +216,7 @@ const Home: React.FC = () => {
           <Typography variant="h2">Featured Work</Typography>
           <Box
             component={Link}
-            to="/projects"
+            to={ROUTES.projects}
             sx={{
               display: { xs: "none", sm: "inline-flex" },
               alignItems: "center",
@@ -256,7 +258,7 @@ const Home: React.FC = () => {
               >
                 <Box
                   component={Link}
-                  to="/projects"
+                  to={ROUTES.projects}
                   sx={{
                     display: "flex",
                     flexDirection: "column",

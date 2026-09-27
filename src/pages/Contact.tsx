@@ -3,36 +3,37 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
 import SectionLabel from "../components/SectionLabel";
+import { RESUME_URL, SITE } from "../data/site";
 import { ACCENT, accentGlow, EASE_OUT_EXPO, monoFont } from "../theme/theme";
 
 const CONTACT_ITEMS = [
   {
     icon: Email,
-    label: "bhumika.aga@gmail.com",
-    href: "mailto:bhumika.aga@gmail.com",
+    label: SITE.email,
+    href: `mailto:${SITE.email}`,
     external: false,
     meta: "Email",
   },
   {
     icon: LinkedIn,
-    label: "linkedin.com/in/bhumika-aga",
-    href: "https://linkedin.com/in/bhumika-aga",
+    label: SITE.linkedin.replace("https://", ""),
+    href: SITE.linkedin,
     external: true,
     meta: "LinkedIn",
   },
   {
     icon: GitHub,
-    label: "github.com/bhumika-aga",
-    href: "https://github.com/bhumika-aga",
+    label: SITE.github.replace("https://", ""),
+    href: SITE.github,
     external: true,
     meta: "GitHub",
   },
   {
     icon: Download,
-    label: "Bhumika_Agarwal_Resume.pdf",
-    href: "/Bhumika_Agarwal_Resume.pdf",
+    label: SITE.resumeFile,
+    href: RESUME_URL,
     external: false,
-    download: "Bhumika_Agarwal_Resume.pdf",
+    download: SITE.resumeFile,
     meta: "Resume",
   },
 ];
@@ -128,7 +129,7 @@ const Contact: React.FC = () => {
                   sx={{
                     fontFamily: monoFont,
                     fontSize: "0.6875rem",
-                    color: isDark ? "#3A3A3A" : "#C8C8C8",
+                    color: "text.secondary",
                     flexShrink: 0,
                     letterSpacing: "0.04em",
                     textTransform: "uppercase",
