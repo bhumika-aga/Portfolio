@@ -14,16 +14,18 @@ import {
   useTheme,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 import { SITE } from "../data/site";
 import { ROUTES } from "../routes";
 import { ACCENT, accentGlow } from "../theme/theme";
 import { useThemeMode } from "../theme/useThemeMode";
+import Container from "./Container";
 
 const NAV_ITEMS = [
   { label: "Home", path: ROUTES.home },
   { label: "About", path: ROUTES.about },
   { label: "Projects", path: ROUTES.projects },
+  { label: "Notes", path: ROUTES.notes },
   { label: "Contact", path: ROUTES.contact },
 ];
 
@@ -48,14 +50,7 @@ const Navbar: React.FC = () => {
           backgroundColor: theme.palette.divider,
         }}
       />
-      <Box
-        sx={{
-          maxWidth: 1120,
-          mx: "auto",
-          width: "100%",
-          px: { xs: 3, sm: 4, md: 6 },
-        }}
-      >
+      <Container>
         <Toolbar
           disableGutters
           sx={{
@@ -70,7 +65,7 @@ const Navbar: React.FC = () => {
             sx={{
               color: "text.primary",
               textDecoration: "none",
-              fontWeight: 700,
+              fontWeight: 600,
               letterSpacing: "-0.03em",
               fontSize: "1rem",
               whiteSpace: "nowrap",
@@ -142,12 +137,12 @@ const Navbar: React.FC = () => {
               })}
             </Box>
 
-            {/* Blue CTA — matches the design's "Hire Me" pill */}
+            {/* CTA pill. Only from md up, since Contact is already in the nav. */}
             <Box
               component={Link}
               to={ROUTES.contact}
               sx={{
-                display: { xs: "none", sm: "inline-flex" },
+                display: { xs: "none", md: "inline-flex" },
                 alignItems: "center",
                 ml: 1,
                 px: 2,
@@ -238,7 +233,7 @@ const Navbar: React.FC = () => {
             </Menu>
           </Box>
         </Toolbar>
-      </Box>
+      </Container>
     </AppBar>
   );
 };

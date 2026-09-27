@@ -8,6 +8,7 @@
     "types": ["node"],
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true
   },
   "include": ["vite.config.ts", "src/routes.ts"]

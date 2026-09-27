@@ -15,6 +15,6 @@ export const education: Education[] = [
     location: "Dehradun, Uttarakhand",
     period: "Jun 2018 – Jun 2022",
     coursework:
-      "Data Structures & Algorithms · Operating Systems · Database Management Systems · Computer Networks · Object-Oriented Programming",
+      "Data Structures & Algorithms · Operating Systems · Database Management Systems · Computer Networks · Object Oriented Programming",
   },
 ];

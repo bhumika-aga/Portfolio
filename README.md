@@ -5,9 +5,10 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
 
-Personal portfolio for Bhumika Agarwal — Software Engineer II at JPMorgan Chase. Focuses on backend systems (Camunda 7
-BPMN, Spring Boot, Microservices), BFSI platform modernization (credit card disputes), and cloud infrastructure (AWS,
-Terraform). Built around a minimalist blue design system with a dark/light theme and bento-grid project layouts.
+Personal portfolio for Bhumika Agarwal, a backend software engineer (previously Software Engineer II at JPMorgan
+Chase). Focuses on backend systems (Camunda 7 BPMN, Spring Boot, Kafka, microservices), BFSI platform modernization, and
+cloud infrastructure (AWS, Terraform), plus React and TypeScript frontends. Built around a minimalist blue design system
+with a dark/light theme and bento-grid project layouts. Content mirrors `public/Bhumika_Agarwal_Resume.pdf`.
 
 **Live:** <https://bhumika-aga.github.io/Portfolio/>
 
@@ -18,26 +19,30 @@ Terraform). Built around a minimalist blue design system with a dark/light theme
 | Layer     | Choice                                                       | Why                                                                            |
 | --------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | Framework | React 19 + TypeScript (strict)                               | Component model + type safety without runtime overhead                         |
-| Build     | Vite 5                                                       | Native ESM dev server, <3s cold build, tree-shaking, explicit chunk splitting  |
-| UI        | Material-UI 7 + Emotion                                      | Mature component primitives, theme system, `sx` prop avoids class-name leakage |
+| Build     | Vite 8 (Rolldown)                                            | Native ESM dev server, sub-second production builds, explicit chunk splitting  |
+| UI        | MUI 9 + Emotion                                              | Mature component primitives, theme system, `sx` prop avoids class-name leakage |
 | Fonts     | Inter (body) · JetBrains Mono (code, labels) via @fontsource | Self-hosted — zero external font requests, no FOUT                             |
-| Animation | Framer Motion (entry fades + page transitions only)          | Declarative `variants`, `AnimatePresence` for route transitions                |
-| Routing   | React Router v6                                              | Client-side SPA routing; a static `index.html` per route serves deep links     |
+| Animation | CSS scroll reveal (`Reveal` + IntersectionObserver)          | No animation library; page switches are instant, so nothing flickers           |
+| Routing   | React Router 7                                               | Client-side SPA routing; a static `index.html` per route serves deep links     |
 | Deploy    | GitHub Pages via GitHub Actions                              | Free static hosting; built and deployed on every push to `main`                |
 
 ---
 
 ## Pages
 
-| Route       | Content                                                                           |
-| ----------- | --------------------------------------------------------------------------------- |
-| `/`         | Hero (status pill, headline, CTAs) · Featured Work bento · Core Stack list        |
-| `/about`    | Bio · Philosophy cards · Experience · Technical arsenal table · Academics         |
-| `/projects` | "Systems & Architecture" bento — 5 projects, featured card with animated terminal |
-| `/contact`  | Email · LinkedIn · GitHub · Resume PDF                                            |
+| Route       | Content                                                                     |
+| ----------- | --------------------------------------------------------------------------- |
+| `/`         | Hero (status pill, headline, CTAs) · Featured Work bento · Core Stack list  |
+| `/about`    | Bio · Philosophy cards · Experience · Technical arsenal table · Academics   |
+| `/projects` | "Systems & Architecture" bento — 5 projects, lead card with terminal visual |
+| `/notes`    | Engineering notes — cards linking to the GitHub Pages study sites           |
+| `/contact`  | Email · LinkedIn · GitHub · Resume PDF                                      |
 
-**Featured projects** (`src/data/projects.ts`): Regulatory Approval System · MediFlow · UrbanNexus · HealthSync · Exam
-Portal — all deployed, each mapped to an icon via `src/components/projectIcons.tsx`.
+**Projects** (`src/data/projects.ts`): Regulatory Approval System · UrbanNexus (both `featured`: shown on Home and first
+on `/projects`) · MediFlow · HealthSync · Exam Portal. Each maps to an icon via `src/components/projectIcons.tsx`. Home
+cards link to `/projects#<id>`.
+
+**Notes** (`src/data/notes.ts`): System Design: Backend · Java Lectures · System Design Notebook · DSA Mastery.
 
 ---
 
@@ -45,16 +50,15 @@ Portal — all deployed, each mapped to an icon via `src/components/projectIcons
 
 ### 1. Build pipeline — Vite
 
-Vite uses [native ES modules](https://vitejs.dev/guide/why.html) in development (no bundling, instant HMR) and Rollup
-for production. `vite.config.ts` defines explicit `manualChunks` so the browser can cache vendor code independently of
+Vite uses [native ES modules](https://vitejs.dev/guide/why.html) in development (no bundling, instant HMR) and Rolldown
+for production. `vite.config.ts` defines `codeSplitting` groups so the browser can cache vendor code independently of
 app code:
 
 ```txt
-vendor  → react, react-dom, react-router-dom   (~7.7 kB gzip)
+vendor  → react, react-dom, react-router        (~82 kB gzip)
 mui     → @mui/material, @mui/icons-material,
-          @emotion/react, @emotion/styled        (~50.6 kB gzip)
-motion  → framer-motion                         (~37.8 kB gzip)
-index   → application code                      (~66.9 kB gzip)
+          @emotion/react, @emotion/styled        (~59 kB gzip)
+index   → application code                      (~12 kB gzip)
 ```
 
 @emotion packages are co-located with `mui` because they are MUI's styling engine — putting them together ensures a
@@ -79,12 +83,12 @@ The theme lives in `src/theme/theme.ts` and is parameterised by `PaletteMode` (`
 The accent is exported from `theme.ts` as `ACCENT` alongside `ACCENT_RGB` and an `accentGlow(alpha)` helper, so every
 blue tint (button shadows, hover backgrounds, card glows, the terminal card) derives from one source of truth.
 
-`EASE_OUT_EXPO = [0.16, 1, 0.3, 1]` is exported alongside theme tokens so every Framer Motion transition uses the same
-cubic-bezier — fast deceleration, feels intentional.
+The scroll reveal transition uses `cubic-bezier(0.16, 1, 0.3, 1)` (ease-out-expo), defined in the `MuiCssBaseline`
+override next to the `[data-reveal]` styles.
 
 **Component overrides** in the theme cover only components actually used in the app:
 
-- `MuiCssBaseline` — smooth scroll, focus rings, custom scrollbar
+- `MuiCssBaseline` — reveal styles, hash-target scroll margin, focus rings, custom scrollbar
 - `MuiAppBar` — backdrop-filter blur (20px, saturate 180%), semi-transparent background
 - `MuiChip` — monospace font, accent-tinted fill (`accentGlow`), accent text, no border
 - `MuiDivider` — border colour from palette
@@ -108,34 +112,21 @@ and to avoid circular imports.
 (`/Portfolio/`). Routes are declared once in `src/routes.ts`.
 
 GitHub Pages has no SPA rewrite rules, so the `static-hosting` plugin in `vite.config.ts` writes a copy of `index.html`
-to `about/`, `projects/` and `contact/` after each build. Deep links therefore return a 200 with a route-specific
+to `about/`, `projects/`, `notes/` and `contact/` after each build. Deep links therefore return a 200 with a route-specific
 canonical URL. It also writes `404.html` (unknown paths render the in-app 404 page), `sitemap.xml` and `robots.txt`.
 
-Page transitions use Framer Motion's `AnimatePresence`:
-
-```tsx
-<AnimatePresence mode="wait">
-  <motion.div key={location.pathname} variants={pageVariants}>
-    <Routes location={location}>...</Routes>
-  </motion.div>
-</AnimatePresence>
-```
-
-`mode="wait"` ensures the exit animation completes before the entering page renders. Passing `location` explicitly to
-`<Routes>` (instead of letting it read from context) keeps the exiting page visible during its fade-out.
+There are no route transitions: pages swap instantly. `ScrollToTop` (rendered before `<Routes>`) resets the scroll
+position in a layout effect, or scrolls to the element named by the URL hash (e.g. `/projects#urbannexus`).
 
 ### 5. Animation strategy
 
-All motion follows one rule: **entry only, no continuous animation**.
+All motion follows one rule: **entry only, and never for content already on screen**.
 
-- **Hero** (`/`): Staggered `containerVariants` with `staggerChildren` — each child (status pill, headline, body,
-  buttons) animates `{ opacity: 0, y: 24 } → { opacity: 1, y: 0 }` with `EASE_OUT_EXPO`.
-- **Scroll sections** (`/`, `/about`, `/projects`): `whileInView` + `viewport: { once: true }` so each card/section
-  fades in once when it enters the viewport, never re-triggers. Bento cards use `Box component={motion.div}` for the
-  entrance and an inner box for the hover lift, so the two transforms never conflict.
-- **Page transitions**: Opacity fade, 250ms in / 150ms out.
-
-No transforms beyond `y` translation (no scale, no rotate). No continuous loops. No autoplay.
+`src/components/Reveal.tsx` wraps sections and cards. Before first paint it checks whether the element is inside the
+viewport. If it is, the element renders as is. If it is below the fold, it gets `data-reveal="pending"` (opacity 0,
+`translateY(16px)`) and an IntersectionObserver flips it to `done` when it scrolls into view. Because `ScrollToTop`
+runs first, switching pages never hides or fades visible content, which is what caused the old flicker. Visitors with
+`prefers-reduced-motion` get no reveal at all.
 
 ### 6. Data layer
 
@@ -143,7 +134,9 @@ All content lives in typed objects under `src/data/`:
 
 ```txt
 experience.ts   → Experience[]   (company, role, location, period, bullets, stack)
-projects.ts     → Project[]      (title, tagline, description, highlights, tech, githubUrl, liveUrl?, featured?, icon, terminalLines?)
+projects.ts     → Project[]      (title, tagline, highlights, tech, githubUrl, liveUrl?, featured?, icon, terminalLines?)
+notes.ts        → NoteSet[]      (title, meta, description, topics, url, repoUrl)
+site.ts         → SITE           (name, email, links, résumé file) + RESUME_URL
 skills.ts       → SkillRow[]     (category, items)
 education.ts    → Education[]    (institution, degree, location, period, coursework?)
 ```
@@ -158,15 +151,15 @@ Defining content in typed structures rather than JSX means:
 
 | Variant     | Size      | Weight | Tracking   | Use                         |
 | ----------- | --------- | ------ | ---------- | --------------------------- |
-| `h1`        | 4rem      | 700    | `−0.04em`  | Hero / page headlines       |
-| `h2`        | 2.5rem    | 700    | `−0.03em`  | Section headings            |
+| `h1`        | 4rem      | 600    | `−0.04em`  | Hero / page headlines       |
+| `h2`        | 2.5rem    | 600    | `−0.03em`  | Section headings            |
 | `h3`        | 1.5rem    | 600    | `−0.02em`  | Card titles                 |
 | `h4`        | 1.125rem  | 600    | `−0.01em`  | Sub-card titles, stack rows |
 | `body1`     | 1rem      | 400    | `−0.003em` | Main prose                  |
 | `body2`     | 0.9375rem | 400    | `−0.003em` | List items, descriptions    |
 | Mono labels | 0.6875rem | 500    | `+0.08em`  | Section tags, stack chips   |
 
-Inter (400–700) is used for all prose. JetBrains Mono is used for section labels, stack chips, dates, and contact rows —
+Inter (400–600) is used for all prose; nothing is heavier than 600. JetBrains Mono is used for section labels, stack chips, dates, and contact rows —
 mono type signals data/code rather than narrative.
 
 ### 8. Fonts — @fontsource
@@ -181,21 +174,26 @@ Only the weights actually used in the theme are imported:
 // main.tsx
 import "@fontsource/inter/400.css"; // body
 import "@fontsource/inter/500.css"; // subtitle, medium headings
-import "@fontsource/inter/600.css"; // headings h3–h4
-import "@fontsource/inter/700.css"; // h1, h2
+import "@fontsource/inter/600.css"; // all headings
 import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css"; // labels, chips, terminal card
-import "@fontsource/jetbrains-mono/700.css";
 ```
 
 ### 9. Shared components
 
-| Component       | File                              | Used by                      |
-| --------------- | --------------------------------- | ---------------------------- |
-| `Navbar`        | `src/components/Navbar.tsx`       | `App.tsx` (always visible)   |
-| `Footer`        | `src/components/Footer.tsx`       | `App.tsx` (always visible)   |
-| `SectionLabel`  | `src/components/SectionLabel.tsx` | About, Contact               |
-| `PROJECT_ICONS` | `src/components/projectIcons.tsx` | Home, Projects (bento cards) |
+| Component        | File                                | Used by                      |
+| ---------------- | ----------------------------------- | ---------------------------- |
+| `Navbar`         | `src/components/Navbar.tsx`         | `App.tsx` (always visible)   |
+| `Footer`         | `src/components/Footer.tsx`         | `App.tsx` (always visible)   |
+| `Container`      | `src/components/Container.tsx`      | Every page, Navbar, Footer   |
+| `Card`           | `src/components/Card.tsx`           | All card surfaces            |
+| `Reveal`         | `src/components/Reveal.tsx`         | Home, About, Projects, Notes |
+| `ScrollToTop`    | `src/components/ScrollToTop.tsx`    | `App.tsx`                    |
+| `SectionHeading` | `src/components/SectionHeading.tsx` | About                        |
+| `SectionLabel`   | `src/components/SectionLabel.tsx`   | About, Contact, NotFound     |
+| `PROJECT_ICONS`  | `src/components/projectIcons.tsx`   | Home, Projects (bento cards) |
+
+`Card` takes an `interactive` prop for the hover lift and glow; only cards that are or carry a link use it.
 
 `SectionLabel` is a small presentational component — a monospace uppercase label in accent colour that precedes each
 section heading (e.g. "About", "Get in touch"). `projectIcons.tsx` maps each project's `icon` key to an MUI icon so the
@@ -236,7 +234,7 @@ portfolio/
 ├── .github/workflows/deploy.yml # Build + deploy to GitHub Pages on push to main
 ├── tsconfig.json               # Strict TypeScript, ESNext/bundler
 ├── .prettierrc                 # Formatting config
-├── eslint.config.js            # ESLint 9 flat config (TS + React rules)
+├── eslint.config.js            # ESLint 10 flat config (TS + React hooks/compiler rules)
 ├── .nvmrc                      # Node 24
 ├── public/
 │   ├── Bhumika_Agarwal_Resume.pdf
@@ -244,11 +242,16 @@ portfolio/
 │   └── manifest.json
 └── src/
     ├── main.tsx                # Entry — font imports, ReactDOM.createRoot
-    ├── App.tsx                 # Router, ThemeProvider, AnimatePresence
+    ├── App.tsx                 # Router, ThemeProvider, routes
     ├── routes.ts               # Route paths (also read by vite.config.ts)
     ├── components/
-    │   ├── Navbar.tsx          # Fixed top bar, backdrop blur, active dot, CTA
+    │   ├── Navbar.tsx          # Fixed top bar, backdrop blur, phone menu, CTA
     │   ├── Footer.tsx          # Wordmark + social links
+    │   ├── Container.tsx       # Shared page-width wrapper
+    │   ├── Card.tsx            # Shared card surface (optional hover)
+    │   ├── Reveal.tsx          # Scroll reveal for below-the-fold content
+    │   ├── ScrollToTop.tsx     # Scroll reset / hash scroll on navigation
+    │   ├── SectionHeading.tsx  # Label + h2
     │   ├── SectionLabel.tsx    # Shared mono uppercase label
     │   └── projectIcons.tsx    # icon-key → MUI icon map for bento cards
     ├── data/
@@ -256,11 +259,13 @@ portfolio/
     │   ├── projects.ts         # Featured projects (typed)
     │   ├── skills.ts           # Skill rows (typed)
     │   ├── education.ts        # Academics (typed)
+    │   ├── notes.ts            # Study-note sites for /notes
     │   └── site.ts             # Name, email, social links, résumé URL
     ├── pages/
     │   ├── Home.tsx            # Hero · Featured Work bento · Core Stack
     │   ├── About.tsx           # Bio · Philosophy · Experience · Arsenal · Academics
-    │   ├── Projects.tsx        # Bento grid, featured terminal card
+    │   ├── Projects.tsx        # Bento grid, lead terminal card
+    │   ├── Notes.tsx           # Engineering notes (links to GitHub Pages sites)
     │   ├── Contact.tsx         # Mailto + social + resume download
     │   └── NotFound.tsx        # Catch-all 404
     └── theme/
@@ -316,7 +321,8 @@ SITE_URL=https://bhumika-aga.github.io/Portfolio npm run build -- --base=/Portfo
 - Background: `#0A0A0A` dark / `#FBF9F8` light
 - Text: `#E8E8E8` dark / `#1B1C1C` light · dim: `#8B8B8B` dark / `#414754` light
 - Accent `#0070F3` (vibrant blue) — CTAs, highlighted headline word, chips, hover/focus, card glows
-- Cards: 1px border, `border-radius: 16px`, hover lift (`translateY(-4px)`) with a soft accent glow shadow
+- Cards: 1px border, `border-radius: 16px`; linked cards get a hover lift (`translateY(-3px)`) with a soft accent glow
+- Headings: weight 600 max
 - Navbar: `backdrop-filter: blur(20px) saturate(180%)` — semi-transparent background, blue "Get in touch" CTA
 - Container max-width: 1120px for content pages (Contact uses a narrower 720px column), centered
 - All fonts self-hosted via @fontsource

@@ -5,25 +5,26 @@ export interface SkillRow {
 
 export const skills: SkillRow[] = [
   {
-    category: "Languages",
-    items: "Java · TypeScript · JavaScript · SQL",
+    category: "Languages & Databases",
+    items: "Java · TypeScript · JavaScript · SQL · PostgreSQL · MySQL",
   },
   {
     category: "Backend",
     items:
-      "Spring Boot · Spring Security · Spring Data JPA · Hibernate · Camunda 7 (BPMN) · Microservices · REST APIs · JWT · RBAC",
+      "Spring Boot · Spring Security · Spring Data JPA · Hibernate · Microservices · REST APIs · Camunda 7 (BPMN) · Kafka",
   },
   {
-    category: "Cloud & DevOps",
-    items: "AWS · Terraform (IaC) · Docker · Maven · Jenkins · CI/CD",
+    category: "Frontend",
+    items: "React · TypeScript · MUI · HTML5 · CSS3",
   },
   {
-    category: "Databases",
-    items: "PostgreSQL · MySQL · Query Optimization",
+    category: "Cloud, DevOps & Observability",
+    items:
+      "AWS · Docker · Terraform (IaC) · Maven · Jenkins · CI/CD · OpenSearch · Splunk",
   },
   {
     category: "Testing & Concepts",
     items:
-      "JUnit 5 · Mockito · System Design · Distributed Systems · AI-Assisted Development (Claude, Copilot)",
+      "JUnit · Mockito · System Design · Distributed Systems · AI Assisted Development (Claude, Copilot)",
   },
 ];

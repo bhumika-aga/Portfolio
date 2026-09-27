@@ -2,7 +2,7 @@ import react from "@vitejs/plugin-react";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { defineConfig, type Plugin } from "vite";
-import { ROUTES } from "./src/routes";
+import { ROUTES } from "./src/routes.ts";
 
 // Public URL of the deployed site, without a trailing slash. The Pages
 // workflow sets it from actions/configure-pages; the fallback is for local builds.
@@ -59,17 +59,17 @@ export default defineConfig({
   build: {
     outDir: "dist",
     sourcemap: false,
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom"],
-          mui: [
-            "@mui/material",
-            "@mui/icons-material",
-            "@emotion/react",
-            "@emotion/styled",
+        // Long-lived vendor chunks, so content edits don't bust their cache.
+        codeSplitting: {
+          groups: [
+            {
+              name: "vendor",
+              test: /node_modules[\\/](react|react-dom|react-router|scheduler|cookie)[\\/]/,
+            },
+            { name: "mui", test: /node_modules[\\/](@mui|@emotion)[\\/]/ },
           ],
-          motion: ["framer-motion"],
         },
       },
     },

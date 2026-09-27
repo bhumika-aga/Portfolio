@@ -1,20 +1,14 @@
 import { ArrowForward } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
+import Container from "../components/Container";
 import SectionLabel from "../components/SectionLabel";
 import { ROUTES } from "../routes";
 import { ACCENT, monoFont } from "../theme/theme";
 
 const NotFound: React.FC = () => (
-  <Box
-    sx={{
-      maxWidth: 720,
-      mx: "auto",
-      px: { xs: 3, sm: 4 },
-      py: { xs: 7, md: 10 },
-    }}
-  >
+  <Container sx={{ maxWidth: 720, py: { xs: 7, md: 10 } }}>
     <SectionLabel>404</SectionLabel>
     <Typography variant="h2" sx={{ mb: 2 }}>
       This page doesn&apos;t exist.
@@ -39,7 +33,7 @@ const NotFound: React.FC = () => (
       Back to home
       <ArrowForward sx={{ fontSize: 15 }} />
     </Box>
-  </Box>
+  </Container>
 );
 
 export default NotFound;

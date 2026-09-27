@@ -1,26 +1,24 @@
 import { ArrowOutward, GitHub, Launch } from "@mui/icons-material";
 import { Box, Chip, Typography, useTheme } from "@mui/material";
-import { motion } from "framer-motion";
 import React from "react";
+import Card from "../components/Card";
+import Container from "../components/Container";
 import { PROJECT_ICONS } from "../components/projectIcons";
-import { Project, projects } from "../data/projects";
-import { ACCENT, accentGlow, EASE_OUT_EXPO, monoFont } from "../theme/theme";
+import Reveal from "../components/Reveal";
+import { orderedProjects, Project } from "../data/projects";
+import { ACCENT, accentGlow, monoFont } from "../theme/theme";
 
-const CONTAINER = {
-  maxWidth: 1120,
-  mx: "auto",
-  px: { xs: 3, sm: 4, md: 6 },
+const linkSx = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 0.5,
+  fontFamily: monoFont,
+  fontSize: "0.6875rem",
+  color: "text.secondary",
+  textDecoration: "none",
+  transition: "color 0.2s ease",
+  "&:hover": { color: ACCENT },
 };
-
-const cardHover = (isDark: boolean) => ({
-  transition:
-    "transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease",
-  "&:hover": {
-    transform: "translateY(-4px)",
-    borderColor: accentGlow(0.5),
-    boxShadow: `0 12px 40px ${accentGlow(isDark ? 0.16 : 0.14)}`,
-  },
-});
 
 const LinkRow: React.FC<{ project: Project }> = ({ project }) => (
   <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
@@ -29,19 +27,8 @@ const LinkRow: React.FC<{ project: Project }> = ({ project }) => (
       href={project.githubUrl}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={(e: React.MouseEvent) => e.stopPropagation()}
       aria-label={`${project.title} on GitHub`}
-      sx={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 0.5,
-        fontFamily: monoFont,
-        fontSize: "0.6875rem",
-        color: "text.secondary",
-        textDecoration: "none",
-        transition: "color 0.2s ease",
-        "&:hover": { color: ACCENT },
-      }}
+      sx={linkSx}
     >
       <GitHub sx={{ fontSize: 13 }} />
       Code
@@ -52,19 +39,8 @@ const LinkRow: React.FC<{ project: Project }> = ({ project }) => (
         href={project.liveUrl}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={(e: React.MouseEvent) => e.stopPropagation()}
         aria-label={`${project.title} live demo`}
-        sx={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 0.5,
-          fontFamily: monoFont,
-          fontSize: "0.6875rem",
-          color: "text.secondary",
-          textDecoration: "none",
-          transition: "color 0.2s ease",
-          "&:hover": { color: ACCENT },
-        }}
+        sx={linkSx}
       >
         <Launch sx={{ fontSize: 13 }} />
         Live demo
@@ -73,43 +49,86 @@ const LinkRow: React.FC<{ project: Project }> = ({ project }) => (
   </Box>
 );
 
+const Highlights: React.FC<{ items: string[] }> = ({ items }) => (
+  <Box component="ul" sx={{ pl: 2.25, m: 0, listStyleType: "disc" }}>
+    {items.map((item) => (
+      <Box
+        key={item}
+        component="li"
+        sx={{
+          "&:not(:last-of-type)": { mb: 0.75 },
+          "&::marker": { color: accentGlow(0.6) },
+        }}
+      >
+        <Typography
+          variant="body2"
+          sx={{ color: "text.secondary", fontSize: "0.875rem" }}
+        >
+          {item}
+        </Typography>
+      </Box>
+    ))}
+  </Box>
+);
+
+const OpenButton: React.FC<{ project: Project; size: number }> = ({
+  project,
+  size,
+}) => (
+  <Box
+    component="a"
+    href={project.liveUrl ?? project.githubUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`Open ${project.title}`}
+    sx={(theme) => ({
+      flexShrink: 0,
+      width: size,
+      height: size,
+      borderRadius: "50%",
+      border: `1px solid ${theme.palette.divider}`,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: ACCENT,
+      transition: "background-color 0.2s ease",
+      "&:hover": { backgroundColor: accentGlow(0.12) },
+    })}
+  >
+    <ArrowOutward sx={{ fontSize: size / 2 }} />
+  </Box>
+);
+
 const Projects: React.FC = () => {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const cardBorder = theme.palette.divider;
 
-  const [featured, ...rest] = projects;
+  const [lead, ...rest] = orderedProjects;
 
   return (
-    <Box sx={{ ...CONTAINER, py: { xs: 6, md: 10 } }}>
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
+    <Container sx={{ py: { xs: 6, md: 10 } }}>
+      <Typography
+        variant="h1"
+        sx={{ fontSize: { xs: "2.5rem", md: "3.5rem" }, mb: 2 }}
       >
-        <Typography
-          variant="h1"
-          sx={{ fontSize: { xs: "2.5rem", md: "3.5rem" }, mb: 2 }}
-        >
-          Systems &amp; Architecture
-        </Typography>
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: 400,
-            color: "text.secondary",
-            maxWidth: 560,
-            mb: { xs: 5, md: 8 },
-            lineHeight: 1.5,
-          }}
-        >
-          A curated selection of backend systems, workflow engines, and
-          full-stack platforms built for reliability at scale.
-        </Typography>
-      </motion.div>
+        Systems &amp; Architecture
+      </Typography>
+      <Typography
+        variant="h4"
+        sx={{
+          fontWeight: 400,
+          color: "text.secondary",
+          maxWidth: 560,
+          mb: { xs: 5, md: 8 },
+          lineHeight: 1.5,
+        }}
+      >
+        A selection of backend systems, workflow engines, and full stack
+        platforms built for reliability.
+      </Typography>
 
-      {/* Bento grid */}
+      {/* Bento grid: the lead project spans 8 columns, the rest span 4. */}
       <Box
         sx={{
           display: "grid",
@@ -117,25 +136,17 @@ const Projects: React.FC = () => {
           gap: 3,
         }}
       >
-        {/* Featured card with terminal */}
-        <Box
-          component={motion.div}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: EASE_OUT_EXPO }}
+        <Reveal
+          id={lead.id}
           sx={{ gridColumn: { xs: "1 / -1", md: "span 8" } }}
         >
-          <Box
+          <Card
+            interactive
             sx={{
               height: "100%",
-              borderRadius: "16px",
-              border: `1px solid ${cardBorder}`,
-              backgroundColor: "background.paper",
               p: { xs: 3, md: 4 },
               display: "flex",
               flexDirection: "column",
-              ...cardHover(isDark),
             }}
           >
             <Box
@@ -144,49 +155,31 @@ const Projects: React.FC = () => {
                 justifyContent: "space-between",
                 alignItems: "flex-start",
                 gap: 2,
+                mb: 2,
               }}
             >
               <Box>
                 <Typography variant="h3" sx={{ mb: 1, color: "text.primary" }}>
-                  {featured.title}
+                  {lead.title}
                 </Typography>
                 <Typography
                   variant="body1"
-                  sx={{ color: "text.secondary", maxWidth: 460 }}
+                  sx={{ color: "text.secondary", maxWidth: 520 }}
                 >
-                  {featured.description.split(". ")[0]}.
+                  {lead.tagline}
                 </Typography>
               </Box>
-              <Box
-                component="a"
-                href={featured.liveUrl ?? featured.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Open ${featured.title}`}
-                sx={{
-                  flexShrink: 0,
-                  width: 42,
-                  height: 42,
-                  borderRadius: "50%",
-                  border: `1px solid ${cardBorder}`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: ACCENT,
-                  transition: "background-color 0.2s ease",
-                  "&:hover": { backgroundColor: accentGlow(0.12) },
-                }}
-              >
-                <ArrowOutward sx={{ fontSize: 20 }} />
-              </Box>
+              <OpenButton project={lead} size={42} />
             </Box>
+
+            <Highlights items={lead.highlights} />
 
             {/* Terminal visual */}
             <Box
               sx={{
                 mt: 3,
                 flex: 1,
-                minHeight: 200,
+                minHeight: 180,
                 borderRadius: "12px",
                 border: `1px solid ${accentGlow(0.2)}`,
                 background: `linear-gradient(135deg, ${accentGlow(isDark ? 0.1 : 0.07)} 0%, ${accentGlow(0.02)} 100%)`,
@@ -194,8 +187,6 @@ const Projects: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                position: "relative",
-                overflow: "hidden",
               }}
             >
               <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
@@ -212,31 +203,26 @@ const Projects: React.FC = () => {
                 ))}
               </Box>
 
-              <Box
-                sx={{
-                  fontFamily: monoFont,
-                  fontSize: { xs: "0.75rem", md: "0.8125rem" },
-                  lineHeight: 1.9,
-                  color: ACCENT,
-                  pl: 2,
-                  borderLeft: `2px solid ${accentGlow(0.3)}`,
-                  mb: "auto",
-                }}
-              >
-                {featured.terminalLines?.map((line) => (
-                  <Box key={line}>{line}</Box>
-                ))}
-              </Box>
+              {lead.terminalLines && (
+                <Box
+                  sx={{
+                    fontFamily: monoFont,
+                    fontSize: { xs: "0.75rem", md: "0.8125rem" },
+                    lineHeight: 1.9,
+                    color: ACCENT,
+                    pl: 2,
+                    borderLeft: `2px solid ${accentGlow(0.3)}`,
+                    mb: "auto",
+                  }}
+                >
+                  {lead.terminalLines.map((line) => (
+                    <Box key={line}>{line}</Box>
+                  ))}
+                </Box>
+              )}
 
-              <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 1,
-                  mt: 3,
-                }}
-              >
-                {featured.tech.map((t) => (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: 3 }}>
+                {lead.tech.map((t) => (
                   <Box
                     key={t}
                     sx={{
@@ -257,37 +243,26 @@ const Projects: React.FC = () => {
               </Box>
             </Box>
 
-            <LinkRow project={featured} />
-          </Box>
-        </Box>
+            <LinkRow project={lead} />
+          </Card>
+        </Reveal>
 
-        {/* Remaining cards — first sits beside the featured (span 4), rest wrap below */}
         {rest.map((project, i) => {
           const Icon = PROJECT_ICONS[project.icon];
           return (
-            <Box
+            <Reveal
               key={project.id}
-              component={motion.div}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.55,
-                ease: EASE_OUT_EXPO,
-                delay: 0.05 + i * 0.06,
-              }}
+              id={project.id}
+              delay={50 + i * 60}
               sx={{ gridColumn: { xs: "1 / -1", md: "span 4" } }}
             >
-              <Box
+              <Card
+                interactive
                 sx={{
                   height: "100%",
-                  borderRadius: "16px",
-                  border: `1px solid ${cardBorder}`,
-                  backgroundColor: "background.paper",
                   p: { xs: 2.5, md: 3 },
                   display: "flex",
                   flexDirection: "column",
-                  ...cardHover(isDark),
                 }}
               >
                 <Box
@@ -299,26 +274,7 @@ const Projects: React.FC = () => {
                   }}
                 >
                   <Icon sx={{ fontSize: 30, color: "text.primary" }} />
-                  <Box
-                    component="a"
-                    href={project.liveUrl ?? project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Open ${project.title}`}
-                    sx={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: ACCENT,
-                      transition: "background-color 0.2s ease",
-                      "&:hover": { backgroundColor: accentGlow(0.12) },
-                    }}
-                  >
-                    <ArrowOutward sx={{ fontSize: 18 }} />
-                  </Box>
+                  <OpenButton project={project} size={32} />
                 </Box>
 
                 <Typography variant="h4" sx={{ mb: 1, color: "text.primary" }}>
@@ -326,10 +282,14 @@ const Projects: React.FC = () => {
                 </Typography>
                 <Typography
                   variant="body2"
-                  sx={{ color: "text.secondary", mb: 2.5, lineHeight: 1.6 }}
+                  sx={{ color: "text.secondary", mb: 2 }}
                 >
                   {project.tagline}
                 </Typography>
+
+                <Box sx={{ mb: 2.5 }}>
+                  <Highlights items={project.highlights} />
+                </Box>
 
                 <Box
                   sx={{
@@ -345,12 +305,12 @@ const Projects: React.FC = () => {
                   </Box>
                   <LinkRow project={project} />
                 </Box>
-              </Box>
-            </Box>
+              </Card>
+            </Reveal>
           );
         })}
       </Box>
-    </Box>
+    </Container>
   );
 };
 

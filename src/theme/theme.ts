@@ -5,7 +5,7 @@ export const ACCENT = "#0070F3";
 export const ACCENT_RGB = "0, 112, 243";
 export const monoFont = '"JetBrains Mono", ui-monospace, Menlo, monospace';
 
-export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
+const EASE_OUT_EXPO = "cubic-bezier(0.16, 1, 0.3, 1)";
 
 // Accent-tinted glow, tuned per mode for hover shadows and ambient light.
 export const accentGlow = (alpha: number) => `rgba(${ACCENT_RGB}, ${alpha})`;
@@ -42,7 +42,7 @@ export const getTheme = (mode: PaletteMode) =>
         '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
       h1: {
         fontSize: "4rem",
-        fontWeight: 700,
+        fontWeight: 600,
         lineHeight: 1.04,
         letterSpacing: "-0.04em",
         "@media (max-width:900px)": { fontSize: "3rem" },
@@ -50,7 +50,7 @@ export const getTheme = (mode: PaletteMode) =>
       },
       h2: {
         fontSize: "2.5rem",
-        fontWeight: 700,
+        fontWeight: 600,
         lineHeight: 1.1,
         letterSpacing: "-0.03em",
         "@media (max-width:600px)": { fontSize: "1.75rem" },
@@ -102,6 +102,18 @@ export const getTheme = (mode: PaletteMode) =>
                 : `radial-gradient(ellipse 110% 55% at 0% 0%, ${accentGlow(0.06)} 0%, transparent 55%),
                    radial-gradient(ellipse 80% 50% at 100% 100%, ${accentGlow(0.04)} 0%, transparent 55%)`,
             backgroundAttachment: "fixed",
+          },
+          // Scroll reveal, driven by components/Reveal.tsx.
+          "[data-reveal]": {
+            transition: `opacity 0.6s ${EASE_OUT_EXPO}, transform 0.6s ${EASE_OUT_EXPO}`,
+          },
+          '[data-reveal="pending"]': {
+            opacity: 0,
+            transform: "translateY(16px)",
+          },
+          // Keep hash targets clear of the fixed navbar.
+          "[id]": {
+            scrollMarginTop: "88px",
           },
           "a:focus-visible, button:focus-visible": {
             outline: `2px solid ${ACCENT}`,

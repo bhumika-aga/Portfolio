@@ -2,6 +2,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { SITE } from "../data/site";
 import { ACCENT, monoFont } from "../theme/theme";
+import Container from "./Container";
 
 const LINKS = [
   { label: "GitHub", href: SITE.github },
@@ -20,11 +21,8 @@ const Footer: React.FC = () => {
         borderTop: `1px solid ${theme.palette.divider}`,
       }}
     >
-      <Box
+      <Container
         sx={{
-          maxWidth: 1120,
-          mx: "auto",
-          px: { xs: 3, sm: 4, md: 6 },
           py: 4,
           display: "flex",
           justifyContent: "space-between",
@@ -35,7 +33,7 @@ const Footer: React.FC = () => {
       >
         <Typography
           sx={{
-            fontWeight: 700,
+            fontWeight: 600,
             fontSize: "1rem",
             letterSpacing: "-0.03em",
             color: "text.primary",
@@ -84,9 +82,9 @@ const Footer: React.FC = () => {
             textAlign: { xs: "left", md: "right" },
           }}
         >
-          © {new Date().getFullYear()} · Built with precision.
+          © {new Date().getFullYear()}
         </Typography>
-      </Box>
+      </Container>
     </Box>
   );
 };
