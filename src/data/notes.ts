@@ -61,8 +61,8 @@ export const notes: NoteSet[] = [
       "Consistent hashing",
       "Estimation",
     ],
-    url: "https://bhumika-aga.github.io/CNCSystemDesign/",
-    repoUrl: "https://github.com/bhumika-aga/CNCSystemDesign",
+    url: "https://bhumika-aga.github.io/SystemDesign/",
+    repoUrl: "https://github.com/bhumika-aga/SystemDesign",
   },
   {
     id: "dsa-mastery",
